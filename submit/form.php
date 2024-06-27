@@ -23,7 +23,7 @@
 
   <body class="bg-warning-subtle">
     <div class="container my-2">
-      <form action="">
+      <form action="../parts/student_form.php" method="post">
         <div class="text-center fw-bold my-2 text-danger fs-3">Student Details</div>
         <div class="row d-flex gap-1 flex-wrap fs-7 px-2">
             <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
@@ -84,7 +84,7 @@
             </div>
             <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="state" class="form-label">Center</label>
-                <select id="districtSelect" name="district" class="form-select " aria-label="Small select example" required="" onchange="loadState(this)" required>
+                <select id="districtSelect" name="center" class="form-select " aria-label="Small select example" required="" onchange="loadState(this)" required>
                     <option value="country">Center1</option>
                     <option value="country">Center2</option>
                     <option value="country">Center3</option>

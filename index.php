@@ -39,13 +39,14 @@
         </div>
 
         <div class="col-md">
-            <form method="get" class="card p-2" action="form.html">
+            <form method="get" class="card p-2" action="./submit">
                 <img width="100%" src="imgs/guruji.jpg" alt="">
                 <span class="fw-bold mt-3"
                   >Want to join:-</span
                 >
                 <label for="type"></label>
                 <select
+                name= "type"
                   class="form-select form-select-sm"
                   aria-label="Small select example" required
                 >
