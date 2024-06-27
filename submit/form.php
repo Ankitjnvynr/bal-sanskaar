@@ -77,9 +77,9 @@
                 </select>
             </div>
             <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
-                <label for="state" class="form-label">District</label>
-                <select id="districtSelect" name="district" class="form-select " aria-label="Small select example" required="" onchange="loadState(this)" required>
-                    <option value="country">district</option>
+                <label for="state" class="form-label">Tehsil</label>
+                <select id="districtSelect" name="tehsil" class="form-select " aria-label="Small select example" required="" onchange="loadState(this)" required>
+                    <option value="country">Tehsil</option>
                 </select>
             </div>
             <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
