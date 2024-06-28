@@ -39,13 +39,13 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true)
             padding: 10px 15px;
             text-decoration: none;
             font-size: 18px;
-            color: #ddd;
+            color: white;
             display: block;
         }
 
         .sidebar a:hover {
             color: #fff;
-            background-color: #575d63;
+            background-color: #741414;
         }
     </style>
 </head>
@@ -54,23 +54,42 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true)
 
     <div class="container-fluid">
         <div class="row">
-            <?php
-            include 'side-menus.php'
-                ?>
-
-            <?php
-            if ($_GET['data'] == 'student')
-            {
-                include 'studentdata.php';
-            } else
-            {
-                include 'teacherdata.php';
-            }
-            ?>
-
-
-
+            <nav class="col-md-3 col-lg-2 d-none d-md-block   bg-danger sidebar">
+                <div class="position-sticky">
+                <?php
+                include 'side-menus.php'
+                    ?>
         </div>
+        </nav>
+
+        <div style="max-width:70%" class="offcanvas offcanvas-start bg-danger" tabindex="-1" id="sidebarCanvas"
+            aria-labelledby="offcanvasExampleLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasExampleLabel">GIEO Gita</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body sidebar">
+                <?php
+                include 'side-menus.php'
+                    ?>
+            </div>
+        </div>
+
+
+
+        <?php
+        if ($_GET['data'] == 'student')
+        {
+            include 'studentdata.php';
+        } else
+        {
+            include 'teacherdata.php';
+        }
+        ?>
+
+
+
+    </div>
     </div>
 
 

@@ -2,11 +2,11 @@
       <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
         <div
           class="h2 text-center shadow-sm my-1 p-1 px-3 align-items-center  rounded-2 text-danger d-flex justify-content-between">
-          <i class="fa-solid fa-bars d-md-none "></i>
+          <i data-bs-toggle="offcanvas" data-bs-target="#sidebarCanvas" class="fa-solid fa-bars d-md-none "></i>
 
           GIEO Gita-Bal Sanskaar
         </div>
-
+  <div class="text-danger h5">Students Data</div>
 
         <div class="overflow-x-scroll">
 
