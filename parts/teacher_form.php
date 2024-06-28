@@ -8,10 +8,11 @@ $sql_create_table = "CREATE TABLE IF NOT EXISTS teachers (
     teacher_type VARCHAR(50) NOT NULL,
     name VARCHAR(100) NOT NULL,
     dob DATE,
-    phone VARCHAR(20),
+    phone VARCHAR(20) unique,
     country VARCHAR(50),
     state VARCHAR(50),
     district VARCHAR(50),
+    tehsil VARCHAR(50),
     center VARCHAR(50)
 )";
 
@@ -30,11 +31,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $country = $_POST['country'];
     $state = $_POST['state'];
     $district = $_POST['district'];
+    $tehsil = $_POST['tehsil'];
     $center = $_POST['center'];
 
     // SQL insert statement
-    $sql_insert = "INSERT INTO teachers (teacher_type, name, dob, phone, country, state, district, center)
-                   VALUES ('$teacher_type', '$name', '$dob', '$phone', '$country', '$state', '$district', '$center')";
+    $sql_insert = "INSERT INTO teachers (teacher_type, name, dob, phone, country, state, district,tehsil, center)
+                   VALUES ('$teacher_type', '$name', '$dob', '$phone', '$country', '$state', '$district','$tehsil', '$center')";
 
     if ($conn->query($sql_insert) === TRUE) {
         echo "New record inserted successfully";

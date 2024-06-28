@@ -30,8 +30,16 @@
             <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="type" class="form-label">Teacher/Head Teacher</label>
                 <select id="type" name="type" class="form-select"  required>
-                    <option value="Teacher">Teacher</option>
-                    <option value="Head Teacher">Head Teacher</option>
+                    <?php
+                    $arr = ['Teacher','Head Teacher'];
+                    foreach ($arr as $value) {
+                        if($value == $_GET['type']){
+                            echo '<option selected value="'.$value.'">'.$value.'</option>';
+                        }else{
+                            echo '<option  value="'.$value.'">'.$value.'</option>';
+                        }
+                    }
+                    ?>
                 </select>
             </div>
             <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
@@ -45,7 +53,7 @@
             
             <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="phone" class="form-label">Phone</label>
-                <input type="text" class="form-control form-control-sm" id="phone" name="phone" >
+                <input type="text" class="form-control form-control-sm" id="phone" name="phone" onkeypress="return onlyDigits(event)" size="10" minlength="10" maxlength="10" >
             </div>
             
            
@@ -58,27 +66,27 @@
             <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="state" class="form-label">State</label>
                 <select id="stateSelect" name="state" class="form-select " aria-label="Small select example" required="" onchange="loadState(this)" required>
-                    <option value="country">state</option>
+                    <option value="state">state</option>
                 </select>
             </div>
             <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="state" class="form-label">District</label>
                 <select id="districtSelect" name="district" class="form-select " aria-label="Small select example" required="" onchange="loadState(this)" required>
-                    <option value="country">district</option>
+                    <option value="dis">district</option>
                 </select>
             </div>
             <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
-                <label for="state" class="form-label">District</label>
-                <select id="districtSelect" name="district" class="form-select " aria-label="Small select example" required="" onchange="loadState(this)" required>
-                    <option value="country">district</option>
+                <label for="state" class="form-label">Tehsil</label>
+                <select id="tehsil" name="tehsil" class="form-select " aria-label="Small select example" required="" onchange="loadState(this)" required>
+                    <option value="teh">teh</option>
                 </select>
             </div>
             <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
-                <label for="state" class="form-label">Center</label>
-                <select id="districtSelect" name="center" class="form-select " aria-label="Small select example" required="" onchange="loadState(this)" required>
-                    <option value="country">Center1</option>
-                    <option value="country">Center2</option>
-                    <option value="country">Center3</option>
+                <label for="center" class="form-label">Center</label>
+                <select id="center" name="center" class="form-select " aria-label="Small select example" required="" onchange="loadState(this)" required>
+                    <option value="center1">Center1</option>
+                    <option value="Center2">Center2</option>
+                    <option value="Center3">Center3</option>
                 </select>
             </div>
             
@@ -92,5 +100,6 @@
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
       crossorigin="anonymous"
     ></script>
+    <script src="../js/script.js"></script>
   </body>
 </html>
