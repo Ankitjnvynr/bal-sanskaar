@@ -4,50 +4,54 @@
     <i class="fa-solid fa-bars d-md-none"></i>
     GIEO Gita-Bal Sanskaar
   </div>
-  <table class="table fs-7 table-striped">
-    <thead>
-      <tr>
-        <th scope="col">ID</th>
-        <th scope="col">Teacher Type</th>
-        <th scope="col">Name</th>
-        <th scope="col">DOB</th>
-        <th scope="col">Phone</th>
-        <th scope="col">Country</th>
-        <th scope="col">State</th>
-        <th scope="col">District</th>
-        <th scope="col">Tehsil</th>
-        <th scope="col">Center</th>
-      </tr>
-    </thead>
-    <tbody>
-      <?php
-      include '../config/_db.php';// include the database connection
-      $sql = "SELECT * FROM teachers";
-      $result = $conn->query($sql);
+  <div class="overflow-x-scroll">
+    <table class="table fs-7 table-striped">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Teacher Type</th>
+          <th scope="col">Name</th>
+          <th scope="col">DOB</th>
+          <th scope="col">Phone</th>
+          <th scope="col">Country</th>
+          <th scope="col">State</th>
+          <th scope="col">District</th>
+          <th scope="col">Tehsil</th>
+          <th scope="col">Center</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php
+        include '../config/_db.php';// include the database connection
+        $sql = "SELECT * FROM teachers";
+        $result = $conn->query($sql);
 
-      if ($result->num_rows > 0)
-      {
-        while ($row = $result->fetch_assoc())
+        if ($numrow = $result->num_rows > 0)
         {
-          echo "<tr>
-                                    <th scope='row'>{$row['id']}</th>
-                                    <td>{$row['teacher_type']}</td>
-                                    <td>{$row['name']}</td>
-                                    <td>{$row['dob']}</td>
-                                    <td>{$row['phone']}</td>
-                                    <td>{$row['country']}</td>
-                                    <td>{$row['state']}</td>
-                                    <td>{$row['district']}</td>
-                                    <td>{$row['tehsil']}</td>
-                                    <td>{$row['center']}</td>
-                                </tr>";
+          echo $numrow . " records found";
+          while ($row = $result->fetch_assoc())
+          {
+            echo "<tr>
+                                      <th scope='row'>{$row['id']}</th>
+                                      <td>{$row['teacher_type']}</td>
+                                      <td>{$row['name']}</td>
+                                      <td>{$row['dob']}</td>
+                                      <td>{$row['phone']}</td>
+                                      <td>{$row['country']}</td>
+                                      <td>{$row['state']}</td>
+                                      <td>{$row['district']}</td>
+                                      <td>{$row['tehsil']}</td>
+                                      <td>{$row['center']}</td>
+                                  </tr>";
+          }
+        } else
+        {
+          echo "<tr><td colspan='10' class='text-center'>No records found</td></tr>";
         }
-      } else
-      {
-        echo "<tr><td colspan='10' class='text-center'>No records found</td></tr>";
-      }
-      $conn->close();
-      ?>
-    </tbody>
-  </table>
+        $conn->close();
+        ?>
+      </tbody>
+    </table>
+
+  </div>
 </main>
