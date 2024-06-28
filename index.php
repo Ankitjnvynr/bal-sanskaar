@@ -11,9 +11,19 @@
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" href="css/header.css">
   </head>
 
   <body class="bg-warning-subtle">
+
+  <?php
+  $logoPath = 'imgs/logo.png';
+  include 'parts/_header.php';
+
+  ?>
+
+
+
     <div class="container my-2">
       <div class="row">
         <div class="col-md">
