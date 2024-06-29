@@ -1,350 +1,367 @@
-*{
+* {
 
   cursor: url('bansuri-min.png'), auto;
 }
+
 body {
-    font-family: sans-serif;
-    font-size: larger;
-    font-weight: 500;
-    overflow-x: hidden;
+  font-family: sans-serif;
+  font-size: larger;
+  font-weight: 500;
+  overflow-x: hidden;
+}
+
+.formcs {
+  background-color: linear-gradient(to bottom, #3498db, #2c3e50);
+  font-size: larger;
+  font-weight: 800;
+}
+
+body {
+  background: #f7e092 !important;
+}
+
+#totalChants {
+  height: 120px !important;
+  width: 40% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+
+}
+
+/* ====================================count Down ========================= */
+#countdown {
+  font-size: 24px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  background-color: purple;
+}
+
+.countdown-item {
+  margin: 0 10px;
+}
+
+.countdown-label {
+  font-size: 14px;
+  color: rgb(7, 247, 11);
+}
+
+
+
+/* =========================================countdown ENds==================================== */
+
+.carousel-item {
+  transition: transform 2s ease-in-out;
+  /* Default transition properties */
+}
+
+/*#msgspan {*/
+/*  opacity: 0;*/
+/*  animation: op 5s ease-in;*/
+/*}*/
+
+@keyframes opw {
+  0% {
+    opacity: 1;
   }
-  .formcs{
-    background-color: linear-gradient(to bottom, #3498db, #2c3e50);
-    font-size: larger;
-    font-weight: 800;
+
+  70% {
+    opacity: 1;
   }
-  
-  body {
-    background: #f7e092 !important;
+
+  100% {
+    opacity: 0;
   }
-  #totalChants {
-    height: 120px !important;
-    width: 40% !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-  
-  
-  }
-  
-  /* ====================================count Down ========================= */
-  #countdown {
-    font-size: 24px;
-    font-weight: bold;
-    display: flex;
-    justify-content: center;
-    background-color: purple;
-  }
-  
-  .countdown-item {
-    margin: 0 10px;
-  }
-  
-  .countdown-label {
-    font-size: 14px;
-    color: rgb(7, 247, 11);
-  }
-  
-  
-  
-  /* =========================================countdown ENds==================================== */
-  
-  .carousel-item {
-    transition: transform 2s ease-in-out;
-    /* Default transition properties */
-  }
-  
-  /*#msgspan {*/
-  /*  opacity: 0;*/
-  /*  animation: op 5s ease-in;*/
-  /*}*/
-  
-  @keyframes opw {
-    0% {
-      opacity: 1;
-    }
-  
-    70% {
-      opacity: 1;
-    }
-  
-    100% {
-      opacity: 0;
-    }
-  }
-  
-  .a-navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .a-navbar ul {
-    list-style: none;
-  }
-  
-  .a-navbar ul a {
-    text-decoration: none;
-    color: rgb(78, 78, 78);
-    position: relative;
-  }
-  
-  .a-navbar ul li {
-    transition: all 5s;
-    position: relative;
-  
-  }
-  
-  .a-navbar ul li:hover ::after {
-    position: absolute;
-    background-color: #fd5a5a;
-    width: 100%;
-    height: 5px;
-  
-  }
-  
-  .a-navbar ul li:hover a {
-    color: #fd5a5a;
-  }
-  
-  .mybtn {
-    height: 100%;
-    background-color: #fd5a5a;
-    border: none;
-    border-radius: 0;
-    font-weight: 500;
-    text-transform: uppercase;
-  }
-  
-  #header,
-  .a-head {
-    background-color: #c16406;
-    color: white;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    font-size: 13px;
-    font-weight: 600;
-  }
-  
-  .a-head .email-content a {
-    background-color: #c16406;
-    color: white;
-    text-decoration: none;
-  }
-  
-  .a-head .email-content a:hover {
-  
-    color: yellow;
-  
-  }
-  
-  #mobilenav {
+}
+
+.a-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.a-navbar ul {
+  list-style: none;
+}
+
+.a-navbar ul a {
+  text-decoration: none;
+  color: rgb(78, 78, 78);
+  position: relative;
+}
+
+.a-navbar ul li {
+  transition: all 5s;
+  position: relative;
+
+}
+
+.a-navbar ul li:hover ::after {
+  position: absolute;
+  background-color: #fd5a5a;
+  width: 100%;
+  height: 5px;
+
+}
+
+.a-navbar ul li:hover a {
+  color: #fd5a5a;
+}
+
+.mybtn {
+  height: 100%;
+  background-color: #fd5a5a;
+  border: none;
+  border-radius: 0;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+#header,
+.a-head {
+  background-color: #c16406;
+  color: white;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.a-head .email-content a {
+  background-color: #c16406;
+  color: white;
+  text-decoration: none;
+}
+
+.a-head .email-content a:hover {
+
+  color: yellow;
+
+}
+
+#mobilenav {
+  display: none;
+  flex-direction: column;
+
+}
+
+
+
+#menutoggle:checked~#mobilemenu {
+  transform: translatex(1%);
+}
+
+#menutoggle label {
+
+  display: inline-block;
+  right: 2%;
+  position: absolute;
+
+}
+
+#countdown {
+  position: absolute;
+  display: flex;
+  bottom: 1%;
+  left: 1%;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: rgb(7, 247, 11);
+  gap: 5px;
+  border-radius: 20px;
+}
+
+.countdown-item {
+  display: flex;
+  padding: 10px;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 0;
+
+}
+
+.pic {
+  width: 100%;
+  object-fit: cover;
+  overflow: hidden;
+  aspect-ratio: 19/9;
+  transition: transform 0.5s;
+  cursor: pointer;
+}
+
+.pic:hover {
+  transform: scale(1.08);
+}
+
+#viewPic {
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  backdrop-filter: blur(2px);
+  transition: all 0.5s;
+  transform-origin: center;
+  overflow: hidden;
+  border-radius: 50%;
+  scale: 0;
+  z-index: 100;
+}
+
+#activeImg {
+  width: 90vw;
+  height: auto;
+  border-radius: 10px;
+  max-width: 600px;
+}
+
+#closeBtn {
+  position: absolute;
+  top: 10%;
+  right: 10%;
+  cursor: pointer;
+  color: white;
+  background-color: white;
+  border-radius: 50%;
+}
+
+#countbox {
+  display: none;
+}
+
+/* ====================   responsive css  ================== */
+@media screen and (max-width: 767px) {
+
+  .a-head,
+  #mynav {
     display: none;
+  }
+
+  #mobilenav {
+    display: flex;
+    justify-content: flex-start;
     flex-direction: column;
-  
+    align-items: flex-start;
+
   }
-  
-  
-  
-  #menutoggle:checked~#mobilemenu {
-    transform: translatex(1%);
-  }
-  
-  #menutoggle label {
-  
-    display: inline-block;
-    right: 2%;
+
+  #mobilemenu {
     position: absolute;
-  
+    background-color: rgba(0, 0, 0, 0.85);
+    width: 250px;
+    left: 0;
+    top: 15%;
+    padding: 10px;
+    transform: translatex(101%);
+    transition: all 0.5s;
+    border-radius: 0 10px 10px 0;
+    z-index: 200;
   }
-  
+
+  #mobilemenu li a {
+    color: white;
+  }
+
   #countdown {
-    position: absolute;
+    /* position: absolute; */
     display: flex;
     bottom: 1%;
     left: 1%;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     font-weight: 800;
     color: rgb(7, 247, 11);
-    gap: 5px;
-     border-radius:20px;
+    gap: 2px;
+    background-color: rgb(73, 0, 73);
+    width: 100%;
+    height: 90px;
   }
-  
+
   .countdown-item {
+    /* background-color: rgba(255, 255, 255, 0.815); */
     display: flex;
-    padding: 10px;
+    padding: 3px;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     margin: 0;
-   
-  }
-  
-  .pic {
-    width: 100%;
-    object-fit: cover;
-    overflow: hidden;
-    aspect-ratio: 19/9;
-    transition: transform 0.5s;
-    cursor: pointer;
-  }
-  
-  .pic:hover {
-    transform: scale(1.08);
-  }
-  
-  #viewPic {
-    height: 100%;
-    width: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    position: absolute;
-    backdrop-filter: blur(2px);
-    transition: all 0.5s;
-    transform-origin: center;
-    overflow: hidden;
-    border-radius: 50%;
-    scale: 0;
-    z-index: 100;
-  }
-  
-  #activeImg {
-    width: 90vw;
-    height: auto;
     border-radius: 10px;
-    max-width: 600px;
+    font-size: 1rem;
   }
-  
-  #closeBtn {
-    position: absolute;
-    top: 10%;
-    right: 10%;
-    cursor: pointer;
-    color: white;
-    background-color: white;
-    border-radius: 50%;
-  }
-  #countbox{
-    display: none;
-  }
-  
-  /* ====================   responsive css  ================== */
-  @media screen and (max-width: 767px) {
-  
-    .a-head,
-    #mynav {
-      display: none;
-    }
-  
-    #mobilenav {
-      display: flex;
-      justify-content: flex-start;
-      flex-direction: column;
-      align-items: flex-start;
-      
-    }
-  
-    #mobilemenu {
-      position: absolute;
-      background-color: rgba(0, 0, 0, 0.85);
-      width: 250px;
-      left: 0;
-      top: 15%;
-      padding: 10px;
-      transform: translatex(-101%);
-      transition: all 0.5s;
-      border-radius: 0 10px 10px 0;
-      z-index: 200;
-    }
-  
-    #mobilemenu li a {
-      color: white;
-    }
-  
-    #countdown {
-      /* position: absolute; */
-      display: flex;
-      bottom: 1%;
-      left: 1%;
-      font-size: 1.2rem;
-      font-weight: 800;
-      color: rgb(7, 247, 11);
-      gap: 2px;
-      background-color: rgb(73, 0, 73);
-      width: 100%;
-      height: 90px;
-  }
-  
-    .countdown-item {
-      /* background-color: rgba(255, 255, 255, 0.815); */
-      display: flex;
-      padding: 3px;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      margin: 0;
-      border-radius: 10px;
-      font-size: 1rem;
-    }
-  
-    .countdown-label {
-      font-weight: 400;
-      font-size: small;
-    }
-    #countbox{
-      display: block;
-      position: relative;
-      height: 100px;
-    }
-  
-  }
-  /* (A) GALLERY WRAPPER */
-  /* (A1) BIG SCREENS - 3 IMAGES PER ROW */
-  .gallery {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 10px;
-    max-width: 1200px;
-    margin: 0 auto; /* horizontal center */
-    position: relative;
-  }
-  .gallery video {
-    
-  }
-    
-  
-  /* (A2) SMALL SCREENS - 2 IMAGES PER ROW */
-  @media screen and (max-width: 768px) {
-    .gallery { grid-template-columns: repeat(2, 1fr); }
-  }
-  
-  /* (B) GALLERY VIDEOS */
-  /* (B1) THUMBNAIL VIDEO */
-  .gallery video {
-    width: 100%;
-    height: 200px;
-    object-fit: cover; /* fill | contain | cover | scale-down */
-    cursor: pointer;
-  
-  }
-  
-  /* (B2) FULLSCREEN VIDEO */
-  .gallery video.full {
-    position: fixed;
-    top: 0; left: 0; z-index: 999;
-    width: 100vw; height: 100vh;
-    background: #000;
-    object-fit: scale-down;
-  }
-  
-  /* (C) EXIT FULLSCREEN */
-  #vClose {
-    position: fixed; display: none;
-    top: 0; right: 0; z-index: 9999;
-    font-size: 20px; font-weight: 700;
-    padding: 10px 15px;
-    color: #fff;
-    background: #741414;
-    cursor: pointer;
-  }
-  #vClose.show { display: block; }
 
-  
+  .countdown-label {
+    font-weight: 400;
+    font-size: small;
+  }
+
+  #countbox {
+    display: block;
+    position: relative;
+    height: 100px;
+  }
+
+}
+
+/* (A) GALLERY WRAPPER */
+/* (A1) BIG SCREENS - 3 IMAGES PER ROW */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+  max-width: 1200px;
+  margin: 0 auto;
+  /* horizontal center */
+  position: relative;
+}
+
+.gallery video {}
+
+
+/* (A2) SMALL SCREENS - 2 IMAGES PER ROW */
+@media screen and (max-width: 768px) {
+  .gallery {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* (B) GALLERY VIDEOS */
+/* (B1) THUMBNAIL VIDEO */
+.gallery video {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  /* fill | contain | cover | scale-down */
+  cursor: pointer;
+
+}
+
+/* (B2) FULLSCREEN VIDEO */
+.gallery video.full {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  width: 100vw;
+  height: 100vh;
+  background: #000;
+  object-fit: scale-down;
+}
+
+/* (C) EXIT FULLSCREEN */
+#vClose {
+  position: fixed;
+  display: none;
+  top: 0;
+  right: 0;
+  z-index: 9999;
+  font-size: 20px;
+  font-weight: 700;
+  padding: 10px 15px;
+  color: #fff;
+  background: #741414;
+  cursor: pointer;
+}
+
+#vClose.show {
+  display: block;
+}

@@ -1,7 +1,14 @@
 <?php
 require_once '../config/_db.php';
 
+session_start();
+if (isset($_SESSION['loggedin']))
+{
+    //	header('location : dashboard.php');
+    header('location:dashboard.php?data=student');
 
+    exit;
+}
 $msg = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -14,10 +21,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($result) {
             if ($result->num_rows > 0) {
                 while($row = $result->fetch_assoc()){
-                    session_start();
+                    
                     echo $_SESSION['loggedin'] = true;
                     echo $_SESSION['username'] = $row['name'];
                     echo $_SESSION['phone']= $row['phone'];
+                    echo $_SESSION['district']= $row['district'];
+                    echo $_SESSION['tehsil']= $row['tehsil'];
                     echo $_SESSION['userType'] = $row['teacher_type'];
                     $msg = "Teacher exists!";
 

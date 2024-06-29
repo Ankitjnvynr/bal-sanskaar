@@ -83,7 +83,7 @@
             </div>
             <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="center" class="form-label">Center</label>
-                <select id="center" name="center" class="form-select " aria-label="Small select example" required="" onchange="loadState(this)" required>
+                <select id="center" name="center" class="form-select " aria-label="Small select example" required=""  required>
                     <option value="center1">Center1</option>
                     <option value="Center2">Center2</option>
                     <option value="Center3">Center3</option>

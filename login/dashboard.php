@@ -5,6 +5,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true)
     header("location: index.php");
     exit;
 }
+include '../config/_db.php'; 
 ?>
 
 <!DOCTYPE html>
@@ -41,11 +42,13 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true)
             font-size: 18px;
             color: white;
             display: block;
+            transition:all 0.5s;
         }
 
         .sidebar a:hover {
-            color: #fff;
-            background-color: #741414;
+            color: white;
+            /* background-color: #741414; */
+            transform:translatex(5px)
         }
     </style>
 </head>
@@ -65,7 +68,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true)
         <div style="max-width:70%" class="offcanvas offcanvas-start bg-danger" tabindex="-1" id="sidebarCanvas"
             aria-labelledby="offcanvasExampleLabel">
             <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="offcanvasExampleLabel">GIEO Gita</h5>
+                
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body sidebar">
@@ -81,6 +84,9 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true)
         if ($_GET['data'] == 'student')
         {
             include 'studentdata.php';
+        }
+        elseif($_GET['data'] == 'filterStudent'){
+            include 'filterStudent.php';
         } else
         {
             include 'teacherdata.php';
@@ -98,6 +104,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true)
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
+        <script src="../js/searchList.js"></script>
 </body>
 
 </html>

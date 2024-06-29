@@ -1,5 +1,5 @@
 
-      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 overflow-y-scroll">
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
         <div
           class="h2 text-center shadow-sm my-1 p-1 px-3 align-items-center  rounded-2 text-danger d-flex justify-content-between">
           <i data-bs-toggle="offcanvas" data-bs-target="#sidebarCanvas" class="fa-solid fa-bars d-md-none "></i>
@@ -41,6 +41,11 @@
 
               include '../config/_db.php'; // include the database connection
               $sql = "SELECT * FROM students WHERE `district` = '$userDistrict' AND `tehsil` = '$userTehsil' ";
+              if(isset($_GET['center']) || $_GET['center']!=='' ){
+                $ctr = $_GET['center'];
+                $sql = "SELECT * FROM students WHERE `district` = '$userDistrict' AND `tehsil` = '$userTehsil' AND `center`= '$ctr'";
+      
+              }
               $result = $conn->query($sql);
 
               if ($numrow = $result->num_rows > 0)

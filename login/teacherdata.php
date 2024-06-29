@@ -4,7 +4,7 @@
     <i class="fa-solid fa-bars d-md-none"></i>
     GIEO Gita-Bal Sanskaar
   </div>
-  <div class="text-danger h5">Teachers Data</div>
+  <div class="text-danger h5">Students Data</div>
   <div class="overflow-x-scroll">
     <table class="table fs-7 table-striped">
       <thead>
@@ -23,17 +23,33 @@
       </thead>
       <tbody>
         <?php
+        
+          $userName= $_SESSION['username'] ;
+          $userPhone= $_SESSION['phone'];
+          $userDistrict= $_SESSION['district'];
+          $userTehsil= $_SESSION['tehsil'];
+          $userType= $_SESSION['userType'];
+          
+
+
         include '../config/_db.php';// include the database connection
-        $sql = "SELECT * FROM teachers";
+        $sql = "SELECT * FROM teachers WHERE `district` = '$userDistrict' AND `tehsil` = '$userTehsil'";
+        if(isset($_GET['center'])){
+          $ctr = $_GET['center'];
+          $sql = "SELECT * FROM teachers WHERE `district` = '$userDistrict' AND `tehsil` = '$userTehsil' AND `center`= '$ctr'";
+
+        }
         $result = $conn->query($sql);
 
         if ($numrow = $result->num_rows > 0)
         {
-          echo $numrow . " records found";
+          echo $result->num_rows . " records found";
+          $sr=0;
           while ($row = $result->fetch_assoc())
           {
+            $sr++;
             echo "<tr>
-                                      <th scope='row'>{$row['id']}</th>
+                                      <th scope='row'>{$sr}</th>
                                       <td>{$row['teacher_type']}</td>
                                       <td>{$row['name']}</td>
                                       <td>{$row['dob']}</td>

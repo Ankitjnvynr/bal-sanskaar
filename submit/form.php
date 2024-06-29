@@ -66,28 +66,28 @@
             </div>
             <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="state" class="form-label">State</label>
-                <select id="stateSelect" name="state" class="form-select " aria-label="Small select example" required="" onchange="loadState(this)" required>
-                    <option value="country">state</option>
+                <select id="stateSelect" name="state" class="form-select " aria-label="Small select example" required="" onchange="loadDistrict(this)" required>
+                    <option value="state">state</option>
                 </select>
             </div>
             <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
-                <label for="district" class="form-label">District</label>
-                <select id="selectdistrict" name="district" class="form-select " aria-label="Small select example" required="" onchange="loadState(this)" required>
-                    <option value="country">district</option>
+                <label for="state" class="form-label">District</label>
+                <select id="districtSelect" name="district" class="form-select " aria-label="Small select example" required="" onchange="loadTehsil (this)" required>
+                    <option value="dis">district</option>
                 </select>
             </div>
             <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="state" class="form-label">Tehsil</label>
-                <select id="selecttehsil" name="tehsil" class="form-select " aria-label="Small select example" required="" onchange="loadState(this)" required>
-                    <option value="country">Tehsil</option>
+                <select id="tehsil" name="tehsil" class="form-select " aria-label="Small select example" required=""  required>
+                    <option value="teh">teh</option>
                 </select>
             </div>
             <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="center" class="form-label">Center</label>
-                <select id="center" name="center" class="form-select " aria-label="Small select example" required="" onchange="loadState(this)" required>
-                    <option value="country">Center1</option>
-                    <option value="country">Center2</option>
-                    <option value="country">Center3</option>
+                <select id="center" name="center" class="form-select " aria-label="Small select example" required=""  required>
+                    <option value="Center1">Center1</option>
+                    <option value="Center2">Center2</option>
+                    <option value="Center3">Center3</option>
                 </select>
             </div>
             
