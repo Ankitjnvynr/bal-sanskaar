@@ -65,19 +65,19 @@
             </div>
             <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="state" class="form-label">State</label>
-                <select id="stateSelect" name="state" class="form-select " aria-label="Small select example" required="" onchange="loadState(this)" required>
+                <select id="stateSelect" name="state" class="form-select " aria-label="Small select example" required="" onchange="loadDistrict(this)" required>
                     <option value="state">state</option>
                 </select>
             </div>
             <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="state" class="form-label">District</label>
-                <select id="districtSelect" name="district" class="form-select " aria-label="Small select example" required="" onchange="loadState(this)" required>
+                <select id="districtSelect" name="district" class="form-select " aria-label="Small select example" required="" onchange="loadTehsil (this)" required>
                     <option value="dis">district</option>
                 </select>
             </div>
             <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="state" class="form-label">Tehsil</label>
-                <select id="tehsil" name="tehsil" class="form-select " aria-label="Small select example" required="" onchange="loadState(this)" required>
+                <select id="tehsil" name="tehsil" class="form-select " aria-label="Small select example" required=""  required>
                     <option value="teh">teh</option>
                 </select>
             </div>
