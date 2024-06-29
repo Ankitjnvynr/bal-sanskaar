@@ -7,10 +7,10 @@
                 <a class="nav-link" href="#reports">Reports</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#settings">Settings</a>
+                <a class="nav-link" href="?data=student">Student</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#profile">Profile</a>
+                <a class="nav-link" href="?data=teacher">Teacher</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#logout">Logout</a>
