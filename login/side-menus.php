@@ -12,8 +12,9 @@
          ?>
         
         <ul class="nav flex-column">
-           <div class="logo text-center ">
+           <div class="logo text-center shadow pt-2 rounded">
             <img width="80px" class='shadow rounded rounded-pill' src="../imgs/logo.png" alt="">
+            <p class="text-light mt-2 fw-bolder rounded">GIEO Gita-Bal Sanskaar</p>
            </div>
             <li class="nav-item mt-3">
                 <a class="nav-link" href="?data=student">All Student</a>
@@ -44,7 +45,7 @@
                       {
                         $name = mb_convert_case($row['name'], MB_CASE_TITLE, "UTF-8");
                         $center = mb_convert_case($row['center'], MB_CASE_TITLE, "UTF-8");
-                        echo "<li class='list-group-item bg-warning-subtle' ><a class='text-black fs-7 m-0 p-0' href='?data=filterStudent&center={$row['center']}'>{$name}<span style='font-size:0.8rem;' class='fw-semibold fs-7 text-muted'>({$center})</span></a></li>";
+                        echo "<li class='list-group-item bg-warning-subtle ' ><a class='text-black fs-7 m-0 p-0' href='?data=filterStudent&center={$row['center']}'>{$name}<span style='font-size:0.8rem;' class='fw-semibold fs-7 text-muted'>({$center})</span></a></li>";
                       }
                     }
                     ?>
