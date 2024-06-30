@@ -1,3 +1,4 @@
+
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 overflow-y-scroll">
   <div
     class="h2 text-center shadow-sm my-1 p-1 px-3 align-items-center  rounded-2 text-danger d-flex justify-content-between">
@@ -9,7 +10,7 @@
 
   <div class="overflow-x-scroll">
 
-    <table class="table fs-7 table-striped ">
+    <table id="myTable" class="table fs-7 table-striped ">
       <thead>
         <tr>
           <th scope="col">ID</th>
