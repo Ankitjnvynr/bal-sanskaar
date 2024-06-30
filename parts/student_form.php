@@ -49,6 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($conn->query($sql_insert) === TRUE) {
         echo "New record inserted successfully";
+        header('location:../success.php');
     } else {
         echo "Error: " . $sql_insert . "<br>" . $conn->error;
     }

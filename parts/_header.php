@@ -49,19 +49,20 @@
         <li><a href="https://gieogita.org/our-gallery/"><span>Gallery</span></a></li>
         <li><a href="#"><span>Download</span></a></li>
         <li><a href="https://gieogita.org/contact/"><span>Contact</span></a></li>
-        <li><a class="btn btn-danger text-white" href=<?php echo $loginBtnPath; ?> >LogIn</a></li>
+        <li><a class="btn btn-danger text-white" href=<?php echo $loginBtnPath; ?>>LogIn</a></li>
       </ul>
     </div>
     <div id="mobilenav" class="a-navbar">
-    
+
       <input id="menutoggle" type="checkbox" hidden>
       <div class="logo-m py-2">
         <img class="" width="70px" src="<?php echo $logoPath ?>" alt="">
-        <label for="menutoggle" style=" position: absolute; right: 4%; "><i class="fa-solid fa-bars"></i></label>
+        <label for="menutoggle" style=" position: absolute; right: 4%; "><i class="fa-solid fa-bars fs-1"></i></label>
       </div>
-      
+
       <ul id="mobilemenu" class=" d-flex flex-column gap-3  justify-content-start p-3 mt-3 text-white">
-      <label for="menutoggle" style=" position: absolute; right: 4%; "><i class="fa-solid fa-xmark"></i></label>
+        <label for="menutoggle" style=" position: absolute; right: 4%;  padding:10px"><i
+            class="fa-solid fa-xmark "></i></label>
         <li><a href="https://gieogita.org/" aria-current="page"><span>GIEO GITA</span></a></li>
         <li><a href="https://parivaar.gieogita.org/"><span>Join GIEO Gita</span></a></li>
         <li><a href="#"><span>About Us</span></a></li>
