@@ -11,30 +11,38 @@ if (isset($_SESSION['loggedin']))
 }
 $msg = "";
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (!isset($_POST['username']) || $_POST['username'] == "") {
+if ($_SERVER["REQUEST_METHOD"] == "POST")
+{
+    if (!isset($_POST['username']) || $_POST['username'] == "")
+    {
         $msg = "Please enter username";
-    } else {
+    } else
+    {
         $username = $_POST['username'];
         $checkuser = "SELECT * FROM teachers WHERE `phone` = '$username'";
         $result = $conn->query($checkuser);
-        if ($result) {
-            if ($result->num_rows > 0) {
-                while($row = $result->fetch_assoc()){
-                    
+        if ($result)
+        {
+            if ($result->num_rows > 0)
+            {
+                while ($row = $result->fetch_assoc())
+                {
+
                     echo $_SESSION['loggedin'] = true;
                     echo $_SESSION['username'] = $row['name'];
-                    echo $_SESSION['phone']= $row['phone'];
-                    echo $_SESSION['district']= $row['district'];
-                    echo $_SESSION['tehsil']= $row['tehsil'];
+                    echo $_SESSION['phone'] = $row['phone'];
+                    echo $_SESSION['district'] = $row['district'];
+                    echo $_SESSION['tehsil'] = $row['tehsil'];
                     echo $_SESSION['userType'] = $row['teacher_type'];
+                    echo $_SESSION['userCenter'] = $row['center'];
                     $msg = "Teacher exists!";
 
                     header('location:dashboard.php?data=student');
                     exit;
                 }
                 // Further processing or redirect as needed
-            } else {
+            } else
+            {
                 // No teacher found with the given phone number
                 $msg = "Phone no not exist";
                 // Handle accordingly, such as displaying an error message or redirecting
@@ -52,7 +60,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>GIEO Gita-Bal Sanskaar Yojna</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         .form-item {
             flex: 1 0 230px;
@@ -78,7 +88,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <form action="" method="post">
                 <div class="mb-3">
                     <label for="username" class="form-label">Phone</label>
-                    <input type="text" class="form-control" id="username" name="username" placeholder="Enter phone no as username" />
+                    <input type="text" class="form-control" id="username" name="username"
+                        placeholder="Enter phone no as username" />
                 </div>
                 <!-- <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
@@ -95,13 +106,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <button type="submit" class="btn btn-danger">Login</button>
                 </div>
                 <div class="email-help text-danger text-center"><?php
-                                                                echo $msg;
-                                                                ?></div>
+                echo $msg;
+                ?></div>
             </form>
+            <div class="text-center text-danger mt-3"><a class="btn" href="../"><i class="fa-solid fa-house"></i><span class="mx-2 fw-bold">Homepage-></span></a></div>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>

@@ -43,7 +43,8 @@
                       while ($row = $result->fetch_assoc())
                       {
                         $name = mb_convert_case($row['name'], MB_CASE_TITLE, "UTF-8");
-                        echo "<li class='list-group-item bg-warning-subtle' ><a class='text-black fs-7 m-0 p-0' href='?data=filterStudent&center={$row['center']}'>{$name}</a></li>";
+                        $center = mb_convert_case($row['center'], MB_CASE_TITLE, "UTF-8");
+                        echo "<li class='list-group-item bg-warning-subtle' ><a class='text-black fs-7 m-0 p-0' href='?data=filterStudent&center={$row['center']}'>{$name}<span style='font-size:0.8rem;' class='fw-semibold fs-7 text-muted'>({$center})</span></a></li>";
                       }
                     }
                     ?>

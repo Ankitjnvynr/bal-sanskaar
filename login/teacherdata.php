@@ -4,7 +4,7 @@
     <i class="fa-solid fa-bars d-md-none"></i>
     GIEO Gita-Bal Sanskaar
   </div>
-  <div class="text-danger h5">Students Data</div>
+  <div class="text-danger h5">Teachers Data</div>
   <div class="overflow-x-scroll">
     <table class="table fs-7 table-striped">
       <thead>

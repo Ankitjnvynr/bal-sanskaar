@@ -19,6 +19,7 @@
 
   <?php
   $logoPath = 'imgs/logo.png';
+  $loginBtnPath = 'login/';
   include 'parts/_header.php';
 
   ?>

@@ -49,7 +49,7 @@
         <li><a href="https://gieogita.org/our-gallery/"><span>Gallery</span></a></li>
         <li><a href="#"><span>Download</span></a></li>
         <li><a href="https://gieogita.org/contact/"><span>Contact</span></a></li>
-        <li><a class="btn btn-danger text-white" href="login/"><span>LogIn</span></a></li>
+        <li><a class="btn btn-danger text-white" href=<?php echo $loginBtnPath; ?> >LogIn</a></li>
       </ul>
     </div>
     <div id="mobilenav" class="a-navbar">
@@ -71,7 +71,7 @@
         <li><a href="https://gieogita.org/our-gallery/"><span>Gallery</span></a></li>
         <li><a href="#"><span>Download</span></a></li>
         <li><a href="https://gieogita.org/contact/"><span>Contact</span></a></li>
-        <li><a class="btn btn-danger text-white" href="login/"><span>LogIn</span></a></li>
+        <li><a class="btn btn-danger text-white" href=<?php echo $loginBtnPath; ?>><span>LogIn</span></a></li>
       </ul>
     </div>
   </div>
