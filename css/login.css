@@ -1,0 +1,40 @@
+body {
+  background-color: #87CEEB;
+  overflow: hidden;
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.leaf {
+  width: 100px;
+  height: 100px;
+  background-image: url('https://png.pngtree.com/png-clipart/20230502/ourmid/pngtree-peacock-feather-transparent-png-image_6746941.png'); /* A sample leaf image */
+  background-size: cover;
+  position: absolute;
+  top: -100px;
+  left: var(--x-pos);
+  animation: fall 5s linear infinite, sway 5s ease-in-out infinite;
+  animation-delay: var(--delay);
+  
+}
+
+@keyframes fall {
+  0% {
+    top: -100px;
+  }
+  100% {
+    top: 100vh;
+  }
+}
+
+@keyframes sway {
+  0%, 100% {
+    transform: translateX(0) rotate(10deg);
+  }
+  50% {
+    transform: translateX(50px) rotate(60deg);
+  }
+}
