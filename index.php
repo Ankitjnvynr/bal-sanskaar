@@ -15,19 +15,11 @@
 </head>
 
 <body class="bg-warning-subtle position-relative">
-  <!-- <img 
-  style="
-  z-index:-20
-  
-  "
-
-   class="position-absolute top-0 start-0" src="https://cdn.pixabay.com/photo/2020/12/15/17/49/mandala-5834422_960_720.png" alt=""> -->
-
 
 
   <?php
   $logoPath = 'imgs/logo.png';
-  $loginBtnPath = 'login/';
+  $loginBtnPath = 'admin/';
   include 'parts/_header.php';
 
   ?>
@@ -36,7 +28,7 @@
 
   <div class="container my-2">
     <div class="row">
-      <div class="col-md">
+      <div  class="col-md">
         <img width="100%" src="imgs/hero.jpg" alt="" />
         <p class="fs-3 text-center fw-bolder">🌹*बाल संस्कार योजना*🌹</p>
         <p style="text-align: justify">

@@ -1,5 +1,5 @@
 body {
-  background-color: #87CEEB;
+  background-color: #87ceeb;
   overflow: hidden;
   margin: 0;
   height: 100vh;
@@ -11,14 +11,13 @@ body {
 .leaf {
   width: 100px;
   height: 100px;
-  background-image: url('https://png.pngtree.com/png-clipart/20230502/ourmid/pngtree-peacock-feather-transparent-png-image_6746941.png'); /* A sample leaf image */
+  background-image: url("https://png.pngtree.com/png-clipart/20230502/ourmid/pngtree-peacock-feather-transparent-png-image_6746941.png");
   background-size: cover;
   position: absolute;
   top: -100px;
   left: var(--x-pos);
   animation: fall 5s linear infinite, sway 5s ease-in-out infinite;
   animation-delay: var(--delay);
-  
 }
 
 @keyframes fall {
@@ -31,7 +30,8 @@ body {
 }
 
 @keyframes sway {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateX(0) rotate(10deg);
   }
   50% {
