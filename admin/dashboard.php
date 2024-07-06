@@ -6,6 +6,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true)
     exit;
 }
 include '../config/_db.php';
+
 ?>
 
 <!DOCTYPE html>
@@ -67,14 +68,13 @@ include '../config/_db.php';
                 <div class="position-sticky">
                     <?php
                     include 'side-menus.php'
-                        ?>
+                    ?>
                 </div>
             </nav>
 
             <div style="max-width:70%" class="offcanvas offcanvas-start bg-danger" tabindex="-1" id="sidebarCanvas"
                 aria-labelledby="offcanvasExampleLabel">
                 <div class="offcanvas-header">
-
                     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
                 <div class="offcanvas-body sidebar">
@@ -96,9 +96,6 @@ include '../config/_db.php';
                 if ($_GET['data'] == 'student')
                 {
                     include 'studentdata.php';
-                } elseif ($_GET['data'] == 'filterStudent')
-                {
-                    include 'filterStudent.php';
                 } else
                 {
                     include 'teacherdata.php';

@@ -4,7 +4,7 @@ session_start();
 if (isset($_SESSION['loggedin']))
 {
     //	header('location : dashboard.php');
-    header("location: dashboard.php");
+    header("location: dashboard.php?data=student");
 
     exit;
 }
@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                 $_SESSION['loggedin'] = true;
                 $_SESSION['username'] = $username;
                 $_SESSION['intro'] = true;
-                header("location: dashboard.php");
+                header("location: dashboard.php?data=student");
                 exit;
             } else
             {
