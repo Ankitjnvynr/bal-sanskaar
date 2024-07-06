@@ -5,7 +5,7 @@
 $records_per_page = 10;
 
 // Get the current page or set default to 1
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
 
 // Calculate the offset for the SQL query
 $offset = ($page - 1) * $records_per_page;
@@ -16,11 +16,12 @@ $search_query = isset($_GET['search']) ? $_GET['search'] : '';
 // SQL query to fetch data with pagination and search
 $sql = "SELECT * FROM teachers 
         WHERE name LIKE ? 
+        OR phone LIKE ? 
         LIMIT $offset, $records_per_page";
 
 $stmt = $conn->prepare($sql);
 $search_term = "%" . $search_query . "%";
-$stmt->bind_param("s", $search_term);
+$stmt->bind_param("ss", $search_term, $search_term);
 $stmt->execute();
 $result = $stmt->get_result();
 
@@ -36,38 +37,57 @@ $total_records = $total_result->fetch_assoc()['total'];
 $total_pages = ceil($total_records / $records_per_page);
 ?>
 <div class="container mt-5">
-        <h4 class="mb-4">Teachers List</h4>
-        
-        <!-- Search Form -->
-        <form class="d-flex mb-4" method="GET" action="">
-            <input type="hidden" name="data" value="teacher">
-            <input class="form-control me-2" type="search" name="search" placeholder="Search..." aria-label="Search" value="<?php echo htmlspecialchars($search_query); ?>">
-            <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
+    <h4 class="mb-4">Teachers List</h4>
 
-        <!-- Data Table -->
-        <table class="table table-striped fs-7">
-            <thead>
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Teacher Type</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">DOB</th>
-                    <th scope="col">Phone</th>
-                    <th scope="col">Country</th>
-                    <th scope="col">State</th>
-                    <th scope="col">District</th>
-                    <th scope="col">Tehsil</th>
-                    <th scope="col">Center</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php 
-                 if ($result->num_rows > 0)
-                 { while ($row = $result->fetch_assoc()) : ?>
+    <!-- Search Form -->
+    <form class="d-flex mb-4" method="GET" action="">
+        <input type="hidden" name="data" value="teacher">
+        <input class="form-control me-2" type="search" name="search" placeholder="Search..." aria-label="Search"
+            value="<?php echo htmlspecialchars($search_query); ?>">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+    </form>
+
+    <!-- Data Table -->
+    <table class="table table-striped fs-7">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Teacher Type</th>
+                <th scope="col">Name</th>
+                <th scope="col">DOB</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Country</th>
+                <th scope="col">State</th>
+                <th scope="col">District</th>
+                <th scope="col">Tehsil</th>
+                <th scope="col">Center</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            if ($result->num_rows > 0)
+            {
+                while ($row = $result->fetch_assoc()): ?>
                     <tr>
                         <th scope="row"><?php echo $row['id']; ?></th>
-                        <td><?php echo $row['teacher_type']; ?></td>
+                        <td>
+                            <select class="border" onchange="changeTeacherType(<?php echo $row['id']; ?>,this)">
+                                <?php
+                                $arr = ['Teacher', 'Head Teacher'];
+                                foreach ($arr as $value)
+                                {
+                                    if ($row['teacher_type'] == $value)
+                                    {
+                                        echo '<option selected value="' . $value . '">' . $value . '</option>';
+                                    } else
+                                    {
+                                        echo '<option value="' . $value . '">' . $value . '</option>';
+                                    }
+                                }
+                                ?>
+                            </select>
+                        </td>
                         <td><?php echo $row['name']; ?></td>
                         <td><?php echo $row['dob']; ?></td>
                         <td><?php echo $row['phone']; ?></td>
@@ -76,37 +96,47 @@ $total_pages = ceil($total_records / $records_per_page);
                         <td><?php echo $row['district']; ?></td>
                         <td><?php echo $row['tehsil']; ?></td>
                         <td><?php echo $row['center']; ?></td>
+                        <td>
+                            <a href="updateTeacher.php?user=<?php echo $row['id']; ?>" class="btn p-0 m-0 mx-1 fs-5"><i class="fa-regular fa-pen-to-square text-success"></i></a>
+                            <a href="deleteTeacher.php" class="btn p-0 m-0 mx-1 fs-5"><i class="fa-regular fa-trash-can text-danger"></i></a>
+                        </td>
                     </tr>
                 <?php endwhile;
-                }else
-                {
-                    echo "<tr><td colspan='9'>No records found</td></tr>";
-                } ?>
-            </tbody>
-        </table>
+            } else
+            {
+                echo "<tr><td colspan='9'>No records found</td></tr>";
+            } ?>
+        </tbody>
+    </table>
 
-        <!-- Pagination -->
-        <nav aria-label="Page navigation">
-            <ul class="pagination justify-content-center">
-                <?php if ($page > 1) : ?>
-                    <li class="page-item">
-                        <a class="page-link" href="?page=<?php echo $page - 1; ?>&search=<?php echo htmlspecialchars($search_query); ?>" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                <?php endif; ?>
-                <?php for ($i = 1; $i <= $total_pages; $i++) : ?>
-                    <li class="page-item <?php if ($i == $page) echo 'active'; ?>">
-                        <a class="page-link" href="?page=<?php echo $i; ?>&search=<?php echo htmlspecialchars($search_query); ?>"><?php echo $i; ?></a>
-                    </li>
-                <?php endfor; ?>
-                <?php if ($page < $total_pages) : ?>
-                    <li class="page-item">
-                        <a class="page-link" href="?page=<?php echo $page + 1; ?>&search=<?php echo htmlspecialchars($search_query); ?>" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                <?php endif; ?>
-            </ul>
-        </nav>
-    </div>
+    <!-- Pagination -->
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+            <?php if ($page > 1): ?>
+                <li class="page-item">
+                    <a class="page-link"
+                        href="?page=<?php echo $page - 1; ?>&search=<?php echo htmlspecialchars($search_query); ?>"
+                        aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            <?php endif; ?>
+            <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+                <li class="page-item <?php if ($i == $page)
+                    echo 'active'; ?>">
+                    <a class="page-link"
+                        href="?page=<?php echo $i; ?>&search=<?php echo htmlspecialchars($search_query); ?>"><?php echo $i; ?></a>
+                </li>
+            <?php endfor; ?>
+            <?php if ($page < $total_pages): ?>
+                <li class="page-item">
+                    <a class="page-link"
+                        href="?page=<?php echo $page + 1; ?>&search=<?php echo htmlspecialchars($search_query); ?>"
+                        aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            <?php endif; ?>
+        </ul>
+    </nav>
+</div>
