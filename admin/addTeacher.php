@@ -15,7 +15,7 @@
                 <label for="type" class="form-label">Teacher/Head Teacher</label>
                 <select id="type" name="type" class="form-select" required>
                     <?php
-                    $arr = ['Teacher', 'Head Teacher'];
+                    $arr = ['Head Teacher', 'Teacher'];
                     foreach ($arr as $value)
                     {
                         if ($value == $_GET['type'])
@@ -42,6 +42,7 @@
                 <label for="phone" class="form-label">Phone</label>
                 <input type="text" class="form-control form-control-sm" id="phone" name="phone"
                     onkeypress="return onlyDigits(event)" size="10" minlength="10" maxlength="10">
+                <div id="phone-error" class="text-danger"></div>
             </div>
 
 
@@ -68,19 +69,13 @@
             </div>
             <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="state" class="form-label">Tehsil</label>
-                <select id="tehsil" name="tehsil" class="form-select " aria-label="Small select example" required=""
-                    required>
+                <select id="tehsil" name="tehsil" class="form-select " aria-label="Small select example" required>
                     <option value="teh">teh</option>
                 </select>
             </div>
             <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
-                <label for="center" class="form-label">Center</label> <a href="" class="btn p-0 m-0 mx-2 px-2 btn-outline-danger">Add new</a>
-                <select id="center" name="center" class="form-select " aria-label="Small select example" required=""
-                    required>
-                    <option value="center1">Center1</option>
-                    <option value="Center2">Center2</option>
-                    <option value="Center3">Center3</option>
-                </select>
+                <label for="center" class="form-label">Center</label>
+                <input type="text" id="center" name="center" class="form-control form-control-sm">
             </div>
 
         </div>

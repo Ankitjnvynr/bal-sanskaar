@@ -16,10 +16,10 @@
         <p class="text-light mt-2 fw-bolder rounded">GIEO Gita-Bal Sanskaar</p>
     </div>
     <li class="nav-item mt-3">
-        <a class="nav-link" href="?data=student"> Students</a>
+        <a class="nav-link" href="dashboard.php?data=student"> Students</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link " href="?data=teacher"> Teachers</a>
+        <a class="nav-link " href="dashboard.php?data=teacher"> Teachers</a>
     </li>
     <li class="nav-item mt-3">
         <a class="nav-link" href="addStudent.php">Add Student</a>

@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 require_once '../config/_db.php';
 
 // SQL to create table for student details
@@ -49,7 +49,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($conn->query($sql_insert) === TRUE) {
         echo "New record inserted successfully";
-        header('location:../success.php');
+        if($_SESSION['userType']=='admin' && $_SESSION['insertType']=='student' ){
+            header('location:../admin/dashboard.php?data=student');
+            exit;
+        }else{
+            header('location:../login/dashboard.php?data=student');
+        }
+        // header('location:../success.php');
     } else {
         echo "Error: " . $sql_insert . "<br>" . $conn->error;
     }

@@ -5,7 +5,7 @@ $(document).ready(function () {
 
 loadState = (e) => {
 
-    document.getElementById("stateSelect").disabled = false;
+    // document.getElementById("stateSelect").disabled = false;
     $.ajax({
         url: "../selectOptions/_state.php",
         type: "GET",

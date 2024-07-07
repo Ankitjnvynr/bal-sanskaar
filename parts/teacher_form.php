@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 require_once '../config/_db.php';
 
 // SQL to create table
@@ -16,13 +16,15 @@ $sql_create_table = "CREATE TABLE IF NOT EXISTS teachers (
     center VARCHAR(50)
 )";
 
-if ($conn->query($sql_create_table) === FALSE) {
-  echo "Error creating table: " . $conn->error;
+if ($conn->query($sql_create_table) === FALSE)
+{
+    echo "Error creating table: " . $conn->error;
 }
 ?>
 
 <?php
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] == "POST")
+{
     // Prepare data for insertion
     $teacher_type = $_POST['type'];
     $name = $_POST['name'];
@@ -38,10 +40,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sql_insert = "INSERT INTO teachers (teacher_type, name, dob, phone, country, state, district,tehsil, center)
                    VALUES ('$teacher_type', '$name', '$dob', '$phone', '$country', '$state', '$district','$tehsil', '$center')";
 
-    if ($conn->query($sql_insert) === TRUE) {
+    if ($conn->query($sql_insert) === TRUE)
+    {
         echo "New record inserted successfully";
-        header('location:../success.php');
-    } else {
+        if ($_SESSION['userType'] == 'admin')
+        {
+            header('location:../admin/dashboard.php?data=teacher');
+            exit;
+        } else
+        {
+            header('location:../login/dashboard.php?data=teacher');
+        }
+
+    } else
+    {
         echo "Error: " . $sql_insert . "<br>" . $conn->error;
     }
 }
