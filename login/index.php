@@ -99,7 +99,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
             <form action="" method="post">
                 <div class="mb-3">
                     <label for="username" class="form-label">Phone</label>
-                    <input type="text" class="form-control" id="username" name="username"
+                    <input type="text" value="<?php echo isset($_GET['phone'])?$_GET['phone']:'' ?>"  class="form-control" id="username" name="username"  onkeypress="return onlyDigits(event)" size="10" minlength="10" maxlength="10"
                         placeholder="Enter phone no as username" />
                 </div>
                 <!-- <div class="mb-3">

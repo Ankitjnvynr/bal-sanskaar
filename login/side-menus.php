@@ -7,11 +7,9 @@
         $userType= $_SESSION['userType'];
 
          ?>
-         <?php 
-         
-         ?>
+      
         
-        <ul class="nav flex-column">
+        <ul class="nav flex-column fs-7">
            <div class="logo text-center shadow pt-2 rounded">
             <img width="80px" class='shadow rounded rounded-pill' src="../imgs/logo.png" alt="">
             <p class="text-light mt-2 fw-bolder rounded">GIEO Gita-Bal Sanskaar</p>
@@ -19,11 +17,17 @@
             <li class="nav-item mt-3">
                 <a class="nav-link" href="?data=student">All Student</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="addStudent.php">Add Student</a>
+            </li>
             <?php 
             if($userType=='Head Teacher'){
             ?>
             <li class="nav-item">
                 <a class="nav-link " href="?data=teacher">All Teacher</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link " href="addTeacher.php">Add Teachers</a>
             </li>
             <li>
                 <div  class="  bg-warning-subtle rounded">

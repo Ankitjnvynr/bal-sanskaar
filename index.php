@@ -51,16 +51,11 @@
       </div>
 
       <div class="col-md">
-        <form method="get" class="card p-2" action="./submit">
+        <form method="get" class="card p-2" action="./login">
           <img width="100%" src="imgs/guruji.jpg" alt="">
-          <span class="fw-bold mt-3">Want to join:-</span>
-          <label for="type"></label>
-          <select name="type" class="form-select form-select-sm" aria-label="Small select example" required>
-            <option value="" selected>select user type</option>
-            <option value="Student">Student</option>
-            <option value="Teacher">Teacher</option>
-            <option value="Head Teacher">Head Teacher</option>
-          </select>
+          
+          <label class="mt-4" for="type">Enter Phone Number</label>
+           <input required  onkeypress="return onlyDigits(event)" size="10" minlength="10" maxlength="10" type="text" name="phone" class="form-control">
           <input type="submit" value="Next" class="btn btn-danger my-2">
         </form>
       </div>
@@ -70,6 +65,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
+    <script src="js/script.js"></script>
 </body>
 
 </html>

@@ -58,7 +58,7 @@ include '../config/_db.php';
             display: block;
             transition: all 0.5s;
         }
-        
+
 
         .sidebar a:hover {
             color: white;
@@ -92,35 +92,3 @@ include '../config/_db.php';
                         ?>
                 </div>
             </div>
-
-
-
-            <?php
-            if ($_GET['data'] == 'student')
-            {
-                include 'studentdata.php';
-            } elseif ($_GET['data'] == 'filterStudent')
-            {
-                include 'filterStudent.php';
-            } else
-            {
-                include 'teacherdata.php';
-            }
-            ?>
-
-
-
-        </div>
-    </div>
-
-
-
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
-    <script src="../js/searchList.js"></script>
-    <script src="../js/dataTable.js"></script>
-</body>
-
-</html>

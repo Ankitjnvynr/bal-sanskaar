@@ -2,12 +2,12 @@
 session_start();
 require_once '../config/_db.php';
 
-if ($_SESSION['userType'] != 'admin')
-{
-    // Only allow admin to delete records
-    header('Location: ../login/dashboard.php');
-    exit;
-}
+// if ($_SESSION['userType'] != 'admin')
+// {
+//     // Only allow admin to delete records
+//     header('Location: ../login/dashboard.php');
+//     exit;
+// }
 
 if (isset($_GET['id']))
 {
