@@ -30,6 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 
                     echo $_SESSION['loggedin'] = true;
                     echo $_SESSION['username'] = $row['name'];
+                    echo $_SESSION['id'] = $row['id'];
                     echo $_SESSION['phone'] = $row['phone'];
                     echo $_SESSION['district'] = $row['district'];
                     echo $_SESSION['tehsil'] = $row['tehsil'];

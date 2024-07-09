@@ -1,4 +1,26 @@
 <?php include '_header.php'; ?>
+<style>
+    .suggestions {
+        position: absolute;
+        border: 1px solid #ccc;
+        border-top: none;
+        z-index: 1000;
+        width: 95%;
+        max-height: 150px;
+        overflow-y: auto;
+        border-radius: 0 0 0.25rem 0.25rem;
+        background-color: white;
+    }
+
+    .suggestion {
+        padding: 10px;
+        cursor: pointer;
+    }
+
+    .suggestion:hover {
+        background-color: #f0f0f0;
+    }
+</style>
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 overflow-y-scroll">
     <div
@@ -15,7 +37,7 @@
                 <label for="type" class="form-label">Teacher/Head Teacher</label>
                 <select id="type" name="type" class="form-select" required>
                     <?php
-                    $arr = [ 'Teacher'];
+                    $arr = ['Teacher'];
                     foreach ($arr as $value)
                     {
                         if ($value == $_GET['type'])
@@ -73,9 +95,10 @@
                     <option value="teh">teh</option>
                 </select>
             </div>
-            <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+            <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0 position-relative">
                 <label for="center" class="form-label">Center</label>
                 <input type="text" id="center" name="center" class="form-control form-control-sm">
+                <div id="centerSuggestions" class="suggestions"></div>
             </div>
 
         </div>
@@ -89,5 +112,7 @@
     ?>
 
 </main>
-
+<script>
+    const suggestions = ['Chrome', 'Firefox', 'Safari', 'Opera', 'Edge',];
+</script>
 <?php include '_footer.php'; ?>

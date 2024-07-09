@@ -9,6 +9,10 @@
     crossorigin="anonymous"></script>
 <script src="../js/searchList.js"></script>
 <script src="../js/dataTable.js"></script>
+ <script src="../js/selectOption.js"></script>
+ <script src="../js/login.js"></script>
+
+
 </body>
 
 </html>

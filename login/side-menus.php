@@ -8,25 +8,25 @@
 
          ?>
       
-        
+      
         <ul class="nav flex-column fs-7">
            <div class="logo text-center shadow pt-2 rounded">
             <img width="80px" class='shadow rounded rounded-pill' src="../imgs/logo.png" alt="">
             <p class="text-light mt-2 fw-bolder rounded">GIEO Gita-Bal Sanskaar</p>
            </div>
-            <li class="nav-item mt-3">
-                <a class="nav-link" href="?data=student">All Student</a>
+            <li class="nav-item mt-3 ">
+                <a class="nav-link" href="dashboard.php?data=student">All Student</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item border-top">
                 <a class="nav-link" href="addStudent.php">Add Student</a>
             </li>
             <?php 
             if($userType=='Head Teacher'){
             ?>
-            <li class="nav-item">
-                <a class="nav-link " href="?data=teacher">All Teacher</a>
+            <li class="nav-item border-top">
+                <a class="nav-link " href="dashboard.php?data=teacher">All Teacher</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item border-top">
                 <a class="nav-link " href="addTeacher.php">Add Teachers</a>
             </li>
             <li>
@@ -36,7 +36,7 @@
                 <div id="searchBar">
                 <input type="text" class="form-control " id="searchInput" placeholder="Search... by name">
                 </div>
-                <ul id="itemList" style="height:50vh" class="list-group bg-warning-subtle fs-7 overflow-y-scroll" >
+                <ul id="itemList" style="height:40vh" class="list-group bg-warning-subtle fs-7 overflow-y-scroll" >
                     <?php 
                     $sql = "SELECT * FROM teachers WHERE `district` = '$userDistrict' AND `tehsil` = '$userTehsil'";
                     $result = $conn->query($sql);
@@ -60,7 +60,10 @@
             <?php 
             }
             ?>
-            <li class="nav-item">
+            <li class="nav-item border-top">
+                <a class="nav-link" href="profile.php">Profile</a>
+            </li>
+            <li class="nav-item border-top">
                 <a class="nav-link" href="logout.php">Logout</a>
             </li>
         </ul>
