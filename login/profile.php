@@ -32,7 +32,7 @@ if ($user_id > 0)
     </div>
 
     <form action="../parts/teacher_update.php" method="post">
-        <div class="text-center fw-bold my-2 text-danger fs-3">Teacher Details</div>
+        <div class="text-center fw-bold my-2 text-danger fs-3">Your Details</div>
 
         <input type="hidden" name="id" value="<?php echo htmlspecialchars($user_id); ?>">
 

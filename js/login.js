@@ -1,7 +1,6 @@
 const centerInput = document.getElementById('center');
 const suggestionsBox = document.getElementById('centerSuggestions');
 
-
 centerInput.addEventListener('input', function () {
     const value = this.value.toLowerCase();
     suggestionsBox.innerHTML = '';

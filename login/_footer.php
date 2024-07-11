@@ -8,7 +8,6 @@
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
 <script src="../js/searchList.js"></script>
-<script src="../js/dataTable.js"></script>
  <script src="../js/selectOption.js"></script>
  <script src="../js/login.js"></script>
  <script src="../js/admin.js"></script>
