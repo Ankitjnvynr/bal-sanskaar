@@ -11,6 +11,8 @@
 <script src="../js/dataTable.js"></script>
  <script src="../js/selectOption.js"></script>
  <script src="../js/login.js"></script>
+ <script src="../js/admin.js"></script>
+ <script src="../js/script.js"></script>
 
 
 </body>

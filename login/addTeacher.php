@@ -33,37 +33,20 @@
         <div class="text-center fw-bold my-2 text-danger fs-3">Teacher Details</div>
 
         <div class="row d-flex gap-1 flex-wrap fs-7 px-2">
-            <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
-                <label for="type" class="form-label">Teacher/Head Teacher</label>
-                <select id="type" name="type" class="form-select" required>
-                    <?php
-                    $arr = ['Teacher'];
-                    foreach ($arr as $value)
-                    {
-                        if ($value == $_GET['type'])
-                        {
-                            echo '<option selected value="' . $value . '">' . $value . '</option>';
-                        } else
-                        {
-                            echo '<option  value="' . $value . '">' . $value . '</option>';
-                        }
-                    }
-                    ?>
-                </select>
-            </div>
+
             <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="name" class="form-label">Name</label>
-                <input type="text" class="form-control form-control-sm" id="name" name="name">
+                <input type="text" class="form-control form-control-sm" id="name" name="name" required>
             </div>
             <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="dob" class="form-label">DOB</label>
-                <input type="date" class="form-control form-control-sm" id="dob" name="dob">
+                <input type="date" class="form-control form-control-sm" id="dob" name="dob" required>
             </div>
 
             <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="phone" class="form-label">Phone</label>
                 <input type="text" class="form-control form-control-sm" id="phone" name="phone"
-                    onkeypress="return onlyDigits(event)" size="10" minlength="10" maxlength="10">
+                    onkeypress="return onlyDigits(event)" size="10" minlength="10" maxlength="10" required>
                 <div id="phone-error" class="text-danger"></div>
             </div>
 
@@ -77,7 +60,7 @@
             </div>
             <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="state" class="form-label">State</label>
-                <select id="stateSelect" name="state" class="form-select " aria-label="Small select example" required=""
+                <select id="stateSelect" name="state" class="form-select " aria-label="Small select example"
                     onchange="loadDistrict(this)" required>
                     <option value="state">state</option>
                 </select>
@@ -97,7 +80,8 @@
             </div>
             <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0 position-relative">
                 <label for="center" class="form-label">Center</label>
-                <input type="text" id="center" name="center" class="form-control form-control-sm">
+                <input type="text" id="center" name="center" autocomplete="off" class="form-control form-control-sm"
+                    required>
                 <div id="centerSuggestions" class="suggestions"></div>
             </div>
 
@@ -113,6 +97,16 @@
 
 </main>
 <script>
-    const suggestions = ['Chrome', 'Firefox', 'Safari', 'Opera', 'Edge',];
+    const suggestions = [
+        <?php
+
+        $centersql = "SELECT id,center FROM `centers` WHERE country = '$centerCountry' AND state = '$centerState' AND district = '$centerDist' AND tehsil = '$centerTeh' ORDER BY center ASC";
+        $res = $conn->query($centersql);
+        while ($row = $res->fetch_assoc())
+        {
+            echo "'" . $row['center'] . "',";
+        }
+        ?>
+    ];
 </script>
 <?php include '_footer.php'; ?>

@@ -26,7 +26,7 @@ if ($conn->query($sql_create_table) === FALSE)
 if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
     // Prepare data for insertion
-    $teacher_type = $_POST['type'];
+    $teacher_type = isset($_POST['type']) ? $_POST['type'] : 'Teacher';
     $name = $_POST['name'];
     $dob = $_POST['dob'];
     $phone = $_POST['phone'];

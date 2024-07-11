@@ -32,6 +32,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                     echo $_SESSION['username'] = $row['name'];
                     echo $_SESSION['id'] = $row['id'];
                     echo $_SESSION['phone'] = $row['phone'];
+                    echo $_SESSION['country'] = $row['country'];
+                    echo $_SESSION['state'] = $row['state'];
                     echo $_SESSION['district'] = $row['district'];
                     echo $_SESSION['tehsil'] = $row['tehsil'];
                     echo $_SESSION['userType'] = $row['teacher_type'];
