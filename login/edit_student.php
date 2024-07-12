@@ -7,20 +7,20 @@ include '../config/_db.php'; // include the database connection
 // Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST')
 {
-    $id = $_POST['id'];
-    $name = $_POST['name'];
-    $dob = $_POST['dob'];
-    $father_name = $_POST['father_name'];
-    $father_phone = $_POST['father_phone'];
-    $father_dob = $_POST['father_dob'];
-    $mother_name = $_POST['mother_name'];
-    $mother_phone = $_POST['mother_phone'];
-    $mother_dob = $_POST['mother_dob'];
-    $country = $_POST['country'];
-    $state = $_POST['state'];
-    $district = $_POST['district'];
-    $tehsil = $_POST['tehsil'];
-    $center = $_POST['center'];
+    echo $id = $_POST['id'];
+    echo $name = $_POST['name'];
+    echo $dob = $_POST['dob'];
+    echo $father_name = $_POST['father_name'];
+    echo $father_phone = $_POST['father_phone'];
+    echo $father_dob = $_POST['father_dob'];
+    echo $mother_name = $_POST['mother_name'];
+    echo $mother_phone = $_POST['mother_phone'];
+    echo $mother_dob = $_POST['mother_dob'];
+    echo $country = $_POST['country'];
+    echo $state = $_POST['state'];
+    echo $district = $_POST['district'];
+    echo $tehsil = $_POST['tehsil'];
+    echo $center = $_POST['center'];
 
     // Update student data
     $sql = "UPDATE students SET name = '$name', dob = '$dob', father_name = '$father_name', father_phone = '$father_phone', 
@@ -93,7 +93,7 @@ if (isset($_GET['id']))
         Welcome: <?php echo mb_convert_case($_SESSION['username'], MB_CASE_TITLE) ?>
     </div>
 
-    <form action="edit_student.php" method="post">
+    <form action="" method="post">
         <input type="hidden" name="id" value="<?php echo $student['id']; ?>">
         <div class="text-center fw-bold my-2 text-danger fs-3">Edit Student Details</div>
         <div class="row d-flex gap-1 flex-wrap fs-7 px-2">
@@ -139,30 +139,20 @@ if (isset($_GET['id']))
             </div>
             <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="countrySelect" class="form-label">Country</label>
-                <select id="countrySelect" name="country" class="form-select " aria-label="Small select example"
-                    required="" onchange="loadState(this)">
-                    <option value="country" selected><?php echo $student['country']; ?></option>
-                </select>
+                <input disabled id="countrySelect" name="country" value="<?php echo $student['country']; ?>" class="form-select " />
+                    
             </div>
             <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="state" class="form-label">State</label>
-                <select id="stateSelect" name="state" class="form-select " aria-label="Small select example" required=""
-                    onchange="loadDistrict(this)">
-                    <option value="state" selected><?php echo $student['state']; ?></option>
-                </select>
+                <input disabled id="stateSelect" name="state" class="form-select " value="<?php echo $student['state']; ?>" />
             </div>
             <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="district" class="form-label">District</label>
-                <select id="districtSelect" name="district" class="form-select " aria-label="Small select example"
-                    required="" onchange="loadTehsil(this)">
-                    <option value="district" selected><?php echo $student['district']; ?></option>
-                </select>
+                <input disabled id="districtSelect" name="district" class="form-select " value="<?php echo $student['district']; ?>" />
             </div>
             <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="tehsil" class="form-label">Tehsil</label>
-                <select id="tehsil" name="tehsil" class="form-select " aria-label="Small select example" required="">
-                    <option value="tehsil" selected><?php echo $student['tehsil']; ?></option>
-                </select>
+                <input disabled id="tehsil" name="tehsil" class="form-select "  value="<?php echo $student['tehsil']; ?>"  />
             </div>
             <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="center" class="form-label">Center</label>
