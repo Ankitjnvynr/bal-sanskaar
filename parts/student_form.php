@@ -43,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     $state = isset($_POST['state']) ? $_POST['state'] : $_SESSION['state'];
     $district = isset($_POST['district']) ? $_POST['district'] : $_SESSION['district'];
     $tehsil = isset($_POST['tehsil']) ? $_POST['tehsil'] : $_SESSION['tehsil'];
-    $center = isset($_POST['center']) ? $_POST['center'] : $_SESSION['center'];
+    $center = isset($_POST['center']) ? $_POST['center'] : $_SESSION['userCenter'];
 
     // SQL insert statement
     $sql_insert = "INSERT INTO students (name, dob, father_name, father_phone, father_dob, mother_name, mother_phone, mother_dob, country, state, district, tehsil, center)

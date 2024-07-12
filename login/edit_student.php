@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $state = isset($_POST['state']) ? $_POST['state'] : $_SESSION['state'];
     $district = isset($_POST['district']) ? $_POST['district'] : $_SESSION['district'];
     $tehsil = isset($_POST['tehsil']) ? $_POST['tehsil'] : $_SESSION['tehsil'];
-    $center = isset($_POST['center']) ? $_POST['center'] : $_SESSION['center'];
+    $center = isset($_POST['center']) ? $_POST['center'] : $_SESSION['userCenter'];
     $page = isset($_GET['page']) ? $_GET['page'] : 1;
 
     // Update student data
@@ -171,7 +171,7 @@ if (isset($_GET['id']))
             </div>
             <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="center" class="form-label">Center</label>
-                <input type="text" id="center" name="center" autocomplete="off" placeholder="eg: Center-1" class="form-control form-control-sm"
+                <input type="text" <?php if($_SESSION['userType']=='Teacher'){echo "value='{$_SESSION['userCenter']}' disabled";} ?> id="center" name="center" autocomplete="off" placeholder="eg: Center-1" class="form-control form-control-sm"
                     required>
                 <div id="centerSuggestions" class="suggestions"></div>
             </div>
