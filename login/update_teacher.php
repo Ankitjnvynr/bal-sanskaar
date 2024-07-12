@@ -8,11 +8,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     $name = $_POST['name'];
     $dob = $_POST['dob'];
     $phone = $_POST['phone'];
-    $country = $_POST['country'];
-    $state = $_POST['state'];
-    $district = $_POST['district'];
-    $tehsil = $_POST['tehsil'];
-    $center = $_POST['center'];
+    $country = isset($_POST['country']) ? $_POST['country'] : $_SESSION['country'];
+    $state = isset($_POST['state']) ? $_POST['state'] : $_SESSION['state'];
+    $district = isset($_POST['district']) ? $_POST['district'] : $_SESSION['district'];
+    $tehsil = isset($_POST['tehsil']) ? $_POST['tehsil'] : $_SESSION['tehsil'];
+    $center = isset($_POST['center']) ? $_POST['center'] : $_SESSION['center'];
+    $page = isset($_POST['page']) ? $_POST['page'] : 1;
 
     $sql = "UPDATE teachers SET name=?, dob=?, phone=?, country=?, state=?, district=?, tehsil=?, center=? WHERE id=?";
     $stmt = $conn->prepare($sql);
@@ -34,6 +35,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 }
 
 // Redirect back to the main page
-header("Location: dashboard.php?data=teacher");
+header("Location: dashboard.php?data=teacher&page={$page}");
 exit();
 ?>

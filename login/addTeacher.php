@@ -51,36 +51,31 @@
             </div>
 
 
-            <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+            <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="countrySelect" class="form-label">Country</label>
-                <select id="countrySelect" name="country" class="form-select " aria-label="Small select example"
-                    required="" onchange="loadState(this)" required>
-                    <option value="country">Country</option>
-                </select>
+                <input disabled id="countrySelect" name="country" class="form-select " value="<?php echo $_SESSION['country']; ?>" />
+
             </div>
-            <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+            <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="state" class="form-label">State</label>
-                <select id="stateSelect" name="state" class="form-select " aria-label="Small select example"
-                    onchange="loadDistrict(this)" required>
-                    <option value="state">state</option>
-                </select>
+                <input disabled id="stateSelect" name="state" class="form-select "
+                    value="<?php echo $_SESSION['state']; ?>" />
             </div>
-            <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
-                <label for="state" class="form-label">District</label>
-                <select id="districtSelect" name="district" class="form-select " aria-label="Small select example"
-                    required="" onchange="loadTehsil (this)" required>
-                    <option value="dis">district</option>
-                </select>
+
+            <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+                <label for="district" class="form-label">District</label>
+                <input disabled id="districtSelect" name="district" class="form-select "
+                    value="<?php echo $_SESSION['district']; ?>" />
             </div>
-            <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
-                <label for="state" class="form-label">Tehsil</label>
-                <select id="tehsil" name="tehsil" class="form-select " aria-label="Small select example" required>
-                    <option value="teh">teh</option>
-                </select>
+            <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+                <label for="tehsil" class="form-label">Tehsil</label>
+
+                <input disabled id="tehsil" name="tehsil" class="form-select "
+                    value="<?php echo $_SESSION['tehsil']; ?>" />
             </div>
             <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0 position-relative">
                 <label for="center" class="form-label">Center</label>
-                <input type="text" id="center" name="center" autocomplete="off" class="form-control form-control-sm"
+                <input type="text" id="center" placeholder="eg : Center-1" name="center" autocomplete="off" class="form-control form-control-sm"
                     required>
                 <div id="centerSuggestions" class="suggestions"></div>
             </div>

@@ -65,6 +65,8 @@ if (isset($_GET['id']))
         <div class="row d-flex gap-1 flex-wrap fs-7 px-2">
 
             <input type="hidden" name="id" value="<?php echo $teacher['id']; ?>">
+            <input type="hidden" name="page" value="<?php echo isset($_GET['page'])?$_GET['page']:1; ?>">
+
 
             <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="name" class="form-label">Name</label>
@@ -85,31 +87,25 @@ if (isset($_GET['id']))
             </div>
             <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="countrySelect" class="form-label">Country</label>
-                <select id="countrySelect" name="country" class="form-select" required onchange="loadState(this)">
-                    <option value="country">Country</option>
-                    <!-- Add options dynamically -->
-                </select>
+                <input disabled id="countrySelect" name="country" class="form-select " value="<?php echo $_SESSION['country']; ?>" />
+
             </div>
             <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="state" class="form-label">State</label>
-                <select id="stateSelect" name="state" class="form-select" required onchange="loadDistrict(this)">
-                    <option value="state">State</option>
-                    <!-- Add options dynamically -->
-                </select>
+                <input disabled id="stateSelect" name="state" class="form-select "
+                    value="<?php echo $_SESSION['state']; ?>" />
             </div>
+
             <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="district" class="form-label">District</label>
-                <select id="districtSelect" name="district" class="form-select" required onchange="loadTehsil(this)">
-                    <option value="dis">District</option>
-                    <!-- Add options dynamically -->
-                </select>
+                <input disabled id="districtSelect" name="district" class="form-select "
+                    value="<?php echo $_SESSION['district']; ?>" />
             </div>
             <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="tehsil" class="form-label">Tehsil</label>
-                <select id="tehsil" name="tehsil" class="form-select" required>
-                    <option value="teh">Tehsil</option>
-                    <!-- Add options dynamically -->
-                </select>
+
+                <input disabled id="tehsil" name="tehsil" class="form-select "
+                    value="<?php echo $_SESSION['tehsil']; ?>" />
             </div>
             <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0 position-relative">
                 <label for="center" class="form-label">Center</label>

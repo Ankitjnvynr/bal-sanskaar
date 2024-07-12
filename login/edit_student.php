@@ -1,44 +1,58 @@
 <?php
 
-include '_header.php';
 
+include '_header.php';
 include '../config/_db.php'; // include the database connection
 
+ob_start(); // Start output buffering
+
 // Check if the form is submitted
-if ($_SERVER['REQUEST_METHOD'] === 'POST')
-{
-    echo $id = $_POST['id'];
-    echo $name = $_POST['name'];
-    echo $dob = $_POST['dob'];
-    echo $father_name = $_POST['father_name'];
-    echo $father_phone = $_POST['father_phone'];
-    echo $father_dob = $_POST['father_dob'];
-    echo $mother_name = $_POST['mother_name'];
-    echo $mother_phone = $_POST['mother_phone'];
-    echo $mother_dob = $_POST['mother_dob'];
-    echo $country = $_POST['country'];
-    echo $state = $_POST['state'];
-    echo $district = $_POST['district'];
-    echo $tehsil = $_POST['tehsil'];
-    echo $center = $_POST['center'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $id = $_POST['id'];
+    $name = $_POST['name'];
+    $dob = $_POST['dob'];
+    $father_name = $_POST['father_name'];
+    $father_phone = $_POST['father_phone'];
+    $father_dob = $_POST['father_dob'];
+    $mother_name = $_POST['mother_name'];
+    $mother_phone = $_POST['mother_phone'];
+    $mother_dob = $_POST['mother_dob'];
+    $country = isset($_POST['country']) ? $_POST['country'] : $_SESSION['country'];
+    $state = isset($_POST['state']) ? $_POST['state'] : $_SESSION['state'];
+    $district = isset($_POST['district']) ? $_POST['district'] : $_SESSION['district'];
+    $tehsil = isset($_POST['tehsil']) ? $_POST['tehsil'] : $_SESSION['tehsil'];
+    $center = isset($_POST['center']) ? $_POST['center'] : $_SESSION['center'];
+    $page = isset($_GET['page']) ? $_GET['page'] : 1;
 
     // Update student data
-    $sql = "UPDATE students SET name = '$name', dob = '$dob', father_name = '$father_name', father_phone = '$father_phone', 
-            father_dob = '$father_dob', mother_name = '$mother_name', mother_phone = '$mother_phone', mother_dob = '$mother_dob', 
-            country = '$country', state = '$state', district = '$district', tehsil = '$tehsil', center = '$center' WHERE id = $id";
+    $sql = "UPDATE students SET 
+                name = '$name', 
+                dob = '$dob', 
+                father_name = '$father_name', 
+                father_phone = '$father_phone', 
+                father_dob = '$father_dob', 
+                mother_name = '$mother_name', 
+                mother_phone = '$mother_phone', 
+                mother_dob = '$mother_dob', 
+                country = '$country', 
+                state = '$state', 
+                district = '$district', 
+                tehsil = '$tehsil', 
+                center = '$center' 
+            WHERE id = $id";
 
-    if ($conn->query($sql) === TRUE)
-    {
-        echo "Record updated successfully";
-    } else
-    {
-        echo "Error updating record: " . $conn->error;
-    }
+if ($conn->query($sql) === TRUE) {
+    echo "<script type='text/javascript'> window.location.href = 'dashboard.php?data=student&page={$page}';</script>";
+    exit;
+} else {
+    echo "Error updating record: " . $conn->error;
+}
 
     $conn->close();
-    header("Location: index.php"); // Redirect to the main page
-    exit;
 }
+
+// End output buffering and clean the buffer
+ob_end_clean();
 
 // Fetch student data for editing
 if (isset($_GET['id']))
@@ -54,7 +68,7 @@ if (isset($_GET['id']))
         echo "No record found";
         exit;
     }
-    $conn->close();
+    // $conn->close();
 } else
 {
     echo "Invalid request";
@@ -85,6 +99,7 @@ if (isset($_GET['id']))
         background-color: #f0f0f0;
     }
 </style>
+
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 overflow-y-scroll">
     <div
@@ -154,10 +169,10 @@ if (isset($_GET['id']))
                 <label for="tehsil" class="form-label">Tehsil</label>
                 <input disabled id="tehsil" name="tehsil" class="form-select "  value="<?php echo $student['tehsil']; ?>"  />
             </div>
-            <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+            <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="center" class="form-label">Center</label>
-                <input type="text" id="center" name="center" autocomplete="off" class="form-control form-control-sm"
-                    value="<?php echo $student['center']; ?>" required>
+                <input type="text" id="center" name="center" autocomplete="off" placeholder="eg: Center-1" class="form-control form-control-sm"
+                    required>
                 <div id="centerSuggestions" class="suggestions"></div>
             </div>
         </div>
@@ -186,3 +201,6 @@ if (isset($_GET['id']))
 </script>
 
 <?php include '_footer.php'; ?>
+<?php
+$conn->close();
+?>

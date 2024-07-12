@@ -30,11 +30,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     $name = $_POST['name'];
     $dob = $_POST['dob'];
     $phone = $_POST['phone'];
-    $country = $_POST['country'];
-    $state = $_POST['state'];
-    $district = $_POST['district'];
-    $tehsil = $_POST['tehsil'];
-    $center = $_POST['center'];
+    $country = isset($_POST['country']) ? $_POST['country'] : $_SESSION['country'];
+    $state = isset($_POST['state']) ? $_POST['state'] : $_SESSION['state'];
+    $district = isset($_POST['district']) ? $_POST['district'] : $_SESSION['district'];
+    $tehsil = isset($_POST['tehsil']) ? $_POST['tehsil'] : $_SESSION['tehsil'];
+    $center = isset($_POST['center']) ? $_POST['center'] : $_SESSION['center'];
 
     // SQL insert statement
     $sql_insert = "INSERT INTO teachers (teacher_type, name, dob, phone, country, state, district,tehsil, center)

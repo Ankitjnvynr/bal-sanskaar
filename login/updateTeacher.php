@@ -70,41 +70,25 @@ if ($user_id > 0)
 
             <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="countrySelect" class="form-label">Country</label>
-                <select id="countrySelect" name="country" class="form-select" required onchange="loadState(this)">
-                    <option value="">Select Country</option>
-                    <option value="country1" <?php echo ($teacher && $teacher['country'] == 'country1') ? 'selected' : ''; ?>>Country1</option>
-                    <option value="country2" <?php echo ($teacher && $teacher['country'] == 'country2') ? 'selected' : ''; ?>>Country2</option>
-                    <!-- Add more options as necessary -->
-                </select>
+                <input disabled id="countrySelect" name="country" class="form-select " value="<?php echo $_SESSION['country']; ?>" />
+
             </div>
             <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="state" class="form-label">State</label>
-                <select id="stateSelect" name="state" class="form-select" required onchange="loadDistrict(this)">
-                    <option value="">Select State</option>
-                    <option value="state1" <?php echo ($teacher && $teacher['state'] == 'state1') ? 'selected' : ''; ?>>
-                        State1</option>
-                    <option value="state2" <?php echo ($teacher && $teacher['state'] == 'state2') ? 'selected' : ''; ?>>
-                        State2</option>
-                    <!-- Add more options as necessary -->
-                </select>
+                <input disabled id="stateSelect" name="state" class="form-select "
+                    value="<?php echo $_SESSION['state']; ?>" />
             </div>
+
             <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="district" class="form-label">District</label>
-                <select id="districtSelect" name="district" class="form-select" required onchange="loadTehsil(this)">
-                    <option value="">Select District</option>
-                    <option value="district1" <?php echo ($teacher && $teacher['district'] == 'district1') ? 'selected' : ''; ?>>District1</option>
-                    <option value="district2" <?php echo ($teacher && $teacher['district'] == 'district2') ? 'selected' : ''; ?>>District2</option>
-                    <!-- Add more options as necessary -->
-                </select>
+                <input disabled id="districtSelect" name="district" class="form-select "
+                    value="<?php echo $_SESSION['district']; ?>" />
             </div>
             <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="tehsil" class="form-label">Tehsil</label>
-                <select id="tehsil" name="tehsil" class="form-select" required>
-                    <option value="">Select Tehsil</option>
-                    <option value="tehsil1" <?php echo ($teacher && $teacher['tehsil'] == 'tehsil1') ? 'selected' : ''; ?>>Tehsil1</option>
-                    <option value="tehsil2" <?php echo ($teacher && $teacher['tehsil'] == 'tehsil2') ? 'selected' : ''; ?>>Tehsil2</option>
-                    <!-- Add more options as necessary -->
-                </select>
+
+                <input disabled id="tehsil" name="tehsil" class="form-select "
+                    value="<?php echo $_SESSION['tehsil']; ?>" />
             </div>
             <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="center" class="form-label">Center</label>
