@@ -16,15 +16,13 @@ $sql_create_table = "CREATE TABLE IF NOT EXISTS teachers (
     center VARCHAR(50)
 )";
 
-if ($conn->query($sql_create_table) === FALSE)
-{
+if ($conn->query($sql_create_table) === FALSE) {
     echo "Error creating table: " . $conn->error;
 }
 ?>
 
 <?php
-if ($_SERVER["REQUEST_METHOD"] == "POST")
-{
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Prepare data for insertion
     $teacher_type = isset($_POST['type']) ? $_POST['type'] : 'Teacher';
     $name = $_POST['name'];
@@ -37,23 +35,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     $center = isset($_POST['center']) ? $_POST['center'] : $_SESSION['center'];
 
     // SQL insert statement
-    $sql_insert = "INSERT INTO teachers (teacher_type, name, dob, phone, country, state, district,tehsil, center)
-                   VALUES ('$teacher_type', '$name', '$dob', '$phone', '$country', '$state', '$district','$tehsil', '$center')";
+    $sql_insert = "INSERT INTO teachers (teacher_type, name, dob, phone, country, state, district,tehsil, center,userpassword)
+                   VALUES ('$teacher_type', '$name', '$dob', '$phone', '$country', '$state', '$district','$tehsil', '$center','md5($phone)')";
 
-    if ($conn->query($sql_insert) === TRUE)
-    {
+    if ($conn->query($sql_insert) === TRUE) {
         echo "New record inserted successfully";
-        if ($_SESSION['userType'] == 'admin')
-        {
+        if ($_SESSION['userType'] == 'admin') {
             header('location:../admin/dashboard.php?data=teacher');
             exit;
-        } else
-        {
+        } else {
             header('location:../login/dashboard.php?data=teacher');
         }
-
-    } else
-    {
+    } else {
         echo "Error: " . $sql_insert . "<br>" . $conn->error;
     }
 }
