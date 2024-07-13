@@ -20,8 +20,12 @@ centerInput.addEventListener('input', function () {
 });
 
 document.addEventListener('click', function (event) {
-    if (!suggestionsBox.contains(event.target) && event.target !== centerInput) {
-        suggestionsBox.innerHTML = '';
+    try {
+        if (!suggestionsBox.contains(event.target) && event.target !== centerInput) {
+            suggestionsBox.innerHTML = '';
+        }
+    } catch (error) {
+        
     }
 });
 
