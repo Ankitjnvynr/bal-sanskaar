@@ -1,8 +1,7 @@
 const centerInput = document.getElementById('center');
 const suggestionsBox = document.getElementById('centerSuggestions');
 
-centerInput.addEventListener('input', function () {
-    const value = this.value.toLowerCase();
+function updateSuggestions(value) {
     suggestionsBox.innerHTML = '';
     if (value) {
         const filteredSuggestions = suggestions.filter(suggestion => suggestion.toLowerCase().includes(value));
@@ -17,6 +16,16 @@ centerInput.addEventListener('input', function () {
             suggestionsBox.appendChild(div);
         });
     }
+}
+
+centerInput.addEventListener('input', function () {
+    const value = this.value.toLowerCase();
+    updateSuggestions(value);
+});
+
+centerInput.addEventListener('focus', function () {
+    const value = this.value.toLowerCase();
+    updateSuggestions(value);
 });
 
 document.addEventListener('click', function (event) {
@@ -25,7 +34,7 @@ document.addEventListener('click', function (event) {
             suggestionsBox.innerHTML = '';
         }
     } catch (error) {
-        
+        console.error(error);
     }
 });
 

@@ -38,7 +38,8 @@
                 </div>
                 <ul id="itemList" style="height:40vh" class="list-group bg-warning-subtle fs-7 overflow-y-scroll" >
                     <?php 
-                    $sql = "SELECT * FROM teachers WHERE `district` = '$userDistrict' AND `tehsil` = '$userTehsil'";
+                    $currentUserId = $_SESSION['id'];
+                    $sql = "SELECT * FROM teachers WHERE id != $currentUserId AND `district` = '$userDistrict' AND `tehsil` = '$userTehsil'";
                     $result = $conn->query($sql);
             
                     if ($numrow = $result->num_rows > 0)

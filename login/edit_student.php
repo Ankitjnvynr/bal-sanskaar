@@ -167,11 +167,11 @@ if (isset($_GET['id'])) {
                     value="<?php echo $_SESSION['tehsil']; ?>" />
             </div>
             <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
-                <label for="center" class="form-label">Center</label>
-                <input type="text" <?php if($_SESSION['userType']=='Teacher'){echo "value='{$_SESSION['userCenter']}'";}else{echo "value='{$_SESSION['userCenter']}'";} ?> id="center" name="center" autocomplete="off" placeholder="eg: Center-1" class="form-control form-control-sm"
-                    required>
-                <div id="centerSuggestions" class="suggestions"></div>
-            </div>
+            <label for="center" class="form-label">Center</label>
+            <input type="text" <?php if ($_SESSION['userType'] == 'Teacher') { echo "value='{$_SESSION['userCenter']}'"; } else { echo "value='{$_SESSION['userCenter']}'"; } ?> id="center" name="center" autocomplete="off" placeholder="eg: Center-1" class="form-control form-control-sm"
+                required onclick="handleClick()">
+            <div id="centerSuggestions" class="suggestions"></div>
+        </div>
         </div>
         <div class="text-center my-3">
             <button type="submit" class="btn btn-danger col-5">Update</button>
@@ -194,6 +194,12 @@ if (isset($_GET['id'])) {
         ?>
     ];
     console.log(suggestions);
+    
+        function handleClick() {
+            const centerInput = document.getElementById('center');
+            
+        }
+    
 </script>
 
 <?php include '_footer.php'; ?>

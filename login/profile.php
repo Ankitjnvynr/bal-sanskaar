@@ -28,7 +28,7 @@ if ($user_id > 0) {
         Welcome: <?php echo mb_convert_case($_SESSION['username'], MB_CASE_TITLE) ?>
     </div>
 
-    <form action="../parts/teacher_update.php" method="post">
+    <form action="update_teacher.php" method="post">
         <div class="text-center fw-bold my-2 text-danger fs-3">Your Details</div>
 
         <input type="hidden" name="id" value="<?php echo htmlspecialchars($user_id); ?>">

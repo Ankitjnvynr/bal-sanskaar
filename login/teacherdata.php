@@ -30,7 +30,7 @@ if (isset($_GET['search']))
 }
 
 // Fetch total records for pagination
-$total_records_query = "SELECT COUNT(*) FROM teachers WHERE district = '$userDistrict' AND tehsil = '$userTehsil' $searchQuery";
+$total_records_query = "SELECT COUNT(*) FROM teachers WHERE  district = '$userDistrict' AND tehsil = '$userTehsil' $searchQuery";
 if (isset($_GET['center']))
 {
   $ctr = $_GET['center'];
@@ -41,7 +41,8 @@ $total_records = $total_records_result->fetch_row()[0];
 $total_pages = ceil($total_records / $limit);
 
 // Fetch records for the current page
-$sql = "SELECT * FROM teachers WHERE district = '$userDistrict' AND tehsil = '$userTehsil' $searchQuery";
+$currentUserId = $_SESSION['id'];
+$sql = "SELECT * FROM teachers WHERE id != $currentUserId AND  district = '$userDistrict' AND tehsil = '$userTehsil' $searchQuery";
 if (isset($_GET['center']))
 {
   $ctr = $_GET['center'];
