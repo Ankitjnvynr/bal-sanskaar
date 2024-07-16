@@ -127,4 +127,3 @@ $result = $conn->query($sql);
       </ul>
     </nav>
   </main>
-

@@ -21,7 +21,6 @@ if ($conn->query($sql_create_table) === FALSE) {
     echo "Error creating table: " . $conn->error;
 }
 ?>
-
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Prepare data for insertion
@@ -38,6 +37,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Use prepared statement
     $stmt = $conn->prepare("INSERT INTO teachers (teacher_type, name, dob, phone, country, state, district, tehsil, center, userpassword) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    
+    // Check if preparation was successful
+    if ($stmt === false) {
+        echo "Error preparing statement: " . $conn->error;
+        exit;
+    }
+    
     $stmt->bind_param("ssssssssss", $teacher_type, $name, $dob, $phone, $country, $state, $district, $tehsil, $center, $hash_pass);
 
     if ($stmt->execute()) {
@@ -47,6 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit;
         } else {
             header('location:../login/dashboard.php?data=teacher');
+            exit;
         }
     } else {
         echo "Error: " . $stmt->error;

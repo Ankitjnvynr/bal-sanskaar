@@ -1,32 +1,10 @@
-<?php
+<?php 
 include '_header.php';
 $_SESSION['insertType'] = 'student';
 
-?>
+    ?>
 
-<style>
-    .suggestions {
-        position: absolute;
-        border: 1px solid #ccc;
-        border-top: none;
-        z-index: 1000;
-        width: 95%;
-        max-height: 150px;
-        overflow-y: auto;
-        border-radius: 0 0 0.25rem 0.25rem;
-        background-color: white;
-        max-width: 300px;
-    }
 
-    .suggestion {
-        padding: 10px;
-        cursor: pointer;
-    }
-
-    .suggestion:hover {
-        background-color: #f0f0f0;
-    }
-</style>
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 overflow-y-scroll">
     <div
         class="h4 text-center shadow-sm my-1 p-1 align-items-center  rounded-2 text-danger d-flex justify-content-between">
@@ -69,6 +47,7 @@ $_SESSION['insertType'] = 'student';
                 <label for="mother-dob" class="form-label">Mother's DOB</label>
                 <input type="date" class="form-control form-control-sm" id="mother-dob" name="mother-dob">
             </div>
+            
             <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="countrySelect" class="form-label">Country</label>
                 <input disabled id="countrySelect" name="country" class="form-select " value="<?php echo $_SESSION['country']; ?>" />
@@ -91,9 +70,9 @@ $_SESSION['insertType'] = 'student';
                 <input disabled id="tehsil" name="tehsil" class="form-select "
                     value="<?php echo $_SESSION['tehsil']; ?>" />
             </div>
-            <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+            <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="center" class="form-label">Center</label>
-                <input type="text" <?php if($_SESSION['userType']=='Teacher'){echo "value='{$_SESSION['userCenter']}' disabled";} ?> id="center" name="center" autocomplete="off" placeholder="eg: Center-1" class="form-control form-control-sm"
+                <input type="text" <?php if($_SESSION['userType']=='Teacher'){echo "value='{$row['userCenter']}' disabled ";} ?> id="center" name="center" autocomplete="off" placeholder="eg: Center-1" class="form-control form-control-sm"
                     required>
                 <div id="centerSuggestions" class="suggestions"></div>
             </div>
@@ -104,6 +83,7 @@ $_SESSION['insertType'] = 'student';
     </form>
 
 </main>
+
 <script>
     const suggestions = [
         <?php
@@ -111,14 +91,14 @@ $_SESSION['insertType'] = 'student';
         $centerState = $_SESSION['state'];
         $centerDist = $_SESSION['district'];
         $centerTeh = $_SESSION['tehsil'];
-        $centersql = "SELECT id,center FROM `centers` WHERE country = '$centerCountry' AND state = '$centerState' AND district = '$centerDist' AND tehsil = '$centerTeh' ORDER BY center ASC";
+        $centersql = "SELECT id, center FROM `centers` WHERE country = '$centerCountry' AND state = '$centerState' AND district = '$centerDist' AND tehsil = '$centerTeh' ORDER BY center ASC";
         $res = $conn->query($centersql);
-        while ($row = $res->fetch_assoc())
-        {
+        while ($row = $res->fetch_assoc()) {
             echo "'" . $row['center'] . "',";
         }
         ?>
     ];
+    console.log(suggestions);
 </script>
 
 <?php include '_footer.php'; ?>

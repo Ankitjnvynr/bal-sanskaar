@@ -15,10 +15,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $mother_name = $_POST['mother_name'];
     $mother_phone = $_POST['mother_phone'];
     $mother_dob = $_POST['mother_dob'];
-    $country = isset($_POST['country'])?$_POST['country']:$_SESSION['country'];
-    $state = isset($_POST['state'])?$_POST['state']:$_SESSION['state'];
-    $district = isset($_POST['district'])?$_POST['district']:$_SESSION['district'];
-    $tehsil = isset($_POST['tehsil'])?$_POST['tehsil']:$_SESSION['tehsil'];
+    $country = $_POST['country'];
+    $state = $_POST['state'];
+    $district = $_POST['district'];
+    $tehsil = $_POST['tehsil'];
     $center = isset($_POST['center']) ? $_POST['center'] : $_SESSION['userCenter'];
     $page = isset($_GET['page']) ? $_GET['page'] : 1;
 
@@ -146,29 +146,23 @@ if (isset($_GET['id'])) {
             </div>
             <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="countrySelect" class="form-label">Country</label>
-                <input disabled id="countrySelect" name="country" class="form-select " value="<?php echo $_SESSION['country']; ?>" />
-
+                <input class="form-control form-control-sm" type="text" id="countrySelect" name="country" value="<?php echo $student['country']; ?>"  />
             </div>
             <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
-                <label for="state" class="form-label">State</label>
-                <input disabled id="stateSelect" name="state" class="form-select "
-                    value="<?php echo $_SESSION['state']; ?>" />
+                <label for="stateSelect" class="form-label">State</label>
+                <input class="form-control form-control-sm" type="text" id="stateSelect" name="state" value="<?php echo $student['state']; ?>"  />
             </div>
-
             <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
-                <label for="district" class="form-label">District</label>
-                <input disabled id="districtSelect" name="district" class="form-select "
-                    value="<?php echo $_SESSION['district']; ?>" />
+                <label for="districtSelect" class="form-label">District</label>
+                <input class="form-control form-control-sm" type="text" id="districtSelect" name="district" value="<?php echo $student['district']; ?>" />
             </div>
             <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="tehsil" class="form-label">Tehsil</label>
-
-                <input disabled id="tehsil" name="tehsil" class="form-select "
-                    value="<?php echo $_SESSION['tehsil']; ?>" />
+                <input class="form-control form-control-sm" type="text" id="tehsil" name="tehsil" value="<?php echo $student['tehsil']; ?>" />
             </div>
             <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="center" class="form-label">Center</label>
-                <input type="text" <?php if($_SESSION['userType']=='Teacher'){echo "value='{$_SESSION['userCenter']}'";}else{echo "value='{$_SESSION['userCenter']}'";} ?> id="center" name="center" autocomplete="off" placeholder="eg: Center-1" class="form-control form-control-sm"
+                <input type="text" <?php if($_SESSION['userType']=='Teacher'){echo "value='{$_SESSION['userCenter']}'";} ?> id="center" name="center" autocomplete="off" placeholder="eg: Center-1" class="form-control form-control-sm"
                     required>
                 <div id="centerSuggestions" class="suggestions"></div>
             </div>
@@ -193,7 +187,7 @@ if (isset($_GET['id'])) {
         }
         ?>
     ];
-    console.log(suggestions);
+    // console.log(suggestions);
 </script>
 
 <?php include '_footer.php'; ?>
