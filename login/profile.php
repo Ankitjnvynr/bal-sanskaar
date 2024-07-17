@@ -28,74 +28,98 @@ if ($user_id > 0) {
         Welcome: <?php echo mb_convert_case($_SESSION['username'], MB_CASE_TITLE) ?>
     </div>
 
-    <form action="update_teacher.php" method="post">
-        <div class="text-center fw-bold my-2 text-danger fs-3">Your Details</div>
+    <form id="updateForm" action="update_teacher.php" method="post">
+    <div class="text-center fw-bold my-2 text-danger fs-3">Your Details</div>
 
-        <input type="hidden" name="id" value="<?php echo htmlspecialchars($user_id); ?>">
+    <input type="hidden" name="id" value="<?php echo htmlspecialchars($user_id); ?>">
 
-        <div class="row d-flex gap-1 flex-wrap fs-7 px-2">
+    <div class="row d-flex gap-1 flex-wrap fs-7 px-2">
 
-            <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
-                <label for="name" class="form-label">Name</label>
-                <input type="text" class="form-control form-control-sm" id="name" name="name" value="<?php echo htmlspecialchars($teacher['name'] ?? ''); ?>">
-            </div>
-            <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
-                <label for="dob" class="form-label">DOB</label>
-                <input type="date" class="form-control form-control-sm" id="dob" name="dob" value="<?php echo htmlspecialchars($teacher['dob'] ?? ''); ?>">
-            </div>
-
-            <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
-                <label for="phone" class="form-label">Phone</label>
-                <input type="text" class="form-control form-control-sm" id="phone" name="phone" onkeypress="return onlyDigits(event)" size="10" minlength="10" maxlength="10" value="<?php echo htmlspecialchars($teacher['phone'] ?? ''); ?>">
-                <div id="phone-error" class="text-danger"></div>
-            </div>
-
-            <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
-                <label for="countrySelect" class="form-label">Country</label>
-                <select id="countrySelect" name="country" class="form-select" required onchange="loadState(this)">
-                    <option value="">Select Country</option>
-                    <option value="country1" <?php echo ($teacher && $teacher['country'] == 'country1') ? 'selected' : ''; ?>>Country1</option>
-                    <option value="country2" <?php echo ($teacher && $teacher['country'] == 'country2') ? 'selected' : ''; ?>>Country2</option>
-                    <!-- Add more options as necessary -->
-                </select>
-            </div>
-            <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
-                <label for="state" class="form-label">State</label>
-                <select id="stateSelect" name="state" class="form-select" required onchange="loadDistrict(this)">
-                    <option value="">Select State</option>
-                    <option value="state1" <?php echo ($teacher && $teacher['state'] == 'state1') ? 'selected' : ''; ?>>
-                        State1</option>
-                    <option value="state2" <?php echo ($teacher && $teacher['state'] == 'state2') ? 'selected' : ''; ?>>
-                        State2</option>
-                    <!-- Add more options as necessary -->
-                </select>
-            </div>
-            <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
-                <label for="district" class="form-label">District</label>
-                <select id="districtSelect" name="district" class="form-select" required onchange="loadTehsil(this)">
-                    <option value="">Select District</option>
-                    <option value="district1" <?php echo ($teacher && $teacher['district'] == 'district1') ? 'selected' : ''; ?>>District1</option>
-                    <option value="district2" <?php echo ($teacher && $teacher['district'] == 'district2') ? 'selected' : ''; ?>>District2</option>
-                    <!-- Add more options as necessary -->
-                </select>
-            </div>
-            <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
-                <label for="tehsil" class="form-label">Tehsil</label>
-                <select id="tehsil" name="tehsil" class="form-select" required>
-                    <option value="">Select Tehsil</option>
-                    <option value="tehsil1" <?php echo ($teacher && $teacher['tehsil'] == 'tehsil1') ? 'selected' : ''; ?>>Tehsil1</option>
-                    <option value="tehsil2" <?php echo ($teacher && $teacher['tehsil'] == 'tehsil2') ? 'selected' : ''; ?>>Tehsil2</option>
-                    <!-- Add more options as necessary -->
-                </select>
-            </div>
-            <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
-                <label for="center" class="form-label">Center</label>
-                <input disabled type="text" id="center" name="center" class="form-control form-control-sm" value="<?php echo htmlspecialchars($teacher['center'] ?? ''); ?>">
-            </div>
-
+        <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control form-control-sm" id="name" name="name" value="<?php echo htmlspecialchars($teacher['name'] ?? ''); ?>">
         </div>
-        <div class="text-center my-3"><button type="submit" class="btn btn-danger col-5">Update</button></div>
-    </form>
+        <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+            <label for="dob" class="form-label">DOB</label>
+            <input type="date" class="form-control form-control-sm" id="dob" name="dob" value="<?php echo htmlspecialchars($teacher['dob'] ?? ''); ?>">
+        </div>
+
+        <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+            <label for="phone" class="form-label">Phone</label>
+            <input type="text" class="form-control form-control-sm" id="phone" name="phone" onkeypress="return onlyDigits(event)" size="10" minlength="10" maxlength="10" value="<?php echo htmlspecialchars($teacher['phone'] ?? ''); ?>">
+            <div id="phone-error" class="text-danger"></div>
+        </div>
+
+        <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+            <label for="countrySelect" class="form-label">Country</label>
+            <select id="countrySelect" name="country" class="form-select" required onchange="loadState(this)">
+                <option value="">Select Country</option>
+                <option value="country1" <?php echo ($teacher && $teacher['country'] == 'country1') ? 'selected' : ''; ?>>Country1</option>
+                <option value="country2" <?php echo ($teacher && $teacher['country'] == 'country2') ? 'selected' : ''; ?>>Country2</option>
+                <!-- Add more options as necessary -->
+            </select>
+        </div>
+        <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+            <label for="state" class="form-label">State</label>
+            <select id="stateSelect" name="state" class="form-select" required onchange="loadDistrict(this)">
+                <option value="">Select State</option>
+                <option value="state1" <?php echo ($teacher && $teacher['state'] == 'state1') ? 'selected' : ''; ?>>
+                    State1</option>
+                <option value="state2" <?php echo ($teacher && $teacher['state'] == 'state2') ? 'selected' : ''; ?>>
+                    State2</option>
+                <!-- Add more options as necessary -->
+            </select>
+        </div>
+        <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+            <label for="district" class="form-label">District</label>
+            <select id="districtSelect" name="district" class="form-select" required onchange="loadTehsil(this)">
+                <option value="">Select District</option>
+                <option value="district1" <?php echo ($teacher && $teacher['district'] == 'district1') ? 'selected' : ''; ?>>District1</option>
+                <option value="district2" <?php echo ($teacher && $teacher['district'] == 'district2') ? 'selected' : ''; ?>>District2</option>
+                <!-- Add more options as necessary -->
+            </select>
+        </div>
+        <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+            <label for="tehsil" class="form-label">Tehsil</label>
+            <select id="tehsil" name="tehsil" class="form-select" required>
+                <option value="">Select Tehsil</option>
+                <option value="tehsil1" <?php echo ($teacher && $teacher['tehsil'] == 'tehsil1') ? 'selected' : ''; ?>>Tehsil1</option>
+                <option value="tehsil2" <?php echo ($teacher && $teacher['tehsil'] == 'tehsil2') ? 'selected' : ''; ?>>Tehsil2</option>
+                <!-- Add more options as necessary -->
+            </select>
+        </div>
+        <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+            <label for="center" class="form-label">Center</label>
+            <input disabled type="text" id="center" name="center" class="form-control form-control-sm" value="<?php echo htmlspecialchars($teacher['center'] ?? ''); ?>">
+        </div>
+
+    </div>
+    <div class="text-center my-3"><button type="submit" class="btn btn-danger col-5">Update</button></div>
+</form>
+
+<script>
+document.getElementById('updateForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent the default form submission
+
+    const form = event.target;
+    const formData = new FormData(form);
+
+    fetch(form.action, {
+        method: form.method,
+        body: formData
+    })
+    .then(response => response.text()) // Assuming the server returns a response text
+    .then(data => {
+        if (data.includes('success')) { // Check for a success message or condition
+            window.location.href = 'profile.php'; // Redirect to profile.php
+        } else {
+            // Handle errors or show feedback to the user
+            console.error('Update failed:', data);
+        }
+    })
+    .catch(error => console.error('Error:', error));
+});
+</script>
 
     <hr>
     <div class="accordion fs-7" id="accordionPanelsStayOpenExample">
