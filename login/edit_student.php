@@ -15,10 +15,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $mother_name = $_POST['mother_name'];
     $mother_phone = $_POST['mother_phone'];
     $mother_dob = $_POST['mother_dob'];
-    $country = isset($_POST['country'])?$_POST['country']:$_SESSION['country'];
-    $state = isset($_POST['state'])?$_POST['state']:$_SESSION['state'];
-    $district = isset($_POST['district'])?$_POST['district']:$_SESSION['district'];
-    $tehsil = isset($_POST['tehsil'])?$_POST['tehsil']:$_SESSION['tehsil'];
+    $country = isset($_POST['country']) ? $_POST['country'] : $_SESSION['country'];
+    $state = isset($_POST['state']) ? $_POST['state'] : $_SESSION['state'];
+    $district = isset($_POST['district']) ? $_POST['district'] : $_SESSION['district'];
+    $tehsil = isset($_POST['tehsil']) ? $_POST['tehsil'] : $_SESSION['tehsil'];
     $center = isset($_POST['center']) ? $_POST['center'] : $_SESSION['userCenter'];
     $page = isset($_GET['page']) ? $_GET['page'] : 1;
 
@@ -101,6 +101,7 @@ if (isset($_GET['id'])) {
 
     <form action="" method="post">
         <input type="hidden" name="id" value="<?php echo $student['id']; ?>">
+        <input type="hidden" name="center" value="<?php echo $student['center']; ?>">
         
         <div class="text-center fw-bold my-2 text-danger fs-3">Edit Student Details</div>
         <div class="row d-flex gap-1 flex-wrap fs-7 px-2">
@@ -147,14 +148,12 @@ if (isset($_GET['id'])) {
             <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="countrySelect" class="form-label">Country</label>
                 <input disabled id="countrySelect" name="country" class="form-select " value="<?php echo $_SESSION['country']; ?>" />
-
             </div>
             <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="state" class="form-label">State</label>
                 <input disabled id="stateSelect" name="state" class="form-select "
                     value="<?php echo $_SESSION['state']; ?>" />
             </div>
-
             <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="district" class="form-label">District</label>
                 <input disabled id="districtSelect" name="district" class="form-select "
@@ -162,16 +161,13 @@ if (isset($_GET['id'])) {
             </div>
             <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="tehsil" class="form-label">Tehsil</label>
-
                 <input disabled id="tehsil" name="tehsil" class="form-select "
                     value="<?php echo $_SESSION['tehsil']; ?>" />
             </div>
             <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
-            <label for="center" class="form-label">Center</label>
-            <input type="text" <?php if ($_SESSION['userType'] == 'Teacher') { echo "value='{$_SESSION['userCenter']}'"; } else { echo "value='{$_SESSION['userCenter']}'"; } ?> id="center" name="center" autocomplete="off" placeholder="eg: Center-1" class="form-control form-control-sm"
-                required onclick="handleClick()">
-            <div id="centerSuggestions" class="suggestions"></div>
-        </div>
+                <label for="center" class="form-label">Center</label>
+                <input type="text" id="center" name="center" value="<?php echo $student['center']; ?>" class="form-control form-control-sm" disabled>
+            </div>
         </div>
         <div class="text-center my-3">
             <button type="submit" class="btn btn-danger col-5">Update</button>
@@ -194,12 +190,10 @@ if (isset($_GET['id'])) {
         ?>
     ];
     console.log(suggestions);
-    
-        function handleClick() {
-            const centerInput = document.getElementById('center');
-            
-        }
-    
+
+    function handleClick() {
+        const centerInput = document.getElementById('center');
+    }
 </script>
 
 <?php include '_footer.php'; ?>
