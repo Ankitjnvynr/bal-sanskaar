@@ -9,6 +9,7 @@
     if (isset($_POST['centerAdd']))
     {
         $newCenter = $_POST['newCenter'];
+        $newCenter = htmlentities($newCenter);
         $centerSql = "INSERT INTO centers (country, state, district, tehsil, center)
                       VALUES ('$centerCountry', '$centerState', '$centerDist', '$centerTeh', '$newCenter')";
         try

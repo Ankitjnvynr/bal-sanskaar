@@ -110,7 +110,7 @@ if (isset($_GET['id']))
             <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0 position-relative">
                 <label for="center" class="form-label">Center</label>
                 <input type="text" id="center" name="center" autocomplete="off" class="form-control form-control-sm"
-                    value="<?php echo $teacher['center']; ?>" disabled>
+                    value="<?php echo html_entity_decode($teacher['center']); ?>" >
                 <div id="centerSuggestions" class="suggestions"></div>
             </div>
 

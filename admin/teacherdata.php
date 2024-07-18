@@ -36,7 +36,7 @@ $total_records = $total_result->fetch_assoc()['total'];
 // Calculate total pages
 $total_pages = ceil($total_records / $records_per_page);
 ?>
-<div class="container mt-5">
+<div class="mt-5">
     <h4 class="mb-4">Teachers List</h4>
 
     <!-- Search Form -->

@@ -166,7 +166,7 @@ if (isset($_GET['id'])) {
             </div>
             <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="center" class="form-label">Center</label>
-                <input type="text" id="center" name="center" value="<?php echo $student['center']; ?>" class="form-control form-control-sm" disabled>
+                <input type="text" id="center" name="center" value="<?php echo $student['center']; ?>" class="form-control form-control-sm" >
             </div>
         </div>
         <div class="text-center my-3">
