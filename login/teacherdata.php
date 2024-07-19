@@ -53,40 +53,41 @@ $result = $conn->query($sql);
 ?>
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-  <div
-    class="h4 text-center shadow-sm my-1 p-1 align-items-center rounded-2 text-danger d-flex justify-content-between">
-    <i class="fa-solid fa-bars d-md-none"></i>
-    Welcome: <?php echo mb_convert_case($userName, MB_CASE_TITLE); ?>
-  </div>
-  <div class="text-danger h5">Teachers Data</div>
-
-  <!-- Search Form -->
-  <form method="GET" action="">
-    <div class="input-group mb-3 ">
-      <input type="hidden" name="data" value="teacher">
-      <input type="text" class="form-control" name="search" placeholder="Search..." value="<?php echo $search; ?>">
-      <button class="btn btn-success" type="submit">Search</button>
+    <div
+        class="h4 text-center shadow-sm my-1 p-1 align-items-center rounded-2 text-danger d-flex justify-content-between">
+        <i class="fa-solid fa-bars d-md-none"></i>
+        Welcome: <?php echo mb_convert_case($userName, MB_CASE_TITLE); ?>
     </div>
-  </form>
+    <div class="text-danger h5">Teachers Data</div>
 
-  <div class="overflow-x-scroll">
-    <table id="" class="table fs-7 table-striped">
-      <thead>
-        <tr>
-          <th scope="col">ID</th>
-          <th scope="col">Name</th>
-          <th scope="col">DOB</th>
-          <th scope="col">Phone</th>
-          <th scope="col">Country</th>
-          <th scope="col">State</th>
-          <th scope="col">District</th>
-          <th scope="col">Tehsil</th>
-          <th scope="col">Center</th>
-          <th scope="col">Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <?php
+    <!-- Search Form -->
+    <form method="GET" action="">
+        <div class="input-group mb-3 ">
+            <input type="hidden" name="data" value="teacher">
+            <input type="text" class="form-control" name="search" placeholder="Search..."
+                value="<?php echo $search; ?>">
+            <button class="btn btn-danger" type="submit">Search</button>
+        </div>
+    </form>
+
+    <div class="overflow-x-scroll">
+        <table id="" class="table fs-7 table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">DOB</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">Country</th>
+                    <th scope="col">State</th>
+                    <th scope="col">District</th>
+                    <th scope="col">Tehsil</th>
+                    <th scope="col">Center</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
         if ($result->num_rows > 0)
         {
           $sr = $start_from;
@@ -115,22 +116,22 @@ $result = $conn->query($sql);
         }
         $conn->close();
         ?>
-      </tbody>
-    </table>
-  </div>
+            </tbody>
+        </table>
+    </div>
 
-  <div class="pagination">
-    <?php
+    <div class="pagination">
+        <?php
     for ($i = 1; $i <= $total_pages; $i++)
     {
       echo "<a href='?data=teacher&page=" . $i . "&search=" . $search . "' class='btn btn-primary btn-sm mx-1'>" . $i . "</a>";
     }
     ?>
-  </div>
+    </div>
 </main>
 
 <script>
-  function confirmDelete() {
+function confirmDelete() {
     return confirm('Are you sure you want to delete this record?');
-  }
+}
 </script>

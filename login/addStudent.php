@@ -1,8 +1,8 @@
-<?php 
+<?php
 include '_header.php';
 $_SESSION['insertType'] = 'student';
 
-    ?>
+?>
 
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 overflow-y-scroll">
@@ -29,7 +29,8 @@ $_SESSION['insertType'] = 'student';
             </div>
             <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="father-phone" class="form-label">Father's Phone</label>
-                <input type="text" class="form-control form-control-sm" id="father-phone" name="father-phone">
+                <input type="text" class="form-control form-control-sm" id="father-phone"
+                    onkeypress="return onlyDigits(event)" size="10" minlength="10" maxlength="10" name="father-phone">
             </div>
             <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="father-dob" class="form-label">Father's DOB</label>
@@ -41,16 +42,18 @@ $_SESSION['insertType'] = 'student';
             </div>
             <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="mother-phone" class="form-label">Mother's Phone</label>
-                <input type="text" class="form-control form-control-sm" id="mother-phone" name="mother-phone">
+                <input type="text" class="form-control form-control-sm" id="mother-phone"
+                    onkeypress="return onlyDigits(event)" size="10" minlength="10" maxlength="10" name="mother-phone">
             </div>
             <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="mother-dob" class="form-label">Mother's DOB</label>
                 <input type="date" class="form-control form-control-sm" id="mother-dob" name="mother-dob">
             </div>
-            
+
             <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="countrySelect" class="form-label">Country</label>
-                <input disabled id="countrySelect" name="country" class="form-select " value="<?php echo $_SESSION['country']; ?>" />
+                <input disabled id="countrySelect" name="country" class="form-select "
+                    value="<?php echo $_SESSION['country']; ?>" />
 
             </div>
             <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
@@ -72,8 +75,10 @@ $_SESSION['insertType'] = 'student';
             </div>
             <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="center" class="form-label">Center</label>
-                <input type="text" <?php if($_SESSION['userType']=='Teacher'){echo "value='{$row['userCenter']}' disabled ";} ?> id="center" name="center" autocomplete="off" placeholder="eg: Center-1" class="form-control form-control-sm"
-                    required>
+                <input type="text" <?php if ($_SESSION['userType'] == 'Teacher') {
+                                        echo "value='{$_SESSION['userCenter']}' disabled ";
+                                    } ?> id="center" name="center" autocomplete="off" placeholder="eg: Center-1"
+                    class="form-control form-control-sm" required>
                 <div id="centerSuggestions" class="suggestions"></div>
             </div>
 
@@ -85,8 +90,8 @@ $_SESSION['insertType'] = 'student';
 </main>
 
 <script>
-    const suggestions = [
-        <?php
+const suggestions = [
+    <?php
         $centerCountry = $_SESSION['country'];
         $centerState = $_SESSION['state'];
         $centerDist = $_SESSION['district'];
@@ -97,8 +102,8 @@ $_SESSION['insertType'] = 'student';
             echo "'" . $row['center'] . "',";
         }
         ?>
-    ];
-    console.log(suggestions);
+];
+console.log(suggestions);
 </script>
 
 <?php include '_footer.php'; ?>
