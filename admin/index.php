@@ -1,17 +1,15 @@
 <?php
 $sub = false;
 session_start();
-if (isset($_SESSION['loggedin']))
-{
+if (isset($_SESSION['loggedin'])) {
     //	header('location : dashboard.php');
     header("location: dashboard.php?data=student");
 
     exit;
 }
-include ("../config/_db.php");
+include("../config/_db.php");
 $msg = false;
-if ($_SERVER['REQUEST_METHOD'] == 'POST')
-{
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $sub = true;
     $username = $_POST['username'];
     $password = $_POST['password'];
@@ -19,12 +17,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     $sql = "SELECT * FROM admin_user WHERE  username = '$username'";
     $result = mysqli_query($conn, $sql);
     $num = mysqli_num_rows($result);
-    if ($num == 1)
-    {
-        while ($row = mysqli_fetch_assoc($result))
-        {
-            if (password_verify($password, $row['password']))
-            {
+    if ($num == 1) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            if (password_verify($password, $row['password'])) {
                 $logged = true;
                 session_start();
                 $_SESSION['loggedin'] = true;
@@ -33,13 +28,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                 $_SESSION['userType'] = 'admin';
                 header("location: dashboard.php?data=student");
                 exit;
-            } else
-            {
+            } else {
                 $msg = "Password not match";
             }
         }
-    } else
-    {
+    } else {
         $msg = "Wrong username";
     }
 }
@@ -52,11 +45,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>GIEO Gita : Admin login</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="../css/login.css">
     <style>
         body {
@@ -92,8 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 
 
     <?php
-    if ($msg)
-    {
+    if ($msg) {
         echo '
         <div style="top:2%;" class="container position-absolute ">
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -106,8 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     ?>
 
 
-    <div style="width:90%; max-width:400px "
-        class="container  d-flex justify-content-center align-items-center shadow p-4 py-5 rounded bg-warning-subtle rounded-xl position-relative ">
+    <div style="width:90%; max-width:400px " class="container  d-flex justify-content-center align-items-center shadow p-4 py-5 rounded bg-warning-subtle rounded-xl position-relative ">
         <div class="logo position-absolute shadow">
             <img style="width:100%" src="../imgs/Logo.png" alt="GIEO gita logo">
         </div>
@@ -115,15 +103,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 
             <div class="form-floating mb-3">
                 <input type="text" class="form-control" value="<?php if ($sub)
-                    echo $username; ?>" id="username" name="username" required placeholder="name@example.com">
+                                                                    echo $username; ?>" id="username" name="username" required placeholder="name@example.com">
                 <label for="username">Email address</label>
             </div>
             <div class="form-floating mb-3">
-                <input type="password" class="form-control " id="password" name="password" required
-                    placeholder="Password">
-                <i id="passwordicon"
-                    class="fa-regular fa-eye position-absolute end-0 top-50 end-0 translate-middle-y fs-5 mr-3 translate-x-3 text-danger pr-3"
-                    style="margin-right: 10px; cursor: pointer;"></i>
+                <input type="password" class="form-control " id="password" name="password" required placeholder="Password">
+                <i id="passwordicon" class="fa-regular fa-eye position-absolute end-0 top-50 end-0 translate-middle-y fs-5 mr-3 translate-x-3 text-danger pr-3" style="margin-right: 10px; cursor: pointer;"></i>
                 <label for="password">Password</label>
 
             </div>
@@ -131,16 +116,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                 <button type="submit" class="btn btn-danger">Log In</button>
             </div>
             <div class="text-center mt-2 ">
-                <a target="_blank" class="text-danger link-underline link-underline-opacity-0" href="../index.php">
+                <a target="_blank" class="text-danger link-underline link-underline-opacity-0 fw-bold" href="../index.php">
+                    <i class="fa-solid fa-house"></i>
                     Homepage->
                 </a>
+            </div>
+            <div class="text-center text-danger mt-1"><a class="btn" href="../login">
+                    <i class="fa-solid fa-user-tie"></i>
+                    <span class="mx-2 fw-bold">Are you Teacher ? click</span></a>
             </div>
 
         </form>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    </script>
     <script>
         let passwordicon = document.getElementById('passwordicon')
         let password = document.getElementById('password')

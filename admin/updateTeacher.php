@@ -5,16 +5,14 @@ require_once '../config/_db.php';
 $user_id = isset($_GET['user']) ? intval($_GET['user']) : 0;
 $teacher = null;
 
-if ($user_id > 0)
-{
+if ($user_id > 0) {
     // Fetch existing data
     $sql_fetch = "SELECT * FROM teachers WHERE id = ?";
     $stmt_fetch = $conn->prepare($sql_fetch);
     $stmt_fetch->bind_param("i", $user_id);
     $stmt_fetch->execute();
     $result = $stmt_fetch->get_result();
-    if ($result->num_rows > 0)
-    {
+    if ($result->num_rows > 0) {
         $teacher = $result->fetch_assoc();
     }
     $stmt_fetch->close();
@@ -41,8 +39,7 @@ if ($user_id > 0)
                 <select id="type" name="type" class="form-select" required>
                     <?php
                     $arr = ['Head Teacher', 'Teacher'];
-                    foreach ($arr as $value)
-                    {
+                    foreach ($arr as $value) {
                         $selected = ($teacher && $teacher['teacher_type'] == $value) ? 'selected' : '';
                         echo '<option ' . $selected . ' value="' . $value . '">' . $value . '</option>';
                     }
@@ -72,8 +69,12 @@ if ($user_id > 0)
                 <label for="countrySelect" class="form-label">Country</label>
                 <select id="countrySelect" name="country" class="form-select" required onchange="loadState(this)">
                     <option value="">Select Country</option>
-                    <option value="country1" <?php echo ($teacher && $teacher['country'] == 'country1') ? 'selected' : ''; ?>>Country1</option>
-                    <option value="country2" <?php echo ($teacher && $teacher['country'] == 'country2') ? 'selected' : ''; ?>>Country2</option>
+                    <option value="country1"
+                        <?php echo ($teacher && $teacher['country'] == 'country1') ? 'selected' : ''; ?>>Country1
+                    </option>
+                    <option value="country2"
+                        <?php echo ($teacher && $teacher['country'] == 'country2') ? 'selected' : ''; ?>>Country2
+                    </option>
                     <!-- Add more options as necessary -->
                 </select>
             </div>
@@ -92,8 +93,12 @@ if ($user_id > 0)
                 <label for="district" class="form-label">District</label>
                 <select id="districtSelect" name="district" class="form-select" required onchange="loadTehsil(this)">
                     <option value="">Select District</option>
-                    <option value="district1" <?php echo ($teacher && $teacher['district'] == 'district1') ? 'selected' : ''; ?>>District1</option>
-                    <option value="district2" <?php echo ($teacher && $teacher['district'] == 'district2') ? 'selected' : ''; ?>>District2</option>
+                    <option value="district1"
+                        <?php echo ($teacher && $teacher['district'] == 'district1') ? 'selected' : ''; ?>>District1
+                    </option>
+                    <option value="district2"
+                        <?php echo ($teacher && $teacher['district'] == 'district2') ? 'selected' : ''; ?>>District2
+                    </option>
                     <!-- Add more options as necessary -->
                 </select>
             </div>
@@ -101,8 +106,10 @@ if ($user_id > 0)
                 <label for="tehsil" class="form-label">Tehsil</label>
                 <select id="tehsil" name="tehsil" class="form-select" required>
                     <option value="">Select Tehsil</option>
-                    <option value="tehsil1" <?php echo ($teacher && $teacher['tehsil'] == 'tehsil1') ? 'selected' : ''; ?>>Tehsil1</option>
-                    <option value="tehsil2" <?php echo ($teacher && $teacher['tehsil'] == 'tehsil2') ? 'selected' : ''; ?>>Tehsil2</option>
+                    <option value="tehsil1"
+                        <?php echo ($teacher && $teacher['tehsil'] == 'tehsil1') ? 'selected' : ''; ?>>Tehsil1</option>
+                    <option value="tehsil2"
+                        <?php echo ($teacher && $teacher['tehsil'] == 'tehsil2') ? 'selected' : ''; ?>>Tehsil2</option>
                     <!-- Add more options as necessary -->
                 </select>
             </div>
@@ -117,5 +124,12 @@ if ($user_id > 0)
     </form>
 
 </main>
+<script>
+updating = true;
+currentCountry = '<?php echo htmlspecialchars($teacher['country'] ?? ''); ?>'
+currentState = '<?php echo htmlspecialchars($teacher['state'] ?? ''); ?>'
+currentDistrict = '<?php echo htmlspecialchars($teacher['district'] ?? ''); ?>'
+currentTehsil = '<?php echo htmlspecialchars($teacher['tehsil'] ?? ''); ?>'
+</script>
 
 <?php include '_footer.php'; ?>

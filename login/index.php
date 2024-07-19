@@ -106,11 +106,18 @@ $conn->close();
                 </div>
                 <div class="email-help text-danger text-center"><?php echo $msg; ?></div>
             </form>
-            <div class="text-center text-danger mt-3"><a class="btn" href="../"><i class="fa-solid fa-house"></i><span class="mx-2 fw-bold">Homepage-></span></a></div>
+            <div class="text-center text-danger mt-3"><a class="btn" href="../">
+                    <i class="fa-solid fa-house"></i><span class="mx-2 fw-bold">Homepage-></span></a>
+            </div>
+            <div class="text-center text-danger mt-3"><a class="btn" href="../admin">
+                    <i class="fa-solid fa-user-tie"></i>
+                    <span class="mx-2 fw-bold">Are you Admin ? click</span></a>
+            </div>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    </script>
     <script>
         function onlyDigits(event) {
             var charCode = event.which ? event.which : event.keyCode;

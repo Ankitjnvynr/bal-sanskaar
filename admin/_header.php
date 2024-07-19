@@ -22,42 +22,45 @@ include '../config/_db.php';
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
         integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-  
+
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-   
+
 
 
     <style>
-        .form-item {
-            flex: 1 0 230px;
-        }
+    .form-item {
+        flex: 1 0 230px;
+    }
 
-        .fs-7 {
-            font-size: 0.9rem;
-        }
+    .fs-7 {
+        font-size: 0.9rem;
+    }
     </style>
     <style>
-        .sidebar {
-            min-height: 100vh;
-            padding-top: 20px;
-        }
+    .sidebar {
+        min-height: 100vh;
+        padding-top: 20px;
+    }
 
-        .sidebar a {
-            padding: 10px 15px;
-            text-decoration: none;
-            font-size: 18px;
-            color: white;
-            display: block;
-            transition: all 0.5s;
-        }
+    .sidebar a {
+        padding: 10px 15px;
+        text-decoration: none;
+        font-size: 18px;
+        color: white;
+        display: block;
+        transition: all 0.5s;
+    }
 
-        .sidebar a:hover {
-            color: white;
-            /* background-color: #741414; */
-            transform: translatex(5px)
-        }
+    .sidebar a:hover {
+        color: white;
+        /* background-color: #741414; */
+        transform: translatex(5px)
+    }
     </style>
+    <script>
+    updating = false;
+    </script>
 </head>
 
 <body class="bg-warning-subtle">
@@ -83,8 +86,3 @@ include '../config/_db.php';
                         ?>
                 </div>
             </div>
-
-
-
-
-
