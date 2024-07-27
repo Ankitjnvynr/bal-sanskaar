@@ -2,7 +2,11 @@
 $sub = false;
 session_start();
 if (isset($_SESSION['loggedin'])) {
-    //	header('location : dashboard.php');
+    if ($_SESSION['userType'] != 'admin' || isset($_SESSION['phone'])) {
+        header('Location: ../login');
+        exit;
+    }
+
     header("location: dashboard.php?data=student");
 
     exit;

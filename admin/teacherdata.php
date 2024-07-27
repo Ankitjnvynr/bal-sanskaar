@@ -36,14 +36,13 @@ $total_records = $total_result->fetch_assoc()['total'];
 // Calculate total pages
 $total_pages = ceil($total_records / $records_per_page);
 ?>
-<div class="mt-5">
+<div class="">
     <h4 class="mb-4">Teachers List</h4>
 
     <!-- Search Form -->
     <form class="d-flex mb-4" method="GET" action="">
         <input type="hidden" name="data" value="teacher">
-        <input class="form-control me-2" type="search" name="search" placeholder="Search..." aria-label="Search"
-            value="<?php echo htmlspecialchars($search_query); ?>">
+        <input class="form-control me-2" type="search" name="search" placeholder="Search..." aria-label="Search" value="<?php echo htmlspecialchars($search_query); ?>">
         <button class="btn btn-outline-success" type="submit">Search</button>
     </form>
 
@@ -66,22 +65,18 @@ $total_pages = ceil($total_records / $records_per_page);
         </thead>
         <tbody>
             <?php
-            if ($result->num_rows > 0)
-            {
-                while ($row = $result->fetch_assoc()): ?>
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) : ?>
                     <tr>
                         <th scope="row"><?php echo $row['id']; ?></th>
                         <td>
                             <select class="border" onchange="changeTeacherType(<?php echo $row['id']; ?>,this)">
                                 <?php
                                 $arr = ['Teacher', 'Head Teacher'];
-                                foreach ($arr as $value)
-                                {
-                                    if ($row['teacher_type'] == $value)
-                                    {
+                                foreach ($arr as $value) {
+                                    if ($row['teacher_type'] == $value) {
                                         echo '<option selected value="' . $value . '">' . $value . '</option>';
-                                    } else
-                                    {
+                                    } else {
                                         echo '<option value="' . $value . '">' . $value . '</option>';
                                     }
                                 }
@@ -98,12 +93,11 @@ $total_pages = ceil($total_records / $records_per_page);
                         <td><?php echo $row['center']; ?></td>
                         <td>
                             <a href="updateTeacher.php?user=<?php echo $row['id']; ?>" class="btn p-0 m-0 mx-1 fs-5"><i class="fa-regular fa-pen-to-square text-success"></i></a>
-                            <a href="delete_teacher.php?id=<?php echo $row['id'].'&page'.$page; ?>" class="btn p-0 m-0 mx-1 fs-5"><i class="fa-regular fa-trash-can text-danger"></i></a>
+                            <a href="delete_teacher.php?id=<?php echo $row['id'] . '&page' . $page; ?>" class="btn p-0 m-0 mx-1 fs-5"><i class="fa-regular fa-trash-can text-danger"></i></a>
                         </td>
                     </tr>
-                <?php endwhile;
-            } else
-            {
+            <?php endwhile;
+            } else {
                 echo "<tr><td colspan='9'>No records found</td></tr>";
             } ?>
         </tbody>
@@ -112,27 +106,22 @@ $total_pages = ceil($total_records / $records_per_page);
     <!-- Pagination -->
     <nav aria-label="Page navigation">
         <ul class="pagination justify-content-center">
-            <?php if ($page > 1): ?>
+            <?php if ($page > 1) : ?>
                 <li class="page-item">
-                    <a class="page-link"
-                        href="?page=<?php echo $page - 1; ?>&search=<?php echo htmlspecialchars($search_query); ?>"
-                        aria-label="Previous">
+                    <a class="page-link" href="?page=<?php echo $page - 1; ?>&search=<?php echo htmlspecialchars($search_query); ?>" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
             <?php endif; ?>
-            <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+            <?php for ($i = 1; $i <= $total_pages; $i++) : ?>
                 <li class="page-item <?php if ($i == $page)
-                    echo 'active'; ?>">
-                    <a class="page-link"
-                        href="?page=<?php echo $i; ?>&search=<?php echo htmlspecialchars($search_query); ?>"><?php echo $i; ?></a>
+                                            echo 'active'; ?>">
+                    <a class="page-link" href="?page=<?php echo $i; ?>&search=<?php echo htmlspecialchars($search_query); ?>"><?php echo $i; ?></a>
                 </li>
             <?php endfor; ?>
-            <?php if ($page < $total_pages): ?>
+            <?php if ($page < $total_pages) : ?>
                 <li class="page-item">
-                    <a class="page-link"
-                        href="?page=<?php echo $page + 1; ?>&search=<?php echo htmlspecialchars($search_query); ?>"
-                        aria-label="Next">
+                    <a class="page-link" href="?page=<?php echo $page + 1; ?>&search=<?php echo htmlspecialchars($search_query); ?>" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>

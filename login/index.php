@@ -3,8 +3,13 @@ require_once '../config/_db.php';
 
 session_start();
 if (isset($_SESSION['loggedin'])) {
-    header('Location: dashboard.php?data=student');
-    exit;
+    if ($_SESSION['userType'] == 'admin') {
+        header('Location: ../admin/');
+        exit;
+    } else {
+        header('Location: dashboard.php?data=student');
+        exit;
+    }
 }
 $msg = "";
 

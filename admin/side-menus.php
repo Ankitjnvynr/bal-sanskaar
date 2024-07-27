@@ -1,9 +1,8 @@
 <?php
-// $userName= $_SESSION['username'] ;
-// $userPhone= $_SESSION['phone'];
-// $userDistrict= $_SESSION['district'];
-// $userTehsil= $_SESSION['tehsil'];
-// $userType= $_SESSION['userType'];
+if ($_SESSION['userType'] != 'admin' || isset($_SESSION['phone'])) {
+    header('Location: ../login');
+    exit;
+}
 
 ?>
 <?php
