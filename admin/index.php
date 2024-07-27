@@ -2,7 +2,7 @@
 $sub = false;
 session_start();
 if (isset($_SESSION['loggedin'])) {
-    if ($_SESSION['userType'] != 'admin' || isset($_SESSION['phone'])) {
+    if (isset($_SESSION['phone'])) {
         header('Location: ../login');
         exit;
     }
