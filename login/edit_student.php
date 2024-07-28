@@ -5,8 +5,11 @@ include '../config/_db.php'; // include the database connection
 ob_start(); // Start output buffering
 
 // Check if the form is submitted
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST')
+{
     $id = $_POST['id'];
+    $roll = $_POST['roll'];
+    $address = $_POST['address'];
     $name = $_POST['name'];
     $dob = $_POST['dob'];
     $father_name = $_POST['father_name'];
@@ -24,6 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Update student data
     $sql = "UPDATE students SET 
+                rollno = '$roll', 
                 name = '$name', 
                 dob = '$dob', 
                 father_name = '$father_name', 
@@ -36,13 +40,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 state = '$state', 
                 district = '$district', 
                 tehsil = '$tehsil', 
+                address = '$address', 
                 center = '$center' 
             WHERE id = $id";
 
-    if ($conn->query($sql) === TRUE) {
+    if ($conn->query($sql) === TRUE)
+    {
         echo "<script type='text/javascript'> window.location.href = 'dashboard.php?data=student&page={$page}';</script>";
         exit;
-    } else {
+    } else
+    {
         echo "Error updating record: " . $conn->error;
     }
 
@@ -53,44 +60,48 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ob_end_clean();
 
 // Fetch student data for editing
-if (isset($_GET['id'])) {
+if (isset($_GET['id']))
+{
     $id = $_GET['id'];
     $sql = "SELECT * FROM students WHERE id = $id";
     $result = $conn->query($sql);
-    if ($result->num_rows > 0) {
+    if ($result->num_rows > 0)
+    {
         $student = $result->fetch_assoc();
-    } else {
+    } else
+    {
         echo "No record found";
         exit;
     }
-} else {
+} else
+{
     echo "Invalid request";
     exit;
 }
 ?>
 
 <style>
-.suggestions {
-    position: absolute;
-    border: 1px solid #ccc;
-    border-top: none;
-    z-index: 1000;
-    width: 95%;
-    max-height: 150px;
-    overflow-y: auto;
-    border-radius: 0 0 0.25rem 0.25rem;
-    background-color: white;
-    max-width: 300px;
-}
+    .suggestions {
+        position: absolute;
+        border: 1px solid #ccc;
+        border-top: none;
+        z-index: 1000;
+        width: 95%;
+        max-height: 150px;
+        overflow-y: auto;
+        border-radius: 0 0 0.25rem 0.25rem;
+        background-color: white;
+        max-width: 300px;
+    }
 
-.suggestion {
-    padding: 10px;
-    cursor: pointer;
-}
+    .suggestion {
+        padding: 10px;
+        cursor: pointer;
+    }
 
-.suggestion:hover {
-    background-color: #f0f0f0;
-}
+    .suggestion:hover {
+        background-color: #f0f0f0;
+    }
 </style>
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 overflow-y-scroll">
@@ -106,6 +117,11 @@ if (isset($_GET['id'])) {
 
         <div class="text-center fw-bold my-2 text-danger fs-3">Edit Student Details</div>
         <div class="row d-flex gap-1 flex-wrap fs-7 px-2">
+            <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+                <label for="name" class="form-label">Roll No</label>
+                <input type="text" class="form-control form-control-sm" id="roll" name="roll"
+                    value="<?php echo $student['rollno']; ?>" required>
+            </div>
             <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="name" class="form-label">Name</label>
                 <input type="text" class="form-control form-control-sm" id="name" name="name"
@@ -166,11 +182,17 @@ if (isset($_GET['id'])) {
                 <input disabled id="tehsil" name="tehsil" class="form-select "
                     value="<?php echo $_SESSION['tehsil']; ?>" />
             </div>
+            <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+                <label for="name" class="form-label">Address</label>
+                <input type="text" class="form-control form-control-sm" id="address" name="address"
+                    value="<?php echo $student['address']; ?>" required>
+            </div>
             <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="center" class="form-label">Center</label>
-                <input type="text" id="center" name="center" <?php if ($_SESSION['userType'] == 'Teacher') {
-                                        echo "value='{$_SESSION['userCenter']}' disabled ";
-                                    } ?> value="<?php echo $student['center']; ?>"
+                <input type="text" id="center" name="center" <?php if ($_SESSION['userType'] == 'Teacher')
+                {
+                    echo "value='{$_SESSION['userCenter']}' disabled ";
+                } ?> value="<?php echo $student['center']; ?>"
                     class="form-control form-control-sm">
                 <div id="centerSuggestions" class="suggestions"></div>
             </div>
@@ -182,24 +204,25 @@ if (isset($_GET['id'])) {
 </main>
 
 <script>
-const suggestions = [
-    <?php
+    const suggestions = [
+        <?php
         $centerCountry = $student['country'];
         $centerState = $student['state'];
         $centerDist = $student['district'];
         $centerTeh = $student['tehsil'];
         $centersql = "SELECT id, center FROM `centers` WHERE country = '$centerCountry' AND state = '$centerState' AND district = '$centerDist' AND tehsil = '$centerTeh' ORDER BY center ASC";
         $res = $conn->query($centersql);
-        while ($row = $res->fetch_assoc()) {
+        while ($row = $res->fetch_assoc())
+        {
             echo "'" . $row['center'] . "',";
         }
         ?>
-];
-console.log(suggestions);
+    ];
+    console.log(suggestions);
 
-function handleClick() {
-    const centerInput = document.getElementById('center');
-}
+    function handleClick() {
+        const centerInput = document.getElementById('center');
+    }
 </script>
 
 <?php include '_footer.php'; ?>
