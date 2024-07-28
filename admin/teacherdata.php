@@ -114,7 +114,7 @@ $total_pages = ceil($total_records / $records_per_page);
                             <td>
                                 <a href="updateTeacher.php?user=<?php echo $row['id']; ?>" class="btn p-0 m-0 mx-1 fs-5"><i
                                         class="fa-regular fa-pen-to-square text-success"></i></a>
-                                <a href="delete_teacher.php?id=<?php echo $row['id'] . '&page=' . $page; ?>"
+                                <a href="delete_teacher.php?id=<?php echo $row['id'] . '&page=' . $page; ?>" onclick='return confirm("Are you sure you want to delete this record?")'
                                     class="btn p-0 m-0 mx-1 fs-5"><i class="fa-regular fa-trash-can text-danger"></i></a>
                             </td>
                         </tr>
