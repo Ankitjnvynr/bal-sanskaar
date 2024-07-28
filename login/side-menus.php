@@ -76,3 +76,4 @@ $userType = $_SESSION['userType'];
         <a class="nav-link" href="logout.php">Logout</a>
     </li>
 </ul>
+
