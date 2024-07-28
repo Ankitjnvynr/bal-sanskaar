@@ -42,7 +42,11 @@ $total_pages = ceil($total_records / $limit);
 
 // Fetch records for the current page
 $currentUserId = $_SESSION['id'];
-$sql = "SELECT * FROM teachers WHERE id != $currentUserId AND  district = '$userDistrict' AND tehsil = '$userTehsil' $searchQuery";
+$sql = "SELECT * FROM teachers WHERE id != $currentUserId AND  `state` = '{$_SESSION['state']}' $searchQuery";
+if ($userType == 'Head Teacher')
+{
+  $sql .= " AND `district` = '$userDistrict' AND `tehsil` = '$userTehsil'";
+}
 if (isset($_GET['center']))
 {
   $ctr = $_GET['center'];
