@@ -5,9 +5,11 @@ include '../config/_db.php'; // include the database connection
 ob_start(); // Start output buffering
 
 // Check if the form is submitted
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST')
+{
     $id = $_POST['id'];
     $name = $_POST['name'];
+    $roll = $_POST['roll'];
     $dob = $_POST['dob'];
     $father_name = $_POST['father_name'];
     $father_phone = $_POST['father_phone'];
@@ -19,11 +21,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $state = $_POST['state'];
     $district = $_POST['district'];
     $tehsil = $_POST['tehsil'];
+    $address = $_POST['address'];
     $center = isset($_POST['center']) ? $_POST['center'] : $_SESSION['userCenter'];
     $page = isset($_GET['page']) ? $_GET['page'] : 1;
 
     // Update student data
     $sql = "UPDATE students SET 
+                rollno='$roll',
                 name = '$name', 
                 dob = '$dob', 
                 father_name = '$father_name', 
@@ -36,13 +40,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 state = '$state', 
                 district = '$district', 
                 tehsil = '$tehsil', 
+                address = '$address', 
                 center = '$center' 
             WHERE id = $id";
 
-    if ($conn->query($sql) === TRUE) {
+    if ($conn->query($sql) === TRUE)
+    {
         echo "<script type='text/javascript'> window.location.href = 'dashboard.php?data=student&page={$page}';</script>";
         exit;
-    } else {
+    } else
+    {
         echo "Error updating record: " . $conn->error;
     }
 
@@ -53,17 +60,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ob_end_clean();
 
 // Fetch student data for editing
-if (isset($_GET['id'])) {
+if (isset($_GET['id']))
+{
     $id = $_GET['id'];
     $sql = "SELECT * FROM students WHERE id = $id";
     $result = $conn->query($sql);
-    if ($result->num_rows > 0) {
+    if ($result->num_rows > 0)
+    {
         $student = $result->fetch_assoc();
-    } else {
+    } else
+    {
         echo "No record found";
         exit;
     }
-} else {
+} else
+{
     echo "Invalid request";
     exit;
 }
@@ -94,16 +105,22 @@ if (isset($_GET['id'])) {
 </style>
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 overflow-y-scroll">
-    <div class="h4 text-center shadow-sm my-1 p-1 align-items-center rounded-2 text-danger d-flex justify-content-between">
+    <div
+        class="h4 text-center shadow-sm my-1 p-1 align-items-center rounded-2 text-danger d-flex justify-content-between">
         <i data-bs-toggle="offcanvas" data-bs-target="#sidebarCanvas" class="fa-solid fa-bars d-md-none "></i>
         Welcome: <?php echo mb_convert_case($_SESSION['username'], MB_CASE_TITLE) ?>
     </div>
 
     <form action="" method="post">
         <input type="hidden" name="id" value="<?php echo $student['id']; ?>">
-        
+
         <div class="text-center fw-bold my-2 text-danger fs-3">Edit Student Details</div>
         <div class="row d-flex gap-1 flex-wrap fs-7 px-2">
+            <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+                <label for="name" class="form-label">Roll No</label>
+                <input type="text" class="form-control form-control-sm" id="roll" name="roll"
+                    value="<?php echo $student['rollno']; ?>" required>
+            </div>
             <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="name" class="form-label">Name</label>
                 <input type="text" class="form-control form-control-sm" id="name" name="name"
@@ -146,24 +163,33 @@ if (isset($_GET['id'])) {
             </div>
             <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="countrySelect" class="form-label">Country</label>
-                <input class="form-control form-control-sm" type="text" id="countrySelect" name="country" value="<?php echo $student['country']; ?>"  />
+                <input class="form-control form-control-sm" type="text" id="countrySelect" name="country"
+                    value="<?php echo $student['country']; ?>" />
             </div>
             <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="stateSelect" class="form-label">State</label>
-                <input class="form-control form-control-sm" type="text" id="stateSelect" name="state" value="<?php echo $student['state']; ?>"  />
+                <input class="form-control form-control-sm" type="text" id="stateSelect" name="state"
+                    value="<?php echo $student['state']; ?>" />
             </div>
             <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="districtSelect" class="form-label">District</label>
-                <input class="form-control form-control-sm" type="text" id="districtSelect" name="district" value="<?php echo $student['district']; ?>" />
+                <input class="form-control form-control-sm" type="text" id="districtSelect" name="district"
+                    value="<?php echo $student['district']; ?>" />
             </div>
             <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="tehsil" class="form-label">Tehsil</label>
-                <input class="form-control form-control-sm" type="text" id="tehsil" name="tehsil" value="<?php echo $student['tehsil']; ?>" />
+                <input class="form-control form-control-sm" type="text" id="tehsil" name="tehsil"
+                    value="<?php echo $student['tehsil']; ?>" />
+            </div>
+            <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+                <label for="name" class="form-label">Address</label>
+                <input type="text" class="form-control form-control-sm" id="address" name="address"
+                    value="<?php echo $student['address']; ?>" required>
             </div>
             <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="center" class="form-label">Center</label>
-                <input type="text" <?php if($_SESSION['userType']=='Teacher'){echo "value='{$_SESSION['userCenter']}'";} ?> id="center" name="center" autocomplete="off" placeholder="eg: Center-1" class="form-control form-control-sm"
-                    required>
+                <input type="text" id="center" name="center" autocomplete="off" value="<?php echo $student['center']; ?>"
+                    class="form-control form-control-sm" >
                 <div id="centerSuggestions" class="suggestions"></div>
             </div>
         </div>
@@ -182,7 +208,8 @@ if (isset($_GET['id'])) {
         $centerTeh = $student['tehsil'];
         $centersql = "SELECT id, center FROM `centers` WHERE country = '$centerCountry' AND state = '$centerState' AND district = '$centerDist' AND tehsil = '$centerTeh' ORDER BY center ASC";
         $res = $conn->query($centersql);
-        while ($row = $res->fetch_assoc()) {
+        while ($row = $res->fetch_assoc())
+        {
             echo "'" . $row['center'] . "',";
         }
         ?>

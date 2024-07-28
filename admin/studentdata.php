@@ -33,6 +33,7 @@ if ($result->num_rows > 0) {
         <thead class="thead-light">
             <tr>
                 <th>ID</th>
+                <th>R.No</th>
                 <th>Name</th>
                 <th>DOB</th>
                 <th>Father's Name</th>
@@ -45,6 +46,7 @@ if ($result->num_rows > 0) {
                 <th>State</th>
                 <th>District</th>
                 <th>Tehsil</th>
+                <th>Address</th>
                 <th>Center</th>
                 <th>Actions</th>
             </tr>
@@ -57,6 +59,7 @@ if ($result->num_rows > 0) {
                     $sr++;
                     echo "<tr>
                             <td>{$sr}</td>
+                            <td>{$row['rollno']}</td>
                             <td>{$row['name']}</td>
                             <td>{$row['dob']}</td>
                             <td>{$row['father_name']}</td>
@@ -69,6 +72,7 @@ if ($result->num_rows > 0) {
                             <td>" . (isset($row['state']) ? $row['state'] : 'N/A') . "</td>
                             <td>" . (isset($row['district']) ? $row['district'] : 'N/A') . "</td>
                             <td>" . (isset($row['tehsil']) ? $row['tehsil'] : 'N/A') . "</td>
+                            <td>{$row['address']}</td>
                             <td>{$row['center']}</td>
                             <td class=''>
                             <div  class='d-flex'>
@@ -82,7 +86,7 @@ if ($result->num_rows > 0) {
                         </tr>";
                 }
             } else {
-                echo "<tr><td colspan='15'>No records found</td></tr>";
+                echo "<tr><td colspan='17'>No records found</td></tr>";
             }
             ?>
         </tbody>

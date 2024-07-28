@@ -16,36 +16,40 @@ $_SESSION['insertType'] = 'student';
         <div class="text-center fw-bold my-2 text-danger fs-3">Student Details</div>
         <div class="row d-flex gap-1 flex-wrap fs-7 px-2">
             <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+                <label for="name" class="form-label">Roll No</label>
+                <input type="text" class="form-control form-control-sm" id="roll" name="roll" required>
+            </div>
+            <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="name" class="form-label">Name</label>
-                <input type="text" class="form-control form-control-sm" id="name" name="name">
+                <input type="text" class="form-control form-control-sm" id="name" name="name" required>
             </div>
             <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="dob" class="form-label">DOB</label>
-                <input type="date" class="form-control form-control-sm" id="dob" name="dob">
+                <input required type="date" class="form-control form-control-sm" id="dob" name="dob">
             </div>
             <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="father-name" class="form-label">Father's Name</label>
-                <input type="text" class="form-control form-control-sm" id="father-name" name="father-name">
+                <input required type="text" class="form-control form-control-sm" id="father-name" name="father-name">
             </div>
             <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="father-phone" class="form-label">Father's Phone</label>
-                <input type="text" class="form-control form-control-sm" id="father-phone" name="father-phone">
+                <input required type="text" class="form-control form-control-sm" id="father-phone" name="father-phone">
             </div>
             <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="father-dob" class="form-label">Father's DOB</label>
-                <input type="date" class="form-control form-control-sm" id="father-dob" name="father-dob">
+                <input required type="date" class="form-control form-control-sm" id="father-dob" name="father-dob">
             </div>
             <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="mother-name" class="form-label">Mother's Name</label>
-                <input type="text" class="form-control form-control-sm" id="mother-name" name="mother-name">
+                <input required type="text" class="form-control form-control-sm" id="mother-name" name="mother-name">
             </div>
             <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="mother-phone" class="form-label">Mother's Phone</label>
-                <input type="text" class="form-control form-control-sm" id="mother-phone" name="mother-phone">
+                <input required type="text" class="form-control form-control-sm" id="mother-phone" name="mother-phone">
             </div>
             <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="mother-dob" class="form-label">Mother's DOB</label>
-                <input type="date" class="form-control form-control-sm" id="mother-dob" name="mother-dob">
+                <input required type="date" class="form-control form-control-sm" id="mother-dob" name="mother-dob">
             </div>
             <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="countrySelect" class="form-label">Country</label>
@@ -76,13 +80,13 @@ $_SESSION['insertType'] = 'student';
                 </select>
             </div>
             <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+                <label for="name" class="form-label">Address</label>
+                <input type="text" class="form-control form-control-sm" id="address" name="address" required>
+            </div>
+            <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="center" class="form-label">Center</label>
-                <select id="center" name="center" class="form-select " aria-label="Small select example" required=""
-                    required>
-                    <option value="Center1">Center1</option>
-                    <option value="Center2">Center2</option>
-                    <option value="Center3">Center3</option>
-                </select>
+                <input id="center" name="center" class="form-control  form-control-sm" required="">
+                   
             </div>
 
         </div>

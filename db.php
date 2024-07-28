@@ -15,11 +15,24 @@ try
         center VARCHAR(255) NOT NULL,
         UNIQUE KEY unique_location (country, state, district, tehsil, center)
     )";
+
     $sql2 = "ALTER TABLE teachers ADD userpassword VARCHAR(500)";
+    $add_qualification = "ALTER TABLE teachers ADD qualification VARCHAR(80) AFTER phone";
+    $add_address = "ALTER TABLE students ADD address TEXT AFTER tehsil,ADD rollno VARCHAR(100) AFTER id ";
 
     // Execute the query
     if ($conn->query($sql2) === TRUE) {
         echo "Column added successfully";
+    } else {
+        echo "Error adding column: " . $conn->error;
+    }
+    if ($conn->query($add_qualification) === TRUE) {
+        echo "Column qualification added successfully";
+    } else {
+        echo "Error adding column: " . $conn->error;
+    }
+    if ($conn->query($add_address) === TRUE) {
+        echo "Column address added successfully";
     } else {
         echo "Error adding column: " . $conn->error;
     }
