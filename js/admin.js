@@ -7,11 +7,20 @@ changeTeacherType = (id, e) => {
             id: id,
             type: e.value
         },
+        dataType: 'json', // Ensures the response is parsed as JSON
         success: function (res) {
-            console.log(res);
+            // Check if the response is a JavaScript object
+            console.log(typeof res);
+
+            // Assuming the 10th child element is the one you want to update
+            e.parentNode.parentNode.childNodes[21].innerHTML = res.center;
+        },
+        error: function (xhr, status, error) {
+            console.error('Error:', status, error);
         }
-    })
+    });
 }
+
 
 // cecking the phone no is already exist or not
 $(document).ready(function () {

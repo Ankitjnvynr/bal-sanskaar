@@ -64,29 +64,24 @@ if ($user_id > 0) {
                     value="<?php echo htmlspecialchars($teacher['phone'] ?? ''); ?>">
                 <div id="phone-error" class="text-danger"></div>
             </div>
+            <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+                <label for="name" class="form-label">Qualification</label>
+                <input type="text" class="form-control form-control-sm" id="qualification" name="qualification"
+                    value="<?php echo htmlspecialchars($teacher['qualification'] ?? ''); ?>">
+            </div>
 
             <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="countrySelect" class="form-label">Country</label>
                 <select id="countrySelect" name="country" class="form-select" required onchange="loadState(this)">
                     <option value="">Select Country</option>
-                    <option value="country1"
-                        <?php echo ($teacher && $teacher['country'] == 'country1') ? 'selected' : ''; ?>>Country1
-                    </option>
-                    <option value="country2"
-                        <?php echo ($teacher && $teacher['country'] == 'country2') ? 'selected' : ''; ?>>Country2
-                    </option>
-                    <!-- Add more options as necessary -->
+                    
                 </select>
             </div>
             <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="state" class="form-label">State</label>
                 <select id="stateSelect" name="state" class="form-select" required onchange="loadDistrict(this)">
                     <option value="">Select State</option>
-                    <option value="state1" <?php echo ($teacher && $teacher['state'] == 'state1') ? 'selected' : ''; ?>>
-                        State1</option>
-                    <option value="state2" <?php echo ($teacher && $teacher['state'] == 'state2') ? 'selected' : ''; ?>>
-                        State2</option>
-                    <!-- Add more options as necessary -->
+                    
                 </select>
             </div>
             <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">

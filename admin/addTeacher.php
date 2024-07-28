@@ -15,7 +15,7 @@
                 <label for="type" class="form-label">Teacher/Head Teacher</label>
                 <select id="type" name="type" class="form-select" required>
                     <?php
-                    $arr = ['Head Teacher', 'Teacher'];
+                    $arr = ['Head Teacher', 'Teacher','State Head'];
                     foreach ($arr as $value)
                     {
                         if ($value == $_GET['type'])
@@ -43,6 +43,11 @@
                 <input type="text" class="form-control form-control-sm" id="phone" name="phone"
                     onkeypress="return onlyDigits(event)" size="10" minlength="10" maxlength="10">
                 <div id="phone-error" class="text-danger"></div>
+            </div>
+            <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+                <label for="name" class="form-label">Qualification</label>
+                <input type="text" class="form-control form-control-sm" id="qualification" name="qualification"
+                    >
             </div>
 
 
@@ -73,10 +78,10 @@
                     <option value="teh">teh</option>
                 </select>
             </div>
-            <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+            <!-- <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="center" class="form-label">Center</label>
                 <input type="text" id="center" name="center" class="form-control form-control-sm">
-            </div>
+            </div> -->
 
         </div>
         <div class="text-center my-3"><button type="submit" class="btn btn-danger col-5">Submit</button></div>

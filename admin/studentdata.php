@@ -10,7 +10,7 @@ $sql = "SELECT * FROM students";
 if ($search_query !== '') {
     $sql .= " WHERE name LIKE '%$search_query%' OR father_name LIKE '%$search_query%' OR mother_name LIKE '%$search_query%'";
 }
-$sql .= " LIMIT $start_from, $limit";
+$sql .= " LIMIT $start_from, $limit ";
 $result = $conn->query($sql);
 
 // Debugging step: Print out the first row to check column names
