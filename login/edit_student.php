@@ -189,12 +189,12 @@ if (isset($_GET['id']))
             </div>
             <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="center" class="form-label">Center</label>
-                <input type="text" id="center" name="center" <?php if ($_SESSION['userType'] == 'Teacher')
+                <input type="number" id="center" name="center" <?php if ($_SESSION['userType'] == 'Teacher')
                 {
                     echo "value='{$_SESSION['userCenter']}' disabled ";
                 } ?> value="<?php echo $student['center']; ?>"
                     class="form-control form-control-sm">
-                <div id="centerSuggestions" class="suggestions"></div>
+                
             </div>
         </div>
         <div class="text-center my-3">

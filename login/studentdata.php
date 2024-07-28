@@ -9,7 +9,11 @@ $recordsPerPage = 10;
 $offset = ($page - 1) * $recordsPerPage;
 
 // Get total records for pagination calculation
-$sqlTotal = "SELECT COUNT(*) AS total FROM students WHERE `district` = '{$_SESSION['district']}' AND `tehsil` = '{$_SESSION['tehsil']}'";
+$sqlTotal = "SELECT COUNT(*) AS total FROM students WHERE `state` = '{$_SESSION['state']}'";
+if ($_SESSION['userType'] == 'Head Teacher')
+{
+  $sqlTotal .= " AND `district` = '{$_SESSION['district']}' AND `tehsil` = '{$_SESSION['tehsil']}'";
+}
 if ($_SESSION['userType'] == 'Teacher')
 {
   $sqlTotal .= " AND `center` = '{$_SESSION['userCenter']}'";
@@ -18,22 +22,43 @@ if ($search)
 {
   $sqlTotal .= " AND (name LIKE '%$search%' OR father_name LIKE '%$search%' OR mother_name LIKE '%$search%')";
 }
+
+// Debugging: Print the SQL query
+// echo $sqlTotal;
+
 $resultTotal = $conn->query($sqlTotal);
+if (!$resultTotal)
+{
+  die("Error in SQL query: " . $conn->error);
+}
+
 $totalRecords = $resultTotal->fetch_assoc()['total'];
 $totalPages = ceil($totalRecords / $recordsPerPage);
 
 // Fetch filtered and paginated data
-$sql = "SELECT * FROM students WHERE `district` = '{$_SESSION['district']}' AND `tehsil` = '{$_SESSION['tehsil']}'";
+$sql = "SELECT * FROM students WHERE `state` = '{$_SESSION['state']}'";
+if ($_SESSION['userType'] == 'Head Teacher') 
+{
+  $sql .= " AND `district` = '{$_SESSION['district']}' AND `tehsil` = '{$_SESSION['tehsil']}'";
+}
 if ($_SESSION['userType'] == 'Teacher')
 {
-  $sql .= " AND `center` = '{$_SESSION['userCenter']}'";
+  $sql .= " AND `district` = '{$_SESSION['district']}' AND `tehsil` = '{$_SESSION['tehsil']}' AND `center` = '{$_SESSION['userCenter']}'";
 }
 if ($search)
 {
   $sql .= " AND (name LIKE '%$search%' OR father_name LIKE '%$search%' OR mother_name LIKE '%$search%')";
 }
 $sql .= " LIMIT $offset, $recordsPerPage";
+
+// Debugging: Print the SQL query
+// echo $sql;
+
 $result = $conn->query($sql);
+if (!$result)
+{
+  die("Error in SQL query: " . $conn->error);
+}
 ?>
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 overflow-y-scroll">

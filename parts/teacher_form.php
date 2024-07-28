@@ -79,7 +79,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
             exit;
         } else
         {
-            // header('location:../login/dashboard.php?data=teacher');
+            header('location:../login/dashboard.php?data=teacher');
             exit;
         }
     } else

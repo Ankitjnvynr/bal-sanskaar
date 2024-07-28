@@ -85,6 +85,11 @@ if (isset($_GET['id']))
                     minlength="10" maxlength="10" required>
                 <div id="phone-error" class="text-danger"></div>
             </div>
+             <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+                <label for="name" class="form-label">Qualification</label>
+                <input type="text" class="form-control form-control-sm" id="qualification" name="qualification"
+                    value="<?php echo htmlspecialchars($teacher['qualification'] ?? ''); ?>">
+            </div>
             <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="countrySelect" class="form-label">Country</label>
                 <input disabled id="countrySelect" name="country" class="form-select " value="<?php echo $_SESSION['country']; ?>" />
@@ -111,52 +116,18 @@ if (isset($_GET['id']))
                 <label for="center" class="form-label">Center</label>
                 <input type="text" id="center" name="center" autocomplete="off" class="form-control form-control-sm"
                     value="<?php echo html_entity_decode($teacher['center']); ?>" >
-                <div id="centerSuggestions" class="suggestions"></div>
+                
             </div>
 
         </div>
         <div class="text-center my-3"><button type="submit" class="btn btn-danger col-5">Update</button></div>
     </form>
 
-    <?php
-    include 'centers.php';
-    ?>
+
 
 </main>
 <script>
-    const suggestions = [
-        <?php
-        $centersql = "SELECT id, center FROM `centers` WHERE country = '{$teacher['country']}' AND state = '{$teacher['state']}' AND district = '{$teacher['district']}' AND tehsil = '{$teacher['tehsil']}' ORDER BY center ASC";
-        $res = $conn->query($centersql);
-        while ($row = $res->fetch_assoc())
-        {
-            echo "'" . $row['center'] . "',";
-        }
-        ?>
-    ];
-
-    document.getElementById('center').addEventListener('input', function () {
-        const input = this.value.toLowerCase();
-        const suggestionsBox = document.getElementById('centerSuggestions');
-        suggestionsBox.innerHTML = '';
-
-        if (input) {
-            const filteredSuggestions = suggestions.filter(suggestion =>
-                suggestion.toLowerCase().includes(input)
-            );
-
-            filteredSuggestions.forEach(suggestion => {
-                const div = document.createElement('div');
-                div.className = 'suggestion';
-                div.textContent = suggestion;
-                div.addEventListener('click', function () {
-                    document.getElementById('center').value = this.textContent;
-                    suggestionsBox.innerHTML = '';
-                });
-                suggestionsBox.appendChild(div);
-            });
-        }
-    });
+    
 
     function loadState(countrySelect) {
         // Implement AJAX to load states based on selected country

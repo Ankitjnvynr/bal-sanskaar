@@ -83,7 +83,7 @@ $_SESSION['insertType'] = 'student';
             </div>
             <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="center" class="form-label">Center</label>
-                <input type="text" <?php if ($_SESSION['userType'] == 'Teacher')
+                <input type="number" <?php if ($_SESSION['userType'] == 'Teacher')
                 {
                     echo "value='{$_SESSION['userCenter']}' disabled ";
                 } ?> id="center" name="center" autocomplete="off" placeholder="eg: Center-1"

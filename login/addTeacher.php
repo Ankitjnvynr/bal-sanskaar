@@ -50,10 +50,14 @@
                 <div id="phone-error" class="text-danger"></div>
             </div>
 
-
+            <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+                <label for="name" class="form-label">Qualification</label>
+                <input type="text" class="form-control form-control-sm" id="qualification" name="qualification">
+            </div>
             <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="countrySelect" class="form-label">Country</label>
-                <input disabled id="countrySelect" name="country" class="form-select " value="<?php echo $_SESSION['country']; ?>" />
+                <input disabled id="countrySelect" name="country" class="form-select "
+                    value="<?php echo $_SESSION['country']; ?>" />
 
             </div>
             <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
@@ -73,12 +77,7 @@
                 <input disabled id="tehsil" name="tehsil" class="form-select "
                     value="<?php echo $_SESSION['tehsil']; ?>" />
             </div>
-            <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0 position-relative">
-                <label for="center" class="form-label">Center</label>
-                <input type="text" id="center" placeholder="eg : Center-1" name="center" autocomplete="off" class="form-control form-control-sm"
-                    required>
-                <div id="centerSuggestions" class="suggestions"></div>
-            </div>
+           
 
         </div>
         <div class="text-center my-3"><button type="submit" class="btn btn-danger col-5">Submit</button></div>
@@ -86,9 +85,7 @@
 
 
 
-    <?php
-    include 'centers.php';
-    ?>
+
 
 </main>
 <script>

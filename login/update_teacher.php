@@ -8,6 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     $name = $_POST['name'];
     $dob = $_POST['dob'];
     $phone = $_POST['phone'];
+    $qualification = $_POST['qualification'];
     $country = isset($_POST['country']) ? $_POST['country'] : $_SESSION['country'];
     $state = isset($_POST['state']) ? $_POST['state'] : $_SESSION['state'];
     $district = isset($_POST['district']) ? $_POST['district'] : $_SESSION['district'];
@@ -15,9 +16,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     $center = isset($_POST['center']) ? $_POST['center'] : $_SESSION['center'];
     $page = isset($_POST['page']) ? $_POST['page'] : 1;
 
-    $sql = "UPDATE teachers SET name=?, dob=?, phone=?, country=?, state=?, district=?, tehsil=?, center=? WHERE id=?";
+    // Retrieve the existing phone number from the database
+    $sql = "SELECT phone FROM teachers WHERE id=?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssssssssi", $name, $dob, $phone, $country, $state, $district, $tehsil, $center, $id);
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $stmt->bind_result($existing_phone);
+    $stmt->fetch();
+    $stmt->close();
+
+    // Determine whether to update the password
+    $update_password = false;
+    if ($phone !== $existing_phone)
+    {
+        $new_password = password_hash($phone, PASSWORD_DEFAULT);
+        $update_password = true;
+    }
+
+    // Update the teacher's information
+    if ($update_password)
+    {
+        $sql = "UPDATE teachers SET name=?, dob=?, phone=?, qualification=?, country=?, state=?, district=?, tehsil=?, center=?, userpassword=? WHERE id=?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ssssssssssi", $name, $dob, $phone, $qualification, $country, $state, $district, $tehsil, $center, $new_password, $id);
+    } else
+    {
+        $sql = "UPDATE teachers SET name=?, dob=?, phone=?, qualification=?, country=?, state=?, district=?, tehsil=?, center=? WHERE id=?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("sssssssssi", $name, $dob, $phone, $qualification, $country, $state, $district, $tehsil, $center, $id);
+    }
 
     if ($stmt->execute())
     {
