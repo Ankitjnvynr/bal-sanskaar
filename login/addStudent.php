@@ -70,47 +70,47 @@ $_SESSION['insertType'] = 'student';
             if ($_SESSION['userType'] == 'State Head')
             {
                 ?>
-                <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
-                    <label for="state" class="form-label">District</label>
-                    <select id="districtSelect" name="district" class="form-select " aria-label="Small select example"
-                        required="" onchange="loadTehsil (this)" required>
-                        <option value="dis">district</option>
-                    </select>
-                </div>
-                <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
-                    <label for="state" class="form-label">Tehsil</label>
-                    <select id="tehsil" name="tehsil" class="form-select " aria-label="Small select example" required=""
-                        required>
-                        
-                    </select>
-                </div>
-                <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
-                    <label for="name" class="form-label">Address</label>
-                    <input type="text" class="form-control form-control-sm" id="address" name="address" required>
-                </div>
-                <?php
+            <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+                <label for="state" class="form-label">District</label>
+                <select id="districtSelect" name="district" class="form-select " aria-label="Small select example"
+                    required="" onchange="loadTehsil (this)" required>
+                    <option value="dis">district</option>
+                </select>
+            </div>
+            <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+                <label for="state" class="form-label">Tehsil</label>
+                <select id="tehsil" name="tehsil" class="form-select " aria-label="Small select example" required=""
+                    required>
+
+                </select>
+            </div>
+            <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+                <label for="name" class="form-label">Address</label>
+                <input type="text" class="form-control form-control-sm" id="address" name="address" required>
+            </div>
+            <?php
 
             } else
             {
                 ?>
 
 
-                <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
-                    <label for="district" class="form-label">District</label>
-                    <input disabled id="districtSelect" name="district" class="form-select "
-                        value="<?php echo $_SESSION['district']; ?>" />
-                </div>
-                <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
-                    <label for="tehsil" class="form-label">Tehsil</label>
+            <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+                <label for="district" class="form-label">District</label>
+                <input disabled id="districtSelect" name="district" class="form-select "
+                    value="<?php echo $_SESSION['district']; ?>" />
+            </div>
+            <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+                <label for="tehsil" class="form-label">Tehsil</label>
 
-                    <input disabled id="tehsil" name="tehsil" class="form-select "
-                        value="<?php echo $_SESSION['tehsil']; ?>" />
-                </div>
-                <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
-                    <label for="name" class="form-label">Address</label>
-                    <input type="text" class="form-control form-control-sm" id="address" name="address" required>
-                </div>
-                <?php
+                <input disabled id="tehsil" name="tehsil" class="form-select "
+                    value="<?php echo $_SESSION['tehsil']; ?>" />
+            </div>
+            <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+                <label for="name" class="form-label">Address</label>
+                <input type="text" class="form-control form-control-sm" id="address" name="address" required>
+            </div>
+            <?php
             }
             ?>
             <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
@@ -118,8 +118,8 @@ $_SESSION['insertType'] = 'student';
                 <input type="number" <?php if ($_SESSION['userType'] == 'Teacher')
                 {
                     echo "value='{$_SESSION['userCenter']}' disabled ";
-                } ?> id="center" name="center" autocomplete="off"
-                    placeholder="eg: Center-1" class="form-control form-control-sm" required>
+                } ?> id="center" name="center" autocomplete="off" placeholder="eg: 1"
+                    class="form-control form-control-sm" required>
                 <div id="centerSuggestions" class="suggestions"></div>
             </div>
 
@@ -131,8 +131,8 @@ $_SESSION['insertType'] = 'student';
 </main>
 
 <script>
-    const suggestions = [
-        <?php
+const suggestions = [
+    <?php
         $centerCountry = $_SESSION['country'];
         $centerState = $_SESSION['state'];
         $centerDist = $_SESSION['district'];
@@ -144,11 +144,13 @@ $_SESSION['insertType'] = 'student';
             echo "'" . $row['center'] . "',";
         }
         ?>
-    ];
-    console.log(suggestions);
+];
+console.log(suggestions);
 </script>
 
 <?php include '_footer.php'; ?>
 <script>
-    loadDistrict({value:"<?php echo $_SESSION['state'] ?>"})
+loadDistrict({
+    value: "<?php echo $_SESSION['state'] ?>"
+})
 </script>

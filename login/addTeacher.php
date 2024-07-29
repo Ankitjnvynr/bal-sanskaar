@@ -1,25 +1,25 @@
 <?php include '_header.php'; ?>
 <style>
-    .suggestions {
-        position: absolute;
-        border: 1px solid #ccc;
-        border-top: none;
-        z-index: 1000;
-        width: 95%;
-        max-height: 150px;
-        overflow-y: auto;
-        border-radius: 0 0 0.25rem 0.25rem;
-        background-color: white;
-    }
+.suggestions {
+    position: absolute;
+    border: 1px solid #ccc;
+    border-top: none;
+    z-index: 1000;
+    width: 95%;
+    max-height: 150px;
+    overflow-y: auto;
+    border-radius: 0 0 0.25rem 0.25rem;
+    background-color: white;
+}
 
-    .suggestion {
-        padding: 10px;
-        cursor: pointer;
-    }
+.suggestion {
+    padding: 10px;
+    cursor: pointer;
+}
 
-    .suggestion:hover {
-        background-color: #f0f0f0;
-    }
+.suggestion:hover {
+    background-color: #f0f0f0;
+}
 </style>
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 overflow-y-scroll">
@@ -66,6 +66,30 @@
                     value="<?php echo $_SESSION['state']; ?>" />
             </div>
 
+            <?php
+            if ($_SESSION['userType'] == 'State Head') {
+            ?>
+            <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+                <label for="state" class="form-label">District</label>
+                <select id="districtSelect" name="district" class="form-select " aria-label="Small select example"
+                    required="" onchange="loadTehsil (this)" required>
+                    <option value="dis">district</option>
+                </select>
+            </div>
+            <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+                <label for="state" class="form-label">Tehsil</label>
+                <select id="tehsil" name="tehsil" class="form-select " aria-label="Small select example" required=""
+                    required>
+
+                </select>
+            </div>
+
+            <?php
+
+            } else {
+            ?>
+
+
             <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="district" class="form-label">District</label>
                 <input disabled id="districtSelect" name="district" class="form-select "
@@ -77,7 +101,10 @@
                 <input disabled id="tehsil" name="tehsil" class="form-select "
                     value="<?php echo $_SESSION['tehsil']; ?>" />
             </div>
-           
+
+            <?php
+            }
+            ?>
 
         </div>
         <div class="text-center my-3"><button type="submit" class="btn btn-danger col-5">Submit</button></div>
@@ -88,17 +115,11 @@
 
 
 </main>
-<script>
-    const suggestions = [
-        <?php
 
-        $centersql = "SELECT id,center FROM `centers` WHERE country = '$centerCountry' AND state = '$centerState' AND district = '$centerDist' AND tehsil = '$centerTeh' ORDER BY center ASC";
-        $res = $conn->query($centersql);
-        while ($row = $res->fetch_assoc())
-        {
-            echo "'" . $row['center'] . "',";
-        }
-        ?>
-    ];
-</script>
 <?php include '_footer.php'; ?>
+
+<script>
+loadDistrict({
+    value: "<?php echo $_SESSION['state'] ?>"
+})
+</script>

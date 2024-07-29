@@ -7,8 +7,7 @@ $userDistrict = $_SESSION['district'];
 $userTehsil = $_SESSION['tehsil'];
 $userType = $_SESSION['userType'];
 
-if ($userType == 'Teacher')
-{
+if ($userType == 'Teacher') {
   header('location:?data=student');
   exit();
 }
@@ -23,16 +22,14 @@ $start_from = ($page - 1) * $limit;
 $searchQuery = '';
 $search = '';
 
-if (isset($_GET['search']))
-{
+if (isset($_GET['search'])) {
   $search = $_GET['search'];
   $searchQuery = " AND (name LIKE '%$search%' OR phone LIKE '%$search%' OR center LIKE '%$search%')";
 }
 
 // Fetch total records for pagination
-$total_records_query = "SELECT COUNT(*) FROM teachers WHERE  district = '$userDistrict' AND tehsil = '$userTehsil' $searchQuery";
-if (isset($_GET['center']))
-{
+$total_records_query = "SELECT COUNT(*) FROM teachers WHERE   id != $currentUserId AND  `state` = '{$_SESSION['state']}' $searchQuery";
+if (isset($_GET['center'])) {
   $ctr = $_GET['center'];
   $total_records_query .= " AND center = '$ctr'";
 }
@@ -43,12 +40,10 @@ $total_pages = ceil($total_records / $limit);
 // Fetch records for the current page
 $currentUserId = $_SESSION['id'];
 $sql = "SELECT * FROM teachers WHERE id != $currentUserId AND  `state` = '{$_SESSION['state']}' $searchQuery";
-if ($userType == 'Head Teacher')
-{
+if ($userType == 'Head Teacher') {
   $sql .= " AND `district` = '$userDistrict' AND `tehsil` = '$userTehsil'";
 }
-if (isset($_GET['center']))
-{
+if (isset($_GET['center'])) {
   $ctr = $_GET['center'];
   $sql .= " AND center = '$ctr'";
 }
@@ -82,6 +77,7 @@ $result = $conn->query($sql);
                     <th scope="col">Name</th>
                     <th scope="col">DOB</th>
                     <th scope="col">Phone</th>
+                    <th scope="col">Qualification</th>
                     <th scope="col">Country</th>
                     <th scope="col">State</th>
                     <th scope="col">District</th>
@@ -92,17 +88,16 @@ $result = $conn->query($sql);
             </thead>
             <tbody>
                 <?php
-        if ($result->num_rows > 0)
-        {
+        if ($result->num_rows > 0) {
           $sr = $start_from;
-          while ($row = $result->fetch_assoc())
-          {
+          while ($row = $result->fetch_assoc()) {
             $sr++;
             echo "<tr>
                     <th scope='row'>{$sr}</th>
                     <td>{$row['name']}</td>
                     <td>{$row['dob']}</td>
                     <td>{$row['phone']}</td>
+                    <td>{$row['qualification']}</td>
                     <td>{$row['country']}</td>
                     <td>{$row['state']}</td>
                     <td>{$row['district']}</td>
@@ -114,8 +109,7 @@ $result = $conn->query($sql);
                     </td>
                   </tr>";
           }
-        } else
-        {
+        } else {
           echo "<tr><td colspan='10' class='text-center'>No records found</td></tr>";
         }
         $conn->close();
@@ -126,8 +120,7 @@ $result = $conn->query($sql);
 
     <div class="pagination">
         <?php
-    for ($i = 1; $i <= $total_pages; $i++)
-    {
+    for ($i = 1; $i <= $total_pages; $i++) {
       echo "<a href='?data=teacher&page=" . $i . "&search=" . $search . "' class='btn btn-primary btn-sm mx-1'>" . $i . "</a>";
     }
     ?>
