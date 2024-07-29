@@ -172,21 +172,53 @@ if (isset($_GET['id']))
                 <input disabled id="stateSelect" name="state" class="form-select "
                     value="<?php echo $_SESSION['state']; ?>" />
             </div>
-            <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
-                <label for="district" class="form-label">District</label>
-                <input disabled id="districtSelect" name="district" class="form-select "
-                    value="<?php echo $_SESSION['district']; ?>" />
-            </div>
-            <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
-                <label for="tehsil" class="form-label">Tehsil</label>
-                <input disabled id="tehsil" name="tehsil" class="form-select "
-                    value="<?php echo $_SESSION['tehsil']; ?>" />
-            </div>
-            <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
-                <label for="name" class="form-label">Address</label>
-                <input type="text" class="form-control form-control-sm" id="address" name="address"
-                    value="<?php echo $student['address']; ?>" required>
-            </div>
+            <?php
+            if ($_SESSION['userType'] == 'State Head')
+            {
+                ?>
+                <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+                    <label for="state" class="form-label">District</label>
+                    <select id="districtSelect" name="district" class="form-select " aria-label="Small select example"
+                        required="" onchange="loadTehsil (this)" required>
+                        <option value="dis">district</option>
+                    </select>
+                </div>
+                <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+                    <label for="state" class="form-label">Tehsil</label>
+                    <select id="tehsil" name="tehsil" class="form-select " aria-label="Small select example" required=""
+                        required>
+
+                    </select>
+                </div>
+                <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+                    <label for="name" class="form-label">Address</label>
+                    <input type="text" class="form-control form-control-sm" id="address" name="address" required>
+                </div>
+                <?php
+
+            } else
+            {
+                ?>
+
+
+                <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+                    <label for="district" class="form-label">District</label>
+                    <input disabled id="districtSelect" name="district" class="form-select "
+                        value="<?php echo $_SESSION['district']; ?>" />
+                </div>
+                <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+                    <label for="tehsil" class="form-label">Tehsil</label>
+
+                    <input disabled id="tehsil" name="tehsil" class="form-select "
+                        value="<?php echo $_SESSION['tehsil']; ?>" />
+                </div>
+                <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+                    <label for="name" class="form-label">Address</label>
+                    <input type="text" class="form-control form-control-sm" id="address" name="address" required>
+                </div>
+                <?php
+            }
+            ?>
             <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="center" class="form-label">Center</label>
                 <input type="number" id="center" name="center" <?php if ($_SESSION['userType'] == 'Teacher')
@@ -194,7 +226,7 @@ if (isset($_GET['id']))
                     echo "value='{$_SESSION['userCenter']}' disabled ";
                 } ?> value="<?php echo $student['center']; ?>"
                     class="form-control form-control-sm">
-                
+
             </div>
         </div>
         <div class="text-center my-3">

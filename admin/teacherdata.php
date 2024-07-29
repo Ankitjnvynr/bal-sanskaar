@@ -133,7 +133,7 @@ $total_pages = ceil($total_records / $records_per_page);
             <?php if ($page > 1): ?>
                 <li class="page-item">
                     <a class="page-link"
-                        href="?page=<?php echo $page - 1; ?>&search=<?php echo htmlspecialchars($search_query); ?>"
+                        href="?data=teacher&page=<?php echo $page - 1; ?>&search=<?php echo htmlspecialchars($search_query); ?>"
                         aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                     </a>

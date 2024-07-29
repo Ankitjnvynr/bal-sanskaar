@@ -96,4 +96,4 @@ const initializeForm = async () => {
     }
 };
 
-setTimeout(initializeForm, 100);
+setTimeout(initializeForm, 500);
