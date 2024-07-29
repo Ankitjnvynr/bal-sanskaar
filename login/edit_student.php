@@ -5,8 +5,7 @@ include '../config/_db.php'; // include the database connection
 ob_start(); // Start output buffering
 
 // Check if the form is submitted
-if ($_SERVER['REQUEST_METHOD'] === 'POST')
-{
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id = $_POST['id'];
     $roll = $_POST['roll'];
     $address = $_POST['address'];
@@ -44,12 +43,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
                 center = '$center' 
             WHERE id = $id";
 
-    if ($conn->query($sql) === TRUE)
-    {
+    if ($conn->query($sql) === TRUE) {
         echo "<script type='text/javascript'> window.location.href = 'dashboard.php?data=student&page={$page}';</script>";
         exit;
-    } else
-    {
+    } else {
         echo "Error updating record: " . $conn->error;
     }
 
@@ -60,48 +57,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
 ob_end_clean();
 
 // Fetch student data for editing
-if (isset($_GET['id']))
-{
+if (isset($_GET['id'])) {
     $id = $_GET['id'];
     $sql = "SELECT * FROM students WHERE id = $id";
     $result = $conn->query($sql);
-    if ($result->num_rows > 0)
-    {
+    if ($result->num_rows > 0) {
         $student = $result->fetch_assoc();
-    } else
-    {
+    } else {
         echo "No record found";
         exit;
     }
-} else
-{
+} else {
     echo "Invalid request";
     exit;
 }
 ?>
 
 <style>
-    .suggestions {
-        position: absolute;
-        border: 1px solid #ccc;
-        border-top: none;
-        z-index: 1000;
-        width: 95%;
-        max-height: 150px;
-        overflow-y: auto;
-        border-radius: 0 0 0.25rem 0.25rem;
-        background-color: white;
-        max-width: 300px;
-    }
+.suggestions {
+    position: absolute;
+    border: 1px solid #ccc;
+    border-top: none;
+    z-index: 1000;
+    width: 95%;
+    max-height: 150px;
+    overflow-y: auto;
+    border-radius: 0 0 0.25rem 0.25rem;
+    background-color: white;
+    max-width: 300px;
+}
 
-    .suggestion {
-        padding: 10px;
-        cursor: pointer;
-    }
+.suggestion {
+    padding: 10px;
+    cursor: pointer;
+}
 
-    .suggestion:hover {
-        background-color: #f0f0f0;
-    }
+.suggestion:hover {
+    background-color: #f0f0f0;
+}
 </style>
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 overflow-y-scroll">
@@ -173,58 +166,57 @@ if (isset($_GET['id']))
                     value="<?php echo $_SESSION['state']; ?>" />
             </div>
             <?php
-            if ($_SESSION['userType'] == 'State Head')
-            {
-                ?>
-                <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
-                    <label for="state" class="form-label">District</label>
-                    <select id="districtSelect" name="district" class="form-select " aria-label="Small select example"
-                        required="" onchange="loadTehsil (this)" required>
-                        <option value="dis">district</option>
-                    </select>
-                </div>
-                <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
-                    <label for="state" class="form-label">Tehsil</label>
-                    <select id="tehsil" name="tehsil" class="form-select " aria-label="Small select example" required=""
-                        required>
+            if ($_SESSION['userType'] == 'State Head') {
+            ?>
+            <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+                <label for="state" class="form-label">District</label>
+                <select id="districtSelect" name="district" class="form-select " aria-label="Small select example"
+                    required="" onchange="loadTehsil (this)" required>
+                    <option value="dis">district</option>
+                </select>
+            </div>
+            <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+                <label for="state" class="form-label">Tehsil</label>
+                <select id="tehsil" name="tehsil" class="form-select " aria-label="Small select example" required=""
+                    required>
 
-                    </select>
-                </div>
-                <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
-                    <label for="name" class="form-label">Address</label>
-                    <input type="text" class="form-control form-control-sm" id="address" name="address" required>
-                </div>
-                <?php
+                </select>
+            </div>
+            <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+                <label for="name" class="form-label">Address</label>
+                <input type="text" class="form-control form-control-sm" value="<?php echo $student['address']; ?>"
+                    id="address" name="address" required>
+            </div>
+            <?php
 
-            } else
-            {
-                ?>
+            } else {
+            ?>
 
 
-                <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
-                    <label for="district" class="form-label">District</label>
-                    <input disabled id="districtSelect" name="district" class="form-select "
-                        value="<?php echo $_SESSION['district']; ?>" />
-                </div>
-                <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
-                    <label for="tehsil" class="form-label">Tehsil</label>
+            <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+                <label for="district" class="form-label">District</label>
+                <input disabled id="districtSelect" name="district" class="form-select "
+                    value="<?php echo $_SESSION['district']; ?>" />
+            </div>
+            <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+                <label for="tehsil" class="form-label">Tehsil</label>
 
-                    <input disabled id="tehsil" name="tehsil" class="form-select "
-                        value="<?php echo $_SESSION['tehsil']; ?>" />
-                </div>
-                <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
-                    <label for="name" class="form-label">Address</label>
-                    <input type="text" class="form-control form-control-sm" id="address" name="address" required>
-                </div>
-                <?php
+                <input disabled id="tehsil" name="tehsil" class="form-select "
+                    value="<?php echo $_SESSION['tehsil']; ?>" />
+            </div>
+            <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+                <label for="name" class="form-label">Address</label>
+                <input type="text" class="form-control form-control-sm" value="<?php echo $student['address']; ?>"
+                    id="address" name="address" required>
+            </div>
+            <?php
             }
             ?>
             <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="center" class="form-label">Center</label>
-                <input type="number" id="center" name="center" <?php if ($_SESSION['userType'] == 'Teacher')
-                {
-                    echo "value='{$_SESSION['userCenter']}' disabled ";
-                } ?> value="<?php echo $student['center']; ?>"
+                <input type="number" id="center" name="center" <?php if ($_SESSION['userType'] == 'Teacher') {
+                                                                    echo "value='{$_SESSION['userCenter']}' disabled ";
+                                                                } ?> value="<?php echo $student['center']; ?>"
                     class="form-control form-control-sm">
 
             </div>
@@ -235,27 +227,25 @@ if (isset($_GET['id']))
     </form>
 </main>
 
-<script>
-    const suggestions = [
-        <?php
-        $centerCountry = $student['country'];
-        $centerState = $student['state'];
-        $centerDist = $student['district'];
-        $centerTeh = $student['tehsil'];
-        $centersql = "SELECT id, center FROM `centers` WHERE country = '$centerCountry' AND state = '$centerState' AND district = '$centerDist' AND tehsil = '$centerTeh' ORDER BY center ASC";
-        $res = $conn->query($centersql);
-        while ($row = $res->fetch_assoc())
-        {
-            echo "'" . $row['center'] . "',";
-        }
-        ?>
-    ];
-    console.log(suggestions);
 
-    function handleClick() {
-        const centerInput = document.getElementById('center');
-    }
-</script>
 
 <?php include '_footer.php'; ?>
+<script>
+var currentDistrict = '<?php echo $student['district'] ?>'
+var currentTehsil = '<?php echo $student['tehsil'] ?>'
+const initializeForm2 = async () => {
+    try {
+
+        await loadDistrict({
+            value: '<?php echo $student['state'] ?>'
+        });
+        await selectOptionByValue('districtSelect', currentDistrict);
+        await loadTehsil(document.getElementById("districtSelect"));
+        await selectOptionByValue('tehsil', currentTehsil);
+    } catch (error) {
+        console.error("Error initializing form:", error);
+    }
+}
+setTimeout(initializeForm2, 500);
+</script>
 <?php $conn->close(); ?>

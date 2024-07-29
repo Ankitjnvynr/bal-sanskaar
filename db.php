@@ -1,8 +1,7 @@
 <?php
 include 'config/_db.php';
 
-try
-{
+try {
 
 
     // SQL to create table
@@ -21,30 +20,40 @@ try
     $add_address = "ALTER TABLE students ADD address TEXT AFTER tehsil,ADD rollno VARCHAR(100) AFTER id ";
 
     // Execute the query
+
+
+
+    // Use exec() because no results are returned
+    $conn->query($sql);
+} catch (PDOException $e) {
+    echo $sql . "<br>" . $e->getMessage();
+}
+try {
     if ($conn->query($sql2) === TRUE) {
         echo "Column added successfully";
     } else {
         echo "Error adding column: " . $conn->error;
     }
+} catch (\Throwable $th) {
+    echo $th;
+}
+// Close connection
+try {
     if ($conn->query($add_qualification) === TRUE) {
         echo "Column qualification added successfully";
     } else {
         echo "Error adding column: " . $conn->error;
     }
+} catch (\Throwable $th) {
+   echo $th;
+}
+try {
     if ($conn->query($add_address) === TRUE) {
         echo "Column address added successfully";
     } else {
         echo "Error adding column: " . $conn->error;
     }
-
-    // Use exec() because no results are returned
-    $conn->query($sql);
-    echo "Table locations created successfully";
-} catch (PDOException $e)
-{
-    echo $sql . "<br>" . $e->getMessage();
+} catch (\Throwable $th) {
+   echo $th;
 }
-
-// Close connection
 $conn = null;
-?>
