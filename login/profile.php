@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['profile_picture'])) {
     // Check if image file is an actual image
     $check = getimagesize($_FILES["profile_picture"]["tmp_name"]);
     if ($check === false) {
-        echo "<div class='alert alert-danger'>File is not an image.</div>";
+        $alert = "<div class='alert alert-danger'>File is not an image.</div>";
         $uploadOk = 0;
     }
 
@@ -47,13 +47,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['profile_picture'])) {
 
     // Allow certain file formats
     if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
-        echo "<div class='alert alert-danger'>Sorry, only JPG, JPEG, PNG & GIF files are allowed.</div>";
+        $alert = "<div class='alert alert-danger'>Sorry, only JPG, JPEG, PNG & GIF files are allowed.</div>";
         $uploadOk = 0;
     }
 
     // Check if $uploadOk is set to 0 by an error
     if ($uploadOk == 0) {
-        echo "<div class='alert alert-danger'>Sorry, your file was not uploaded.</div>";
+        $alert = "<div class='alert alert-danger'>Sorry, your file was not uploaded.</div>";
     } else {
         // Generate a new file name using the current timestamp
         $timestamp = time(); // Current timestamp
@@ -81,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['profile_picture'])) {
 
             $update = true;
         } else {
-            echo "<div class='alert alert-danger'>Sorry, there was an error uploading your file.</div>";
+            $alert = "<div class='alert alert-danger'>Sorry, there was an error uploading your file.</div>";
         }
     }
 }
@@ -104,7 +104,8 @@ if ($user_id > 0) {
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 overflow-y-scroll">
     <?php
     if ($update) {
-        echo "<div class='alert alert-success'>The file " . htmlspecialchars($new_file_name) . " has been uploaded.</div>";
+        $alert = "<div class='alert alert-success'>The file " . htmlspecialchars($new_file_name) . " has been uploaded.</div>";
+        echo $alert;
     }
     ?>
     <div class=" my-4">
