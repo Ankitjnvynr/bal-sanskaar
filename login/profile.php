@@ -5,203 +5,205 @@ require_once '../config/_db.php';
 
 $user_id = $_SESSION['id'];
 $teacher = null;
-$update = false;
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['profile_picture'])) {
-    // Define the target directory
-    $target_dir = "../imgs/uploads/";
 
-    // Check if directory exists, if not create it
-    if (!is_dir($target_dir)) {
-        mkdir($target_dir, 0755, true);
-    }
-
-    $target_file = $target_dir . basename($_FILES["profile_picture"]["name"]);
-    $uploadOk = 1;
-    $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-
-    // Check if image file is a actual image
-    $check = getimagesize($_FILES["profile_picture"]["tmp_name"]);
-    if ($check === false) {
-        echo "<div class='alert alert-danger'>File is not an image.</div>";
-        $uploadOk = 0;
-    }
-
-    // Check file size
-    if ($_FILES["profile_picture"]["size"] > 500000) {
-        echo "<div class='alert alert-danger'>Sorry, your file is too large.</div>";
-        $uploadOk = 0;
-    }
-
-    // Allow certain file formats
-    if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
-        echo "<div class='alert alert-danger'>Sorry, only JPG, JPEG, PNG & GIF files are allowed.</div>";
-        $uploadOk = 0;
-    }
-
-    // Check if $uploadOk is set to 0 by an error
-    if ($uploadOk == 0) {
-        echo "<div class='alert alert-danger'>Sorry, your file was not uploaded.</div>";
-    } else {
-       
-        // Generate a new file name using the current timestamp
-        $timestamp = time(); // Current timestamp
-        $file_extension = pathinfo($_FILES["profile_picture"]["name"], PATHINFO_EXTENSION); // Extract the file extension
-        $new_file_name = $timestamp . "." . $file_extension; // New file name
-
-        // Define the target file path
-        $target_file = $target_dir . $new_file_name;
-
-        if (move_uploaded_file($_FILES["profile_picture"]["tmp_name"], $target_file)) {
-            // Update the database with the new file name
-            $sql_update = "UPDATE teachers SET pic = ? WHERE id = ?";
-            $stmt_update = $conn->prepare($sql_update);
-            $stmt_update->bind_param("si", $new_file_name, $user_id);
-            $stmt_update->execute();
-            $stmt_update->close();
-
-            $update = true;
-            
-        } else {
-            echo "<div class='alert alert-danger'>Sorry, there was an error uploading your file.</div>";
-        }
-    }
-}
-
-if ($user_id > 0) {
+if ($user_id > 0)
+{
     // Fetch existing data
     $sql_fetch = "SELECT * FROM teachers WHERE id = ?";
     $stmt_fetch = $conn->prepare($sql_fetch);
     $stmt_fetch->bind_param("i", $user_id);
     $stmt_fetch->execute();
     $result = $stmt_fetch->get_result();
-    if ($result->num_rows > 0) {
+    if ($result->num_rows > 0)
+    {
         $teacher = $result->fetch_assoc();
     }
     $stmt_fetch->close();
 }
-
-
-
 ?>
 
+
+
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 overflow-y-scroll">
-    <?php
-    if ($update) {
-         "<div class='alert alert-success'>The file " . htmlspecialchars(basename($_FILES["profile_picture"]["name"])) . " has been uploaded.</div>";
-    }
-    ?>
-    <div class=" my-4">
-        <!-- Profile Card -->
-        <div class="row align-items-center">
-            <!-- Profile Picture -->
-            <div class="col-md-4 text-center">
-                <img src="../imgs/uploads/<?php echo htmlspecialchars($teacher['pic'] ?? 'defaultimg.png'); ?>" alt="Profile Picture" class="img-fluid rounded-circle" style="width: 150px; height: 150px; object-fit: cover;">
-                <!-- Profile Picture Upload Form -->
-                <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" enctype="multipart/form-data">
-                    <div class="my-3">
-                        <input type="file" name="profile_picture" class="form-control form-control-sm bg-danger-subtle" accept="image/*" required>
-                        <button type="submit" class="btn btn-danger mt-2">Upload New Photo</button>
-                    </div>
-                </form>
+    <div
+        class="h4 text-center shadow-sm my-1 p-1 align-items-center rounded-2 text-danger d-flex justify-content-between">
+        <i data-bs-toggle="offcanvas" data-bs-target="#sidebarCanvas" class="fa-solid fa-bars d-md-none "></i>
+        Welcome: <?php echo mb_convert_case($_SESSION['username'], MB_CASE_TITLE) ?>
+    </div>
+
+    <form id="updateForm" action="update_teacher.php" method="post">
+        <div class="text-center fw-bold my-2 text-danger fs-3">Your Details</div>
+
+        <input type="hidden" name="id" value="<?php echo htmlspecialchars($user_id); ?>">
+
+        <div class="row d-flex gap-1 flex-wrap fs-7 px-2">
+
+            <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" class="form-control form-control-sm" id="name" name="name"
+                    value="<?php echo htmlspecialchars($teacher['name'] ?? ''); ?>">
             </div>
-            <!-- Profile Data -->
-            <div class="col-md-8">
-                <div class="card profile-card shadow-sm ">
-                    <div class="card-body d-flex align-items-center flex-column">
-                        <h4 class="card-title mb-1"><?php echo htmlspecialchars($teacher['name'] ?? ''); ?></h4>
-                        <p class="card-text text-muted"><?php echo htmlspecialchars($teacher['email'] ?? ''); ?></p>
-                        <p class="card-text"><strong>Date of Birth:</strong> <?php echo htmlspecialchars($teacher['dob'] ?? ''); ?></p>
-                        <p class="card-text"><strong>Phone:</strong> <?php echo htmlspecialchars($teacher['phone'] ?? ''); ?></p>
-                        <p class="card-text"><strong>Country:</strong> <?php echo htmlspecialchars($teacher['country'] ?? ''); ?></p>
-                        <p class="card-text"><strong>State:</strong> <?php echo htmlspecialchars($teacher['state'] ?? ''); ?></p>
-                        <p class="card-text"><strong>District:</strong> <?php echo htmlspecialchars($teacher['district'] ?? ''); ?></p>
-                        <p class="card-text"><strong>Tehsil:</strong> <?php echo htmlspecialchars($teacher['tehsil'] ?? ''); ?></p>
-                        <p class="card-text"><strong>Center:</strong> <?php echo htmlspecialchars($teacher['center'] ?? ''); ?></p>
-                        <div class="text-center my-3">
-                            <!-- <a href="update_teacher.php" class="btn btn-danger col-5">Edit Profile</a> -->
+            <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+                <label for="dob" class="form-label">DOB</label>
+                <input type="date" class="form-control form-control-sm" id="dob" name="dob"
+                    value="<?php echo htmlspecialchars($teacher['dob'] ?? ''); ?>">
+            </div>
+
+            <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+                <label for="phone" class="form-label">Phone</label>
+                <input disabled type="text" class="form-control form-control-sm" id="phone" name="phone"
+                    onkeypress="return onlyDigits(event)" size="10" minlength="10" maxlength="10"
+                    value="<?php echo htmlspecialchars($teacher['phone'] ?? ''); ?>">
+                <div id="phone-error" class="text-danger"></div>
+            </div>
+
+            <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+                <label for="countrySelect" class="form-label">Country</label>
+                <select id="countrySelect" name="country" class="form-select" required onchange="loadState(this)">
+                    <option value="">Select Country</option>
+                    <option value="country1" <?php echo ($teacher && $teacher['country'] == 'country1') ? 'selected' : ''; ?>>Country1</option>
+                    <option value="country2" <?php echo ($teacher && $teacher['country'] == 'country2') ? 'selected' : ''; ?>>Country2</option>
+                    <!-- Add more options as necessary -->
+                </select>
+            </div>
+            <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+                <label for="state" class="form-label">State</label>
+                <select id="stateSelect" name="state" class="form-select" required onchange="loadDistrict(this)">
+                    <option value="">Select State</option>
+                    <option value="state1" <?php echo ($teacher && $teacher['state'] == 'state1') ? 'selected' : ''; ?>>
+                        State1</option>
+                    <option value="state2" <?php echo ($teacher && $teacher['state'] == 'state2') ? 'selected' : ''; ?>>
+                        State2</option>
+                    <!-- Add more options as necessary -->
+                </select>
+            </div>
+            <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+                <label for="district" class="form-label">District</label>
+                <select id="districtSelect" name="district" class="form-select" required onchange="loadTehsil(this)">
+                    <option value="">Select District</option>
+                    <option value="district1" <?php echo ($teacher && $teacher['district'] == 'district1') ? 'selected' : ''; ?>>District1</option>
+                    <option value="district2" <?php echo ($teacher && $teacher['district'] == 'district2') ? 'selected' : ''; ?>>District2</option>
+                    <!-- Add more options as necessary -->
+                </select>
+            </div>
+            <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+                <label for="tehsil" class="form-label">Tehsil</label>
+                <select id="tehsil" name="tehsil" class="form-select" required>
+                    <option value="">Select Tehsil</option>
+                    <option value="tehsil1" <?php echo ($teacher && $teacher['tehsil'] == 'tehsil1') ? 'selected' : ''; ?>>Tehsil1</option>
+                    <option value="tehsil2" <?php echo ($teacher && $teacher['tehsil'] == 'tehsil2') ? 'selected' : ''; ?>>Tehsil2</option>
+                    <!-- Add more options as necessary -->
+                </select>
+            </div>
+            <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+                <label for="center" class="form-label">Center</label>
+                <input disabled type="text" id="center" name="center" class="form-control form-control-sm"
+                    value="<?php echo htmlspecialchars($teacher['center'] ?? ''); ?>">
+            </div>
+
+        </div>
+        <div class="text-center my-3"><button type="submit" class="btn btn-danger col-5">Update</button></div>
+    </form>
+
+    <script>
+        updating = true;
+        document.getElementById('updateForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            const form = event.target;
+            const formData = new FormData(form);
+
+            fetch(form.action, {
+                method: form.method,
+                body: formData
+            })
+                .then(response => response.text()) // Assuming the server returns a response text
+                .then(data => {
+                    if (data.includes('success')) { // Check for a success message or condition
+                        window.location.href = 'profile.php'; // Redirect to profile.php
+                    } else {
+                        // Handle errors or show feedback to the user
+                        console.error('Update failed:', data);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        });
+    </script>
+
+    <hr>
+    <div class="accordion fs-7" id="accordionPanelsStayOpenExample">
+        <div class="accordion-item accordion-item-sm">
+            <h2 class="accordion-header ">
+                <button class="accordion-button bg-light" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
+                    aria-controls="panelsStayOpen-collapseOne">
+                    Change Password
+                </button>
+            </h2>
+            <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse ">
+                <div class="accordion-body">
+                    <form class="row d-flex gap-1 flex-wrap fs-7 px-2" id="changePasswordForm">
+                        <div class="form-item">
+                            <label for="currentPassword" class="form-label">Current Password</label>
+                            <input type="password" class="form-control form-control-sm" id="currentPassword"
+                                name="current_password" required>
                         </div>
-                    </div>
+                        <div class="form-item">
+                            <label for="newPassword" class="form-label">New Password</label>
+                            <input type="password" class="form-control form-control-sm" id="newPassword"
+                                name="new_password" required>
+                        </div>
+                        <div class="form-item">
+                            <label for="confirmPassword" class="form-label">Confirm New Password</label>
+                            <input type="password" class="form-control form-control-sm" id="confirmPassword"
+                                name="confirm_password" required>
+                        </div>
+                        <div class="text-center mt-2">
+                            <button type="submit" class="btn btn-danger">Change Password</button>
+                        </div>
+                        <div id="message" class="mt-3 text-center"></div>
+                    </form>
                 </div>
             </div>
         </div>
 
-        <hr>
+    </div>
+    </div>
+</main>
+<script>
 
-        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 overflow-y-scroll">
-            <div class="container my-2">
-                <!-- Profile Card and other content here -->
+    // password change funciton 
+    $(document).ready(function () {
 
-                <!-- Change Password Section -->
-                <div class="accordion" id="accordionPanelsStayOpenExample">
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#changePasswordCollapse" aria-expanded="true" aria-controls="changePasswordCollapse">
-                                Change Password
-                            </button>
-                        </h2>
-                        <div id="changePasswordCollapse" class="accordion-collapse collapse show">
-                            <div class="accordion-body">
-                                <form class="row g-3" id="changePasswordForm">
-                                    <div class="col-sm-12 mb-3">
-                                        <label for="currentPassword" class="form-label">Current Password</label>
-                                        <input type="password" class="form-control form-control-lg" id="currentPassword" name="current_password" placeholder="Enter current password" required>
-                                    </div>
-                                    <div class="col-sm-12 mb-3">
-                                        <label for="newPassword" class="form-label">New Password</label>
-                                        <input type="password" class="form-control form-control-lg" id="newPassword" name="new_password" placeholder="Enter new password" required>
-                                    </div>
-                                    <div class="col-sm-12 mb-3">
-                                        <label for="confirmPassword" class="form-label">Confirm New Password</label>
-                                        <input type="password" class="form-control form-control-lg" id="confirmPassword" name="confirm_password" placeholder="Re-enter new password" required>
-                                    </div>
-                                    <div class="text-center mt-3">
-                                        <button type="submit" class="btn btn-danger btn-lg">Change Password</button>
-                                    </div>
-                                    <div id="message" class="mt-3 text-center"></div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </main>
-
-        <!-- Include Bootstrap JS and CSS -->
-        <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-
-
-        <script>
-            // Password change function
-            document.addEventListener('DOMContentLoaded', function() {
-                document.getElementById('changePasswordForm').addEventListener('submit', function(event) {
-                    event.preventDefault();
-                    const formData = new FormData(this);
-
-                    fetch('../parts/change_password.php', {
-                            method: 'POST',
-                            body: formData
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.success) {
-                                document.getElementById('message').innerHTML = `<div class="alert alert-success">${data.message}</div>`;
-                                setTimeout(() => {
-                                    const collapseElement = new bootstrap.Collapse(document.getElementById('changePasswordCollapse'), {
-                                        toggle: false
-                                    });
-                                    collapseElement.hide(); // Close the accordion
-                                    document.getElementById('message').innerHTML = '';
-                                }, 4000);
-                            } else {
-                                document.getElementById('message').innerHTML = `<div class="alert alert-danger">${data.message}</div>`;
-                            }
-                        })
-                        .catch(error => {
-                            document.getElementById('message').innerHTML = `<div class="alert alert-danger">An error occurred while processing the request.</div>`;
-                        });
-                });
+        $('#changePasswordForm').on('submit', function (event) {
+            event.preventDefault();
+            const formData = $(this).serialize();
+            $.ajax({
+                url: '../parts/change_password.php',
+                type: 'POST',
+                data: formData,
+                dataType: 'json',
+                success: function (response) {
+                    if (response.success) {
+                        $('#message').html('<div class="alert alert-success">' + response.message + '</div>');
+                        $('#changePasswordForm')[0].reset(); // Clear the form
+                        setTimeout(() => {
+                            const collapseElement = new bootstrap.Collapse($('#panelsStayOpen-collapseOne'));
+                            $('#message').html('');
+                            collapseElement.hide();// Close the accordion
+                        }, 4000);
+                    } else {
+                        $('#message').html('<div class="alert alert-danger">' + response.message + '</div>');
+                    }
+                },
+                error: function () {
+                    $('#message').html('<div class="alert alert-danger">An error occurred while processing the request.</div>');
+                }
             });
-        </script>
+        });
+    });
 
-        <?php include '_footer.php'; ?>
+
+</script>
+
+<?php include '_footer.php'; ?>
