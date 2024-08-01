@@ -73,10 +73,10 @@ if (isset($_GET['id']))
 
                 ?>
                 <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
-                    <label for="type" class="form-label">Teacher/Head Teacher</label>
+                    <label for="type" class="form-label">Teacher/City Head</label>
                     <select id="type" name="type" class="form-select" required>
                         <?php
-                        $arr = ['Head Teacher', 'Teacher'];
+                        $arr = ['City Head', 'Teacher'];
                         foreach ($arr as $value)
                         {
                             $selected = ($teacher && $teacher['teacher_type'] == $value) ? 'selected' : '';

@@ -10,7 +10,7 @@ $offset = ($page - 1) * $recordsPerPage;
 
 // Get total records for pagination calculation
 $sqlTotal = "SELECT COUNT(*) AS total FROM students WHERE `state` = '{$_SESSION['state']}'";
-if ($_SESSION['userType'] == 'Head Teacher')
+if ($_SESSION['userType'] == 'City Head')
 {
   $sqlTotal .= " AND `district` = '{$_SESSION['district']}' AND `tehsil` = '{$_SESSION['tehsil']}'";
 }
@@ -37,7 +37,7 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
 
 // Fetch filtered and paginated data
 $sql = "SELECT * FROM students WHERE `state` = '{$_SESSION['state']}'";
-if ($_SESSION['userType'] == 'Head Teacher') 
+if ($_SESSION['userType'] == 'City Head') 
 {
   $sql .= " AND `district` = '{$_SESSION['district']}' AND `tehsil` = '{$_SESSION['tehsil']}'";
 }

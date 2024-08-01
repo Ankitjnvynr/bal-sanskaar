@@ -88,7 +88,7 @@ $total_pages = ceil($total_records / $records_per_page);
                             <td>
                                 <select class="border" onchange="changeTeacherType(<?php echo $row['id']; ?>,this)">
                                     <?php
-                                    $arr = ['Teacher', 'Head Teacher','State Head'];
+                                    $arr = ['Teacher', 'City Head','State Head'];
                                     foreach ($arr as $value)
                                     {
                                         if ($row['teacher_type'] == $value)

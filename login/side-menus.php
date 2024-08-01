@@ -26,7 +26,7 @@ $userType = $_SESSION['userType'];
         <a class="nav-link" href="addStudent.php">Add Student</a>
     </li>
     <?php
-    if ($userType == 'Head Teacher' || $userType == 'State Head')
+    if ($userType == 'City Head' || $userType == 'State Head')
     {
         ?>
         <li class="nav-item border-top">
@@ -47,7 +47,7 @@ $userType = $_SESSION['userType'];
                     $currentUserId = $_SESSION['id'];
                     $sql = "SELECT * FROM teachers WHERE id != $currentUserId AND `state` = '{$_SESSION['state']}'";
 
-                    if ($userType == 'Head Teacher')
+                    if ($userType == 'City Head')
                     {
                         $sql .= " AND `district` = '$userDistrict' AND `tehsil` = '$userTehsil'";
                     }

@@ -43,7 +43,7 @@ $total_pages = ceil($total_records / $limit);
 // Fetch records for the current page
 $currentUserId = $_SESSION['id'];
 $sql = "SELECT * FROM teachers WHERE id != $currentUserId AND  `state` = '{$_SESSION['state']}' $searchQuery";
-if ($userType == 'Head Teacher')
+if ($userType == 'City Head')
 {
   $sql .= " AND `district` = '$userDistrict' AND `tehsil` = '$userTehsil'";
 }
@@ -115,7 +115,7 @@ $result = $conn->query($sql);
               <td>
                 <select class="border" onchange="changeTeacherType(<?php echo $row['id']; ?>,this)">
                   <?php
-                  $arr = ['Teacher', 'Head Teacher',];
+                  $arr = ['Teacher', 'City Head',];
                   foreach ($arr as $value)
                   {
                     if ($row['teacher_type'] == $value)
