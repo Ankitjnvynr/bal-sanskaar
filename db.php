@@ -18,6 +18,8 @@ try {
     $sql2 = "ALTER TABLE teachers ADD userpassword VARCHAR(500)";
     $add_qualification = "ALTER TABLE teachers ADD qualification VARCHAR(80) AFTER phone";
     $add_pic = "ALTER TABLE teachers ADD pic VARCHAR(80) AFTER phone";
+    $add_dt = "ALTER TABLE teachers ADD COLUMN dt TIMESTAMP DEFAULT CURRENT_TIMESTAMP";
+
     $add_address = "ALTER TABLE students ADD address TEXT AFTER tehsil,ADD rollno VARCHAR(100) AFTER id ";
 
     // Execute the query
@@ -62,6 +64,15 @@ try {
         echo "Column pic added successfully";
     } else {
         echo "Error adding column: " . $conn->error;
+    }
+} catch (\Throwable $th) {
+    echo $th;
+}
+try {
+    if ($conn->query($add_dt) === TRUE) {
+        echo "Column join date as dt added successfully";
+    } else {
+        echo "Error join date as dt column: " . $conn->error;
     }
 } catch (\Throwable $th) {
     echo $th;
