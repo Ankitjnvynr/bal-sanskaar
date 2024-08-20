@@ -84,6 +84,7 @@ $result = $conn->query($sql);
             echo '<th scope="col">Type</th>';
           }
           ?>
+          <th scope="col">Teacher </th>
           <th scope="col">Name</th>
           <th scope="col">DOB</th>
           <th scope="col">Phone</th>
@@ -109,13 +110,16 @@ $result = $conn->query($sql);
                     ";
             ?>
             <?php
-            if ($_SESSION['userType'] == 'State Head')
+            if ($_SESSION['userType'] == 'State Head'||$_SESSION['userType'] == 'City Head')
             {
               ?>
               <td>
                 <select class="border" onchange="changeTeacherType(<?php echo $row['id']; ?>,this)">
                   <?php
-                  $arr = ['Teacher', 'City Head',];
+                  $arr = ['Teacher','Teacher1'];
+                   if ($_SESSION['userType'] == 'State Head'){
+                    array_push($arr,  'City Head');
+                   }
                   foreach ($arr as $value)
                   {
                     if ($row['teacher_type'] == $value)
