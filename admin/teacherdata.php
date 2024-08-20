@@ -19,8 +19,7 @@ $sql = "SELECT * FROM teachers
         LIMIT ?, ?";
 
 $stmt = $conn->prepare($sql);
-if ($stmt === false)
-{
+if ($stmt === false) {
     die('Prepare failed: ' . htmlspecialchars($conn->error));
 }
 
@@ -32,8 +31,7 @@ $result = $stmt->get_result();
 // SQL query to get the total number of records for pagination
 $total_records_sql = "SELECT COUNT(*) AS total FROM teachers WHERE name LIKE ? OR phone LIKE ?";
 $total_stmt = $conn->prepare($total_records_sql);
-if ($total_stmt === false)
-{
+if ($total_stmt === false) {
     die('Prepare failed: ' . htmlspecialchars($conn->error));
 }
 
@@ -52,8 +50,7 @@ $total_pages = ceil($total_records / $records_per_page);
     <!-- Search Form -->
     <form class="d-flex mb-4" method="GET" action="">
         <input type="hidden" name="data" value="teacher">
-        <input class="form-control me-2" type="search" name="search" placeholder="Search..." aria-label="Search"
-            value="<?php echo htmlspecialchars($search_query); ?>">
+        <input class="form-control me-2" type="search" name="search" placeholder="Search..." aria-label="Search" value="<?php echo htmlspecialchars($search_query); ?>">
         <button class="btn btn-outline-success" type="submit">Search</button>
     </form>
 
@@ -73,29 +70,26 @@ $total_pages = ceil($total_records / $records_per_page);
                     <th scope="col">District</th>
                     <th scope="col">Tehsil</th>
                     <th scope="col">Center</th>
+                    <th scope="col">Start On</th>
                     <th scope="col">Action</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
-                if ($result->num_rows > 0)
-                {
+                if ($result->num_rows > 0) {
                     $sr = 0;
-                    while ($row = $result->fetch_assoc()):
+                    while ($row = $result->fetch_assoc()) :
                         $sr++; ?>
                         <tr>
                             <th scope="row"><?php echo $sr; ?></th>
                             <td>
                                 <select class="border" onchange="changeTeacherType(<?php echo $row['id']; ?>,this)">
                                     <?php
-                                    $arr = ['Teacher', 'Head Teacher','State Head'];
-                                    foreach ($arr as $value)
-                                    {
-                                        if ($row['teacher_type'] == $value)
-                                        {
+                                    $arr = ['Teacher', 'City Head', 'State Head'];
+                                    foreach ($arr as $value) {
+                                        if ($row['teacher_type'] == $value) {
                                             echo '<option selected value="' . $value . '">' . $value . '</option>';
-                                        } else
-                                        {
+                                        } else {
                                             echo '<option value="' . $value . '">' . $value . '</option>';
                                         }
                                     }
@@ -111,16 +105,14 @@ $total_pages = ceil($total_records / $records_per_page);
                             <td><?php echo $row['district']; ?></td>
                             <td><?php echo $row['tehsil']; ?></td>
                             <td><?php echo $row['center']; ?></td>
+                            <td><?php echo substr($row['dt'], 0, 10); ?></td>
                             <td>
-                                <a href="updateTeacher.php?user=<?php echo $row['id']; ?>" class="btn p-0 m-0 mx-1 fs-5"><i
-                                        class="fa-regular fa-pen-to-square text-success"></i></a>
-                                <a href="delete_teacher.php?id=<?php echo $row['id'] . '&page=' . $page; ?>" onclick='return confirm("Are you sure you want to delete this record?")'
-                                    class="btn p-0 m-0 mx-1 fs-5"><i class="fa-regular fa-trash-can text-danger"></i></a>
+                                <a href="updateTeacher.php?user=<?php echo $row['id']; ?>" class="btn p-0 m-0 mx-1 fs-5"><i class="fa-regular fa-pen-to-square text-success"></i></a>
+                                <a href="delete_teacher.php?id=<?php echo $row['id'] . '&page=' . $page; ?>" onclick='return confirm("Are you sure you want to delete this record?")' class="btn p-0 m-0 mx-1 fs-5"><i class="fa-regular fa-trash-can text-danger"></i></a>
                             </td>
                         </tr>
-                    <?php endwhile;
-                } else
-                {
+                <?php endwhile;
+                } else {
                     echo "<tr><td colspan='12'>No records found</td></tr>";
                 } ?>
             </tbody>
@@ -130,27 +122,22 @@ $total_pages = ceil($total_records / $records_per_page);
     <!-- Pagination -->
     <nav aria-label="Page navigation">
         <ul class="pagination justify-content-center">
-            <?php if ($page > 1): ?>
+            <?php if ($page > 1) : ?>
                 <li class="page-item">
-                    <a class="page-link"
-                        href="?data=teacher&page=<?php echo $page - 1; ?>&search=<?php echo htmlspecialchars($search_query); ?>"
-                        aria-label="Previous">
+                    <a class="page-link" href="?data=teacher&page=<?php echo $page - 1; ?>&search=<?php echo htmlspecialchars($search_query); ?>" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
             <?php endif; ?>
-            <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+            <?php for ($i = 1; $i <= $total_pages; $i++) : ?>
                 <li class="page-item <?php if ($i == $page)
-                    echo 'active'; ?>">
-                    <a class="page-link"
-                        href="?data=teacher&page=<?php echo $i; ?>&search=<?php echo htmlspecialchars($search_query); ?>"><?php echo $i; ?></a>
+                                            echo 'active'; ?>">
+                    <a class="page-link" href="?data=teacher&page=<?php echo $i; ?>&search=<?php echo htmlspecialchars($search_query); ?>"><?php echo $i; ?></a>
                 </li>
             <?php endfor; ?>
-            <?php if ($page < $total_pages): ?>
+            <?php if ($page < $total_pages) : ?>
                 <li class="page-item">
-                    <a class="page-link"
-                        href="?data=teacher&page=<?php echo $page + 1; ?>&search=<?php echo htmlspecialchars($search_query); ?>"
-                        aria-label="Next">
+                    <a class="page-link" href="?data=teacher&page=<?php echo $page + 1; ?>&search=<?php echo htmlspecialchars($search_query); ?>" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
 

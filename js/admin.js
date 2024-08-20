@@ -1,5 +1,7 @@
 // change the type of teacher
 changeTeacherType = (id, e) => {
+
+
     $.ajax({
         url: 'changeTeacherType.php',
         type: 'POST',
@@ -9,8 +11,10 @@ changeTeacherType = (id, e) => {
         },
         dataType: 'json', // Ensures the response is parsed as JSON
         success: function (res) {
+
             // Check if the response is a JavaScript object
-            console.log(typeof res);
+            //console.log(res);
+            if (res.center == 0) res.center = '';
 
             // Assuming the 10th child element is the one you want to update
             e.parentNode.parentNode.childNodes[21].innerHTML = res.center;

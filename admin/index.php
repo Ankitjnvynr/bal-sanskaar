@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $_SESSION['username'] = $username;
                 $_SESSION['intro'] = true;
                 $_SESSION['userType'] = 'admin';
-                $_SESSION['isAndmin'] = true;
+                $_SESSION['isAdmin'] = true;
                 header("location: dashboard.php?data=student");
                 exit;
             } else {

@@ -2,8 +2,7 @@
 session_start();
 require_once '../config/_db.php';
 
-if ($_SERVER["REQUEST_METHOD"] == "POST")
-{
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id = $_POST['id'];
     $teacher_type = $_POST['type'];
     $name = $_POST['name'];
@@ -15,6 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     $district = $_POST['district'];
     $tehsil = $_POST['tehsil'];
     $center = $_POST['center'];
+    $dt = $_POST['dt'];
 
     // Check existing phone number
     $sql_check_phone = "SELECT phone FROM teachers WHERE id = ?";
@@ -29,43 +29,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     $update_password = ($phone !== $existing_phone);
 
     // Prepare SQL update statement
-    if ($update_password)
-    {
+    if ($update_password) {
         // Phone number has changed, update userpassword as well
         $hash_pass = password_hash($phone, PASSWORD_DEFAULT);
         $sql_update = "UPDATE teachers 
-                       SET teacher_type = ?, name = ?, dob = ?, phone = ?, qualification = ?, country = ?, state = ?, district = ?, tehsil = ?, center = ?, userpassword = ?
+                       SET teacher_type = ?, name = ?, dob = ?, phone = ?, qualification = ?, country = ?, state = ?, district = ?, tehsil = ?, center = ?, dt = ?, userpassword = ?
                        WHERE id = ?";
         $stmt_update = $conn->prepare($sql_update);
-        $stmt_update->bind_param("sssssssssssi", $teacher_type, $name, $dob, $phone, $qualification, $country, $state, $district, $tehsil, $center, $hash_pass, $id);
-    } else
-    {
+        $stmt_update->bind_param("ssssssssssssi", $teacher_type, $name, $dob, $phone, $qualification, $country, $state, $district, $tehsil, $center, $dt, $hash_pass, $id);
+    } else {
         // Phone number has not changed, do not update userpassword
         $sql_update = "UPDATE teachers 
-                       SET teacher_type = ?, name = ?, dob = ?, phone = ?, qualification = ?, country = ?, state = ?, district = ?, tehsil = ?, center = ?
+                       SET teacher_type = ?, name = ?, dob = ?, phone = ?, qualification = ?, country = ?, state = ?, district = ?, tehsil = ?, center = ?, dt = ?
                        WHERE id = ?";
         $stmt_update = $conn->prepare($sql_update);
-        $stmt_update->bind_param("ssssssssssi", $teacher_type, $name, $dob, $phone, $qualification, $country, $state, $district, $tehsil, $center, $id);
+        $stmt_update->bind_param("sssssssssssi", $teacher_type, $name, $dob, $phone, $qualification, $country, $state, $district, $tehsil, $center, $dt, $id);
     }
 
     // Execute the update statement
-    if ($stmt_update->execute())
-    {
+    if ($stmt_update->execute()) {
         echo "Record updated successfully";
-        if ($_SESSION['isAndmin'])
-        {
+        if ($_SESSION['isAdmin']) {
             header('Location: ../admin/dashboard.php?data=teacher');
             exit;
-        } else
-        {
-            // header('Location: ../login/dashboard.php?data=teacher');
+        } else {
+            header('Location: ../login/dashboard.php?data=teacher');
             exit;
         }
-    } else
-    {
+    } else {
         echo "Error updating record: " . $stmt_update->error;
     }
     $stmt_update->close();
 }
 $conn->close();
-?>

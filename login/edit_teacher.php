@@ -65,9 +65,29 @@ if (isset($_GET['id']))
         <div class="row d-flex gap-1 flex-wrap fs-7 px-2">
 
             <input type="hidden" name="id" value="<?php echo $teacher['id']; ?>">
-            <input type="hidden" name="page" value="<?php echo isset($_GET['page'])?$_GET['page']:1; ?>">
+            <input type="hidden" name="page" value="<?php echo isset($_GET['page']) ? $_GET['page'] : 1; ?>">
+            <?php
+            if ($_SESSION['userType'] == 'State Head2')
+            {
 
 
+                ?>
+                <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+                    <label for="type" class="form-label">Teacher/City Head</label>
+                    <select id="type" name="type" class="form-select" required>
+                        <?php
+                        $arr = ['City Head', 'Teacher'];
+                        foreach ($arr as $value)
+                        {
+                            $selected = ($teacher && $teacher['teacher_type'] == $value) ? 'selected' : '';
+                            echo '<option ' . $selected . ' value="' . $value . '">' . $value . '</option>';
+                        }
+                        ?>
+                    </select>
+                </div>
+                <?php
+            }
+            ?>
             <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="name" class="form-label">Name</label>
                 <input type="text" class="form-control form-control-sm" id="name" name="name"
@@ -85,14 +105,15 @@ if (isset($_GET['id']))
                     minlength="10" maxlength="10" required>
                 <div id="phone-error" class="text-danger"></div>
             </div>
-             <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+            <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="name" class="form-label">Qualification</label>
                 <input type="text" class="form-control form-control-sm" id="qualification" name="qualification"
                     value="<?php echo htmlspecialchars($teacher['qualification'] ?? ''); ?>">
             </div>
             <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="countrySelect" class="form-label">Country</label>
-                <input disabled id="countrySelect" name="country" class="form-select " value="<?php echo $_SESSION['country']; ?>" />
+                <input disabled id="countrySelect" name="country" class="form-select "
+                    value="<?php echo $_SESSION['country']; ?>" />
 
             </div>
             <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
@@ -100,23 +121,52 @@ if (isset($_GET['id']))
                 <input disabled id="stateSelect" name="state" class="form-select "
                     value="<?php echo $_SESSION['state']; ?>" />
             </div>
+            <?php
+            if ($_SESSION['userType'] == 'State Head')
+            {
+                ?>
+                <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+                    <label for="state" class="form-label">District</label>
+                    <select id="districtSelect" name="district" class="form-select " aria-label="Small select example"
+                        required="" onchange="loadTehsil (this)" required>
+                        <option value="dis">district</option>
+                    </select>
+                </div>
+                <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+                    <label for="state" class="form-label">Tehsil</label>
+                    <select id="tehsil" name="tehsil" class="form-select " aria-label="Small select example" required=""
+                        required>
 
-            <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
-                <label for="district" class="form-label">District</label>
-                <input disabled id="districtSelect" name="district" class="form-select "
-                    value="<?php echo $_SESSION['district']; ?>" />
-            </div>
-            <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
-                <label for="tehsil" class="form-label">Tehsil</label>
+                    </select>
+                </div>
 
-                <input disabled id="tehsil" name="tehsil" class="form-select "
-                    value="<?php echo $_SESSION['tehsil']; ?>" />
-            </div>
+                <?php
+
+            } else
+            {
+                ?>
+
+
+                <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+                    <label for="district" class="form-label">District</label>
+                    <input disabled id="districtSelect" name="district" class="form-select "
+                        value="<?php echo $_SESSION['district']; ?>" />
+                </div>
+                <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+                    <label for="tehsil" class="form-label">Tehsil</label>
+
+                    <input disabled id="tehsil" name="tehsil" class="form-select "
+                        value="<?php echo $_SESSION['tehsil']; ?>" />
+                </div>
+
+                <?php
+            }
+            ?>
             <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0 position-relative">
                 <label for="center" class="form-label">Center</label>
                 <input type="text" id="center" name="center" autocomplete="off" class="form-control form-control-sm"
-                    value="<?php echo html_entity_decode($teacher['center']); ?>" >
-                
+                    value="<?php echo html_entity_decode($teacher['center']); ?>">
+
             </div>
 
         </div>
@@ -126,20 +176,7 @@ if (isset($_GET['id']))
 
 
 </main>
-<script>
-    
 
-    function loadState(countrySelect) {
-        // Implement AJAX to load states based on selected country
-    }
-
-    function loadDistrict(stateSelect) {
-        // Implement AJAX to load districts based on selected state
-    }
-
-    function loadTehsil(districtSelect) {
-        // Implement AJAX to load tehsils based on selected district
-    }
 
     function onlyDigits(event) {
         const charCode = event.which ? event.which : event.keyCode;
@@ -149,3 +186,22 @@ if (isset($_GET['id']))
     }
 </script>
 <?php include '_footer.php'; ?>
+
+<script>
+    var currentDistrict = '<?php echo $teacher['district'] ?>'
+    var currentTehsil = '<?php echo $teacher['tehsil'] ?>'
+    const initializeForm2 = async () => {
+        try {
+
+            await loadDistrict({
+                value: '<?php echo $teacher['state'] ?>'
+            });
+            await selectOptionByValue('districtSelect', currentDistrict);
+            await loadTehsil(document.getElementById("districtSelect"));
+            await selectOptionByValue('tehsil', currentTehsil);
+        } catch (error) {
+            console.error("Error initializing form:", error);
+        }
+    }
+    setTimeout(initializeForm2, 500);
+</script>
