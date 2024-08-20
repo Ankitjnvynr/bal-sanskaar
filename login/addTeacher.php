@@ -1,25 +1,25 @@
 <?php include '_header.php'; ?>
 <style>
-.suggestions {
-    position: absolute;
-    border: 1px solid #ccc;
-    border-top: none;
-    z-index: 1000;
-    width: 95%;
-    max-height: 150px;
-    overflow-y: auto;
-    border-radius: 0 0 0.25rem 0.25rem;
-    background-color: white;
-}
+    .suggestions {
+        position: absolute;
+        border: 1px solid #ccc;
+        border-top: none;
+        z-index: 1000;
+        width: 95%;
+        max-height: 150px;
+        overflow-y: auto;
+        border-radius: 0 0 0.25rem 0.25rem;
+        background-color: white;
+    }
 
-.suggestion {
-    padding: 10px;
-    cursor: pointer;
-}
+    .suggestion {
+        padding: 10px;
+        cursor: pointer;
+    }
 
-.suggestion:hover {
-    background-color: #f0f0f0;
-}
+    .suggestion:hover {
+        background-color: #f0f0f0;
+    }
 </style>
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 overflow-y-scroll">
@@ -33,6 +33,21 @@
         <div class="text-center fw-bold my-2 text-danger fs-3">Teacher Details</div>
 
         <div class="row d-flex gap-1 flex-wrap fs-7 px-2">
+            <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+                <label for="type" class="form-label">Teacher/City Head</label>
+                <select id="type" name="type" class="form-select" required>
+                    <?php
+                    $arr = ['Teacher', 'Teacher 1',];
+                    foreach ($arr as $value) {
+                        if ($value == $_GET['type']) {
+                            echo '<option selected value="' . $value . '">' . $value . '</option>';
+                        } else {
+                            echo '<option  value="' . $value . '">' . $value . '</option>';
+                        }
+                    }
+                    ?>
+                </select>
+            </div>
 
             <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="name" class="form-label">Name</label>
@@ -69,20 +84,20 @@
             <?php
             if ($_SESSION['userType'] == 'State Head') {
             ?>
-            <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
-                <label for="state" class="form-label">District</label>
-                <select id="districtSelect" name="district" class="form-select " aria-label="Small select example"
-                    required="" onchange="loadTehsil (this)" required>
-                    <option value="dis">district</option>
-                </select>
-            </div>
-            <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
-                <label for="state" class="form-label">Tehsil</label>
-                <select id="tehsil" name="tehsil" class="form-select " aria-label="Small select example" required=""
-                    required>
+                <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+                    <label for="state" class="form-label">District</label>
+                    <select id="districtSelect" name="district" class="form-select " aria-label="Small select example"
+                        required="" onchange="loadTehsil (this)" required>
+                        <option value="dis">district</option>
+                    </select>
+                </div>
+                <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+                    <label for="state" class="form-label">Tehsil</label>
+                    <select id="tehsil" name="tehsil" class="form-select " aria-label="Small select example" required=""
+                        required>
 
-                </select>
-            </div>
+                    </select>
+                </div>
 
             <?php
 
@@ -90,17 +105,17 @@
             ?>
 
 
-            <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
-                <label for="district" class="form-label">District</label>
-                <input disabled id="districtSelect" name="district" class="form-select "
-                    value="<?php echo $_SESSION['district']; ?>" />
-            </div>
-            <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
-                <label for="tehsil" class="form-label">Tehsil</label>
+                <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+                    <label for="district" class="form-label">District</label>
+                    <input disabled id="districtSelect" name="district" class="form-select "
+                        value="<?php echo $_SESSION['district']; ?>" />
+                </div>
+                <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+                    <label for="tehsil" class="form-label">Tehsil</label>
 
-                <input disabled id="tehsil" name="tehsil" class="form-select "
-                    value="<?php echo $_SESSION['tehsil']; ?>" />
-            </div>
+                    <input disabled id="tehsil" name="tehsil" class="form-select "
+                        value="<?php echo $_SESSION['tehsil']; ?>" />
+                </div>
 
             <?php
             }
@@ -119,7 +134,7 @@
 <?php include '_footer.php'; ?>
 
 <script>
-loadDistrict({
-    value: "<?php echo $_SESSION['state'] ?>"
-})
+    loadDistrict({
+        value: "<?php echo $_SESSION['state'] ?>"
+    })
 </script>

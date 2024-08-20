@@ -15,14 +15,11 @@
                 <label for="type" class="form-label">Teacher/City Head</label>
                 <select id="type" name="type" class="form-select" required>
                     <?php
-                    $arr = ['City Head', 'Teacher','State Head'];
-                    foreach ($arr as $value)
-                    {
-                        if ($value == $_GET['type'])
-                        {
+                    $arr = ['City Head', 'Teacher', 'State Head', 'Teacher 1'];
+                    foreach ($arr as $value) {
+                        if ($value == $_GET['type']) {
                             echo '<option selected value="' . $value . '">' . $value . '</option>';
-                        } else
-                        {
+                        } else {
                             echo '<option  value="' . $value . '">' . $value . '</option>';
                         }
                     }
@@ -46,8 +43,7 @@
             </div>
             <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="name" class="form-label">Qualification</label>
-                <input type="text" class="form-control form-control-sm" id="qualification" name="qualification"
-                    >
+                <input type="text" class="form-control form-control-sm" id="qualification" name="qualification">
             </div>
 
 
