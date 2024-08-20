@@ -18,16 +18,12 @@ $sql_create_table = "CREATE TABLE IF NOT EXISTS teachers (
     userpassword VARCHAR(255)
 )";
 
-if ($conn->query($sql_create_table) === FALSE)
-{
+if ($conn->query($sql_create_table) === FALSE) {
     echo "Error creating table: " . $conn->error;
     exit;
 }
-?>
 
-<?php
-if ($_SERVER["REQUEST_METHOD"] == "POST")
-{
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Prepare data for insertion
     $teacher_type = isset($_POST['type']) ? $_POST['type'] : 'Teacher';
     $name = $_POST['name'];
@@ -42,51 +38,42 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     $hash_pass = password_hash($phone, PASSWORD_DEFAULT);
 
     // If teacher type is 'Teacher', assign a center number
-    if ($teacher_type === 'Teacher')
-    {
+    if ($teacher_type === 'Teacher') {
         $result = $conn->query("SELECT MAX(center) as max_center FROM teachers WHERE teacher_type='Teacher'");
-        if ($result)
-        {
+        if ($result) {
             $row = $result->fetch_assoc();
             $max_center = $row['max_center'];
-            echo $center = $max_center ? $max_center + 1 : 1;
-        } else
-        {
+
+            // Ensure $max_center is an integer or default to 0 if NULL
+            $center = ($max_center !== NULL ? (int)$max_center : 0) + 1;
+        } else {
             echo "Error fetching center number: " . $conn->error;
             exit;
         }
     }
-   
 
-    // Use prepared statement
+    // Use prepared statement to insert data
     $stmt = $conn->prepare("INSERT INTO teachers (teacher_type, name, dob, phone, qualification, country, state, district, tehsil, center, userpassword) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
     // Check if preparation was successful
-    if ($stmt === false)
-    {
+    if ($stmt === false) {
         echo "Error preparing statement: " . $conn->error;
         exit;
     }
 
     $stmt->bind_param("sssssssssis", $teacher_type, $name, $dob, $phone, $qualification, $country, $state, $district, $tehsil, $center, $hash_pass);
 
-    if ($stmt->execute())
-    {
+    if ($stmt->execute()) {
         echo "New record inserted successfully";
-        if ($_SESSION['isAndmin'])
-        {
-            header('location:../admin/dashboard.php?data=teacher');
-            exit;
-        } else
-        {
-            header('location:../login/dashboard.php?data=teacher');
-            exit;
+        if ($_SESSION['isAdmin']) {
+            header('Location: ../admin/dashboard.php?data=teacher');
+        } else {
+            header('Location: ../login/dashboard.php?data=teacher');
         }
-    } else
-    {
+        exit;
+    } else {
         echo "Error: " . $stmt->error;
     }
     $stmt->close();
 }
 $conn->close();
-?>

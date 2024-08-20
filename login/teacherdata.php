@@ -7,8 +7,7 @@ $userDistrict = $_SESSION['district'];
 $userTehsil = $_SESSION['tehsil'];
 $userType = $_SESSION['userType'];
 
-if ($userType == 'Teacher')
-{
+if ($userType == 'Teacher') {
   header('location:?data=student');
   exit();
 }
@@ -23,16 +22,14 @@ $start_from = ($page - 1) * $limit;
 $searchQuery = '';
 $search = '';
 
-if (isset($_GET['search']))
-{
+if (isset($_GET['search'])) {
   $search = $_GET['search'];
   $searchQuery = " AND (name LIKE '%$search%' OR phone LIKE '%$search%' OR center LIKE '%$search%')";
 }
 
 // Fetch total records for pagination
 $total_records_query = "SELECT COUNT(*) FROM teachers WHERE   id != $currentUserId AND  `state` = '{$_SESSION['state']}' $searchQuery";
-if (isset($_GET['center']))
-{
+if (isset($_GET['center'])) {
   $ctr = $_GET['center'];
   $total_records_query .= " AND center = '$ctr'";
 }
@@ -43,12 +40,10 @@ $total_pages = ceil($total_records / $limit);
 // Fetch records for the current page
 $currentUserId = $_SESSION['id'];
 $sql = "SELECT * FROM teachers WHERE id != $currentUserId AND  `state` = '{$_SESSION['state']}' $searchQuery";
-if ($userType == 'City Head')
-{
+if ($userType == 'City Head') {
   $sql .= " AND `district` = '$userDistrict' AND `tehsil` = '$userTehsil'";
 }
-if (isset($_GET['center']))
-{
+if (isset($_GET['center'])) {
   $ctr = $_GET['center'];
   $sql .= " AND center = '$ctr'";
 }
@@ -68,7 +63,8 @@ $result = $conn->query($sql);
   <form method="GET" action="">
     <div class="input-group mb-3 ">
       <input type="hidden" name="data" value="teacher">
-      <input type="text" class="form-control" name="search" placeholder="Search..." value="<?php echo $search; ?>">
+      <input type="text" class="form-control" name="search" placeholder="Search..."
+        value="<?php echo $search; ?>">
       <button class="btn btn-danger" type="submit">Search</button>
     </div>
   </form>
@@ -79,8 +75,7 @@ $result = $conn->query($sql);
         <tr>
           <th scope="col">ID</th>
           <?php
-          if ($_SESSION['userType'] == 'State Head')
-          {
+          if ($_SESSION['userType'] == 'State Head') {
             echo '<th scope="col">Type</th>';
           }
           ?>
@@ -99,41 +94,35 @@ $result = $conn->query($sql);
       </thead>
       <tbody>
         <?php
-        if ($result->num_rows > 0)
-        {
+        if ($result->num_rows > 0) {
           $sr = $start_from;
-          while ($row = $result->fetch_assoc())
-          {
+          while ($row = $result->fetch_assoc()) {
             $sr++;
             echo "<tr>
                     <th scope='row'>{$sr}</th>
                     ";
-            ?>
+        ?>
             <?php
-            if ($_SESSION['userType'] == 'State Head'||$_SESSION['userType'] == 'City Head')
-            {
-              ?>
+            if ($_SESSION['userType'] == 'State Head' || $_SESSION['userType'] == 'City Head') {
+            ?>
               <td>
                 <select class="border" onchange="changeTeacherType(<?php echo $row['id']; ?>,this)">
                   <?php
-                  $arr = ['Teacher','Teacher1'];
-                   if ($_SESSION['userType'] == 'State Head'){
+                  $arr = ['Teacher', 'Teacher1'];
+                  if ($_SESSION['userType'] == 'State Head') {
                     array_push($arr,  'City Head');
-                   }
-                  foreach ($arr as $value)
-                  {
-                    if ($row['teacher_type'] == $value)
-                    {
+                  }
+                  foreach ($arr as $value) {
+                    if ($row['teacher_type'] == $value) {
                       echo '<option selected value="' . $value . '">' . $value . '</option>';
-                    } else
-                    {
+                    } else {
                       echo '<option value="' . $value . '">' . $value . '</option>';
                     }
                   }
                   ?>
                 </select>
               </td>
-              <?php
+        <?php
             }
             echo "
                     <td>{$row['name']}</td>
@@ -151,8 +140,7 @@ $result = $conn->query($sql);
                     </td>
                   </tr>";
           }
-        } else
-        {
+        } else {
           echo "<tr><td colspan='10' class='text-center'>No records found</td></tr>";
         }
         $conn->close();
@@ -163,8 +151,7 @@ $result = $conn->query($sql);
 
   <div class="pagination">
     <?php
-    for ($i = 1; $i <= $total_pages; $i++)
-    {
+    for ($i = 1; $i <= $total_pages; $i++) {
       echo "<a href='?data=teacher&page=" . $i . "&search=" . $search . "' class='btn btn-primary btn-sm mx-1'>" . $i . "</a>";
     }
     ?>
@@ -184,14 +171,14 @@ $result = $conn->query($sql);
         type: e.value
       },
       dataType: 'json', // Ensures the response is parsed as JSON
-      success: function (res) {
+      success: function(res) {
         // Check if the response is a JavaScript object
         console.log(typeof res);
 
         // Assuming the 10th child element is the one you want to update
         e.parentNode.parentNode.childNodes[21].innerHTML = res.center;
       },
-      error: function (xhr, status, error) {
+      error: function(xhr, status, error) {
         console.error('Error:', status, error);
       }
     });

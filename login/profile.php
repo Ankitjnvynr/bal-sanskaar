@@ -113,11 +113,15 @@ if ($user_id > 0) {
         <div class="row align-items-center">
             <!-- Profile Picture -->
             <div class="col-md-4 text-center">
-                <img src="../imgs/uploads/<?php echo htmlspecialchars($teacher['pic'] ?? 'defaultimg.png'); ?>" alt="Profile Picture" class="img-fluid rounded-circle" style="width: 150px; height: 150px; object-fit: cover;">
+                <img src="../imgs/uploads/<?php echo htmlspecialchars($teacher['pic'] ?? 'defaultimg.png'); ?>"
+                    alt="Profile Picture" class="img-fluid rounded-circle"
+                    style="width: 150px; height: 150px; object-fit: cover;">
                 <!-- Profile Picture Upload Form -->
-                <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" enctype="multipart/form-data">
+                <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post"
+                    enctype="multipart/form-data">
                     <div class="my-3">
-                        <input type="file" name="profile_picture" class="form-control form-control-sm bg-danger-subtle" accept="image/*" required>
+                        <input type="file" name="profile_picture" class="form-control form-control-sm bg-danger-subtle"
+                            accept="image/*" required>
                         <button type="submit" class="btn btn-danger mt-2">Upload New Photo</button>
                     </div>
                 </form>
@@ -126,7 +130,9 @@ if ($user_id > 0) {
             <div class="col-md-8">
                 <div class="card profile-card shadow-sm ">
                     <div class="card-body d-flex align-items-center flex-column">
-                        <h4 class="card-title mb-1"><?php echo htmlspecialchars($teacher['name'] ?? ''); ?></h4>
+                        <h4 class="card-title mb-1">
+                            <?php echo htmlspecialchars($teacher['name'] ?? '');
+                            ?> <span class="fs-6">(<?php echo $teacher['teacher_type']  ?>)</span></h4>
                         <p class="card-text text-muted"><?php echo htmlspecialchars($teacher['email'] ?? ''); ?></p>
                         <p class="card-text"><strong>Date of Birth:</strong>
                             <?php echo htmlspecialchars($teacher['dob'] ?? ''); ?></p>
@@ -154,7 +160,9 @@ if ($user_id > 0) {
         <div class="accordion fs-7" id="accordionPanelsStayOpenExample">
             <div class="accordion-item accordion-item-sm">
                 <h2 class="accordion-header ">
-                    <button class="accordion-button bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                    <button class="accordion-button bg-light" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
+                        aria-controls="panelsStayOpen-collapseOne">
                         Change Password
                     </button>
                 </h2>
@@ -163,15 +171,18 @@ if ($user_id > 0) {
                         <form class="row d-flex gap-1 flex-wrap fs-7 px-2" id="changePasswordForm">
                             <div class="form-item">
                                 <label for="currentPassword" class="form-label">Current Password</label>
-                                <input type="password" class="form-control form-control-sm" id="currentPassword" name="current_password" required>
+                                <input type="password" class="form-control form-control-sm" id="currentPassword"
+                                    name="current_password" required>
                             </div>
                             <div class="form-item">
                                 <label for="newPassword" class="form-label">New Password</label>
-                                <input type="password" class="form-control form-control-sm" id="newPassword" name="new_password" required>
+                                <input type="password" class="form-control form-control-sm" id="newPassword"
+                                    name="new_password" required>
                             </div>
                             <div class="form-item">
                                 <label for="confirmPassword" class="form-label">Confirm New Password</label>
-                                <input type="password" class="form-control form-control-sm" id="confirmPassword" name="confirm_password" required>
+                                <input type="password" class="form-control form-control-sm" id="confirmPassword"
+                                    name="confirm_password" required>
                             </div>
                             <div class="text-center mt-2">
                                 <button type="submit" class="btn btn-danger">Change Password</button>
