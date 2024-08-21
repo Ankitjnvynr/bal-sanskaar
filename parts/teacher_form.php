@@ -14,6 +14,7 @@ $sql_create_table = "CREATE TABLE IF NOT EXISTS teachers (
     state VARCHAR(50),
     district VARCHAR(50),
     tehsil VARCHAR(50),
+    address TEXT,
     center INT,
     userpassword VARCHAR(255)
 )";
@@ -34,6 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $state = isset($_POST['state']) ? $_POST['state'] : $_SESSION['state'];
     $district = isset($_POST['district']) ? $_POST['district'] : $_SESSION['district'];
     $tehsil = isset($_POST['tehsil']) ? $_POST['tehsil'] : $_SESSION['tehsil'];
+    $address = $_POST['address'];
     $center = null;
     $hash_pass = password_hash($phone, PASSWORD_DEFAULT);
 
@@ -53,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Use prepared statement to insert data
-    $stmt = $conn->prepare("INSERT INTO teachers (teacher_type, name, dob, phone, qualification, country, state, district, tehsil, center, userpassword) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt = $conn->prepare("INSERT INTO teachers (teacher_type, name, dob, phone, qualification, country, state, district, tehsil, address, center, userpassword) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
     // Check if preparation was successful
     if ($stmt === false) {
@@ -61,12 +63,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit;
     }
 
-    $stmt->bind_param("sssssssssis", $teacher_type, $name, $dob, $phone, $qualification, $country, $state, $district, $tehsil, $center, $hash_pass);
+    $stmt->bind_param("ssssssssssis", $teacher_type, $name, $dob, $phone, $qualification, $country, $state, $district, $tehsil, $address, $center, $hash_pass);
 
     if ($stmt->execute()) {
         echo "New record inserted successfully";
         if ($_SESSION['isAdmin']) {
-            header('Location: ../admin/dashboard.php?data=teacher');
+            header('Location: ../admin/dashboard.php?data=teacher'); 
         } else {
             header('Location: ../login/dashboard.php?data=teacher');
         }
