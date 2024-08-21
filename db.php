@@ -22,6 +22,8 @@ try {
 
     $add_address = "ALTER TABLE students ADD address TEXT AFTER tehsil,ADD rollno VARCHAR(100) AFTER id ";
 
+    $add_address_teacher = "ALTER TABLE teachers ADD address TEXT AFTER tehsil";
+
     // Execute the query
 
 
@@ -60,6 +62,15 @@ try {
     echo $th;
 }
 try {
+    if ($conn->query($add_address_teacher) === TRUE) {
+        echo "Column address added successfully in teacher";
+    } else {
+        echo "Error adding column: " . $conn->error;
+    }
+} catch (\Throwable $th) {
+    echo $th;
+}
+try {
     if ($conn->query($add_pic) === TRUE) {
         echo "Column pic added successfully";
     } else {
@@ -74,6 +85,7 @@ try {
     } else {
         echo "Error join date as dt column: " . $conn->error;
     }
+   
 } catch (\Throwable $th) {
     echo $th;
 }
