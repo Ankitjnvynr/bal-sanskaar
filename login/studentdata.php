@@ -60,7 +60,12 @@ if (!$result)
   die("Error in SQL query: " . $conn->error);
 }
 ?>
-
+<style>
+  td{
+    margin: 0;
+    padding: 0;
+  }
+</style>
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 overflow-y-scroll">
   <div
     class="h4 text-center shadow-sm my-1 p-1 align-items-center rounded-2 text-danger d-flex justify-content-between">
@@ -85,19 +90,19 @@ if (!$result)
         <tr>
           <th scope="col">Sr</th>
           <th scope="col">R.No</th>
-          <th scope="col">Name</th>
-          <th scope="col">DOB</th>
-          <th scope="col">Father's Name</th>
-          <th scope="col">Father's Phone</th>
-          <th scope="col">Mother's Name</th>
-          <th scope="col">Mother's Phone</th>
-          <th scope="col">Country</th>
-          <th scope="col">State</th>
-          <th scope="col">District</th>
-          <th scope="col">Tehsil</th>
-          <th scope="col">Address</th>
-          <th scope="col">Center</th>
-          <th scope="col">Actions</th>
+          <th scope="col" class="text-nowrap">Name</th>
+          <th scope="col" class="text-nowrap">DOB</th>
+          <th scope="col" class="text-nowrap">Father's Name</th>
+          <th scope="col" class="text-nowrap">Father's Phone</th>
+          <th scope="col" class="text-nowrap">Mother's Name</th>
+          <th scope="col" class="text-nowrap">Mother's Phone</th>
+          <th scope="col" class="text-nowrap">Country</th>
+          <th scope="col" class="text-nowrap">State</th>
+          <th scope="col" class="text-nowrap">District</th>
+          <th scope="col" class="text-nowrap">Tehsil</th>
+          <th scope="col" class="text-nowrap">Address of student</th>
+          <th scope="col" class="text-nowrap">Center</th>
+          <th scope="col" class="text-nowrap">Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -110,17 +115,17 @@ if (!$result)
             echo "<tr>
                     <th scope='row'>{$sr}</th>
                     <td>{$row['rollno']}</td>
-                    <td>{$row['name']}</td>
-                    <td>{$row['dob']}</td>
-                    <td>{$row['father_name']}</td>
-                    <td>{$row['father_phone']}</td>
-                    <td>{$row['mother_name']}</td>
-                    <td>{$row['mother_phone']}</td>
-                    <td>{$row['country']}</td>
-                    <td>{$row['state']}</td>
-                    <td>{$row['district']}</td>
-                    <td>{$row['tehsil']}</td>
-                    <td>{$row['address']}</td>
+                    <td class='lh-1 text-nowrap'>{$row['name']}</td>
+                    <td class='lh-1 text-nowrap' class='lh-1 text-nowrap'>{$row['dob']}</td>
+                    <td class='lh-1 text-nowrap'>{$row['father_name']}</td>
+                    <td class='lh-1 text-nowrap'>{$row['father_phone']}</td>
+                    <td class='lh-1 text-nowrap'>{$row['mother_name']}</td>
+                    <td class='lh-1 text-nowrap'>{$row['mother_phone']}</td>
+                    <td class='lh-1 text-nowrap'>{$row['country']}</td>
+                    <td class='lh-1 text-nowrap'>{$row['state']}</td>
+                    <td class='lh-1 text-nowrap'>{$row['district']}</td>
+                    <td class='lh-1 text-nowrap'>{$row['tehsil']}</td>
+                    <td class='lh-1 text-nowrap' >{$row['address']}</td>
                     <td>{$row['center']}</td>
                     <td class='d-flex gap-1 h-100'>
                       <a data-bs-toggle='tooltip' data-bs-placement='top' data-bs-title='Tooltip on top' href='edit_student.php?id={$row['id']}' class='btn btn-sm btn-primary'><i class='fa-solid fa-pen-to-square'></i></a>

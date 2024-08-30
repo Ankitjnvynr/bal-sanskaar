@@ -14,9 +14,9 @@ $userType = $_SESSION['userType'];
 ?>
 
 
-<ul class="nav flex-column fs-7">
-    <div class="logo text-center shadow pt-2 rounded">
-        <img width="80px" class='shadow rounded rounded-pill' src="../imgs/logo.png" alt="">
+<ul style="height:98vh;" class="nav flex-column fs-7">
+    <div class="logo text-center shadow  rounded">
+        <img width="50px" class='shadow rounded rounded-pill' src="../imgs/logo.png" alt="">
         <p class="text-light mt-2 fw-bolder rounded">GIEO Gita-Bal Sanskaar</p>
     </div>
     <li class="nav-item mt-3">
@@ -29,21 +29,18 @@ $userType = $_SESSION['userType'];
     if ($userType == 'City Head' || $userType == 'State Head')
     {
         ?>
-        <li class="nav-item border-top">
-            <a class="nav-link" href="dashboard.php?data=teacher">All Teacher</a>
-        </li>
-        <li class="nav-item border-top">
-            <a class="nav-link" href="addTeacher.php">Add Teachers</a>
-        </li>
-        <li>
-            <div class="bg-warning-subtle rounded">
-                <!-- <div class="fs-7 text-danger text-center">select a teacher</div> -->
-                <!-- Search bar -->
-                <div id="searchBar">
-                    <input type="text" class="form-control" id="searchInput" placeholder="Search... by name">
-                </div>
-                <ul id="itemList" style="height:40vh" class="list-group bg-warning-subtle fs-7 overflow-y-scroll">
-                    <?php
+    <li class="nav-item border-top">
+        <a class="nav-link" href="dashboard.php?data=teacher">All Teacher</a>
+    </li>
+    <li class="nav-item border-top">
+        <a class="nav-link" href="addTeacher.php">Add Teachers</a>
+    </li>
+    <li  class="d-flex flex-column position-relative">
+        <div id="searchBar">
+            <input type="text" class="form-control" id="searchInput" placeholder="Search... by name">
+        </div>
+        <ul id="itemList" style="height:36vh;" class="list-group bg-warning-subtle fs-7 overflow-y-scroll">
+            <?php
                     $currentUserId = $_SESSION['id'];
                     $sql = "SELECT * FROM teachers WHERE id != $currentUserId AND `state` = '{$_SESSION['state']}'";
 
@@ -63,10 +60,9 @@ $userType = $_SESSION['userType'];
                         }
                     }
                     ?>
-                </ul>
-            </div>
-        </li>
-        <?php
+        </ul>
+    </li>
+    <?php
     }
     ?>
     <li class="nav-item border-top">
@@ -76,4 +72,3 @@ $userType = $_SESSION['userType'];
         <a class="nav-link" href="logout.php">Logout</a>
     </li>
 </ul>
-

@@ -159,15 +159,15 @@ $result = $conn->query($sql);
         <?php
             }
             echo "
-                    <td>{$row['name']}</td>
-                    <td>{$row['dob']}</td>
-                    <td>{$row['phone']}</td>
-                    <td>{$row['qualification']}</td>
-                    <td>{$row['country']}</td>
-                    <td>{$row['state']}</td>
-                    <td>{$row['district']}</td>
-                    <td>{$row['tehsil']}</td>
-                    <td>{$row['center']}</td>
+                    <td class='lh-1 text-nowrap' >{$row['name']}</td>
+                    <td class='lh-1 text-nowrap' >{$row['dob']}</td>
+                    <td class='lh-1 text-nowrap' >{$row['phone']}</td>
+                    <td class='lh-1 text-nowrap' >{$row['qualification']}</td>
+                    <td class='lh-1 text-nowrap' >{$row['country']}</td>
+                    <td class='lh-1 text-nowrap' >{$row['state']}</td>
+                    <td class='lh-1 text-nowrap' >{$row['district']}</td>
+                    <td class='lh-1 text-nowrap' >{$row['tehsil']}</td>
+                    <td class='lh-1 text-nowrap' >{$row['center']}</td>
                     <td>
                         <a href='edit_teacher.php?id={$row['id']}&page={$page}' class='btn btn-primary btn-sm'><i class='fa-solid fa-pen-to-square'></i></a>
                         <a href='delete_teacher.php?id={$row['id']}&page={$page}' class='btn btn-danger btn-sm' onclick='return confirmDelete()'><i class='fa-solid fa-trash'></i></a>
