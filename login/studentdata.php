@@ -139,20 +139,72 @@ if (!$result)
   </div>
 
   <!-- Pagination Links -->
-  <nav aria-label="Page navigation">
+<nav aria-label="Page navigation">
     <ul class="pagination justify-content-center">
-      <?php if ($page > 1): ?>
-        <li class="page-item"><a class="page-link"
-            href="?data=student&page=<?php echo $page - 1; ?>&search=<?php echo $search; ?>">Previous</a></li>
-      <?php endif; ?>
-      <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-        <li class="page-item <?php echo ($i == $page) ? 'active' : ''; ?>"><a class="page-link"
-            href="?data=student&page=<?php echo $i; ?>&search=<?php echo $search; ?>"><?php echo $i; ?></a></li>
-      <?php endfor; ?>
-      <?php if ($page < $totalPages): ?>
-        <li class="page-item"><a class="page-link"
-            href="?data=student&page=<?php echo $page + 1; ?>&search=<?php echo $search; ?>">Next</a></li>
-      <?php endif; ?>
+        <!-- Previous Button -->
+        <?php if ($page > 1): ?>
+            <li class="page-item">
+                <a class="page-link" href="?data=student&page=<?php echo $page - 1; ?>&search=<?php echo htmlspecialchars($search); ?>" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+        <?php endif; ?>
+
+        <!-- Page Number Buttons -->
+        <?php
+        $visible_buttons = 5; // Number of buttons to display
+        $start_page = max(1, $page - floor($visible_buttons / 2));
+        $end_page = min($totalPages, $page + floor($visible_buttons / 2));
+
+        // Adjust start and end page to ensure the buttons fit within the visible range
+        if ($end_page - $start_page + 1 < $visible_buttons) {
+            if ($start_page == 1) {
+                $end_page = min($totalPages, $start_page + $visible_buttons - 1);
+            } else {
+                $start_page = max(1, $end_page - $visible_buttons + 1);
+            }
+        }
+
+        // Display first page button and ellipsis if necessary
+        if ($start_page > 1): ?>
+            <li class="page-item">
+                <a class="page-link" href="?data=student&page=1&search=<?php echo htmlspecialchars($search); ?>">1</a>
+            </li>
+            <?php if ($start_page > 2): ?>
+                <li class="page-item disabled">
+                    <span class="page-link">...</span>
+                </li>
+            <?php endif; ?>
+        <?php endif; ?>
+
+        <!-- Display page number buttons -->
+        <?php for ($i = $start_page; $i <= $end_page; $i++): ?>
+            <li class="page-item <?php echo ($i == $page) ? 'active' : ''; ?>">
+                <a class="page-link" href="?data=student&page=<?php echo $i; ?>&search=<?php echo htmlspecialchars($search); ?>"><?php echo $i; ?></a>
+            </li>
+        <?php endfor; ?>
+
+        <!-- Display last page button and ellipsis if necessary -->
+        <?php if ($end_page < $totalPages): ?>
+            <?php if ($end_page < $totalPages - 1): ?>
+                <li class="page-item disabled">
+                    <span class="page-link">...</span>
+                </li>
+            <?php endif; ?>
+            <li class="page-item">
+                <a class="page-link" href="?data=student&page=<?php echo $totalPages; ?>&search=<?php echo htmlspecialchars($search); ?>"><?php echo $totalPages; ?></a>
+            </li>
+        <?php endif; ?>
+
+        <!-- Next Button -->
+        <?php if ($page < $totalPages): ?>
+            <li class="page-item">
+                <a class="page-link" href="?data=student&page=<?php echo $page + 1; ?>&search=<?php echo htmlspecialchars($search); ?>" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        <?php endif; ?>
     </ul>
-  </nav>
+</nav>
+
 </main>

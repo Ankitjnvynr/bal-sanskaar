@@ -119,30 +119,73 @@ $total_pages = ceil($total_records / $records_per_page);
         </table>
     </div>
 
-    <!-- Pagination -->
-    <nav aria-label="Page navigation">
-        <ul class="pagination justify-content-center">
-            <?php if ($page > 1) : ?>
-                <li class="page-item">
-                    <a class="page-link" href="?data=teacher&page=<?php echo $page - 1; ?>&search=<?php echo htmlspecialchars($search_query); ?>" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-            <?php endif; ?>
-            <?php for ($i = 1; $i <= $total_pages; $i++) : ?>
-                <li class="page-item <?php if ($i == $page)
-                                            echo 'active'; ?>">
-                    <a class="page-link" href="?data=teacher&page=<?php echo $i; ?>&search=<?php echo htmlspecialchars($search_query); ?>"><?php echo $i; ?></a>
-                </li>
-            <?php endfor; ?>
-            <?php if ($page < $total_pages) : ?>
-                <li class="page-item">
-                    <a class="page-link" href="?data=teacher&page=<?php echo $page + 1; ?>&search=<?php echo htmlspecialchars($search_query); ?>" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
+<!-- Pagination -->
+<nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+        <!-- Previous Button -->
+        <?php if ($page > 1) : ?>
+            <li class="page-item">
+                <a class="page-link" href="?data=teacher&page=<?php echo $page - 1; ?>&search=<?php echo htmlspecialchars($search_query); ?>" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+        <?php endif; ?>
 
+        <!-- Page Number Buttons -->
+        <?php
+        $visible_buttons = 5; // Number of buttons to display
+        $start_page = max(1, $page - floor($visible_buttons / 2));
+        $end_page = min($total_pages, $page + floor($visible_buttons / 2));
+
+        // Adjust start and end page to ensure the buttons fit within the visible range
+        if ($end_page - $start_page + 1 < $visible_buttons) {
+            if ($start_page == 1) {
+                $end_page = min($total_pages, $start_page + $visible_buttons - 1);
+            } else {
+                $start_page = max(1, $end_page - $visible_buttons + 1);
+            }
+        }
+
+        // Display first page button and ellipsis if necessary
+        if ($start_page > 1) : ?>
+            <li class="page-item">
+                <a class="page-link" href="?data=teacher&page=1&search=<?php echo htmlspecialchars($search_query); ?>">1</a>
+            </li>
+            <?php if ($start_page > 2) : ?>
+                <li class="page-item disabled">
+                    <span class="page-link">...</span>
                 </li>
             <?php endif; ?>
-        </ul>
-    </nav>
+        <?php endif; ?>
+
+        <!-- Display page number buttons -->
+        <?php for ($i = $start_page; $i <= $end_page; $i++) : ?>
+            <li class="page-item <?php if ($i == $page) echo 'active'; ?>">
+                <a class="page-link" href="?data=teacher&page=<?php echo $i; ?>&search=<?php echo htmlspecialchars($search_query); ?>"><?php echo $i; ?></a>
+            </li>
+        <?php endfor; ?>
+
+        <!-- Display last page button and ellipsis if necessary -->
+        <?php if ($end_page < $total_pages) : ?>
+            <?php if ($end_page < $total_pages - 1) : ?>
+                <li class="page-item disabled">
+                    <span class="page-link">...</span>
+                </li>
+            <?php endif; ?>
+            <li class="page-item">
+                <a class="page-link" href="?data=teacher&page=<?php echo $total_pages; ?>&search=<?php echo htmlspecialchars($search_query); ?>"><?php echo $total_pages; ?></a>
+            </li>
+        <?php endif; ?>
+
+        <!-- Next Button -->
+        <?php if ($page < $total_pages) : ?>
+            <li class="page-item">
+                <a class="page-link" href="?data=teacher&page=<?php echo $page + 1; ?>&search=<?php echo htmlspecialchars($search_query); ?>" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        <?php endif; ?>
+    </ul>
+</nav>
+
 </div>

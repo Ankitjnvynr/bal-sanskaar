@@ -93,8 +93,9 @@ if ($result->num_rows > 0) {
     </table>
 </div>
 
-
+<div class="d-flex justify-content-center align-items-center">
 <?php
+
 // Pagination for search results
 $count_sql = "SELECT COUNT(id) FROM students";
 if ($search_query !== '') {
@@ -105,15 +106,72 @@ $row = $count_result->fetch_row();
 $total_records = $row[0];
 $total_pages = ceil($total_records / $limit);
 
+$range = 2; // Number of page links to show on either side of the current page
+$start_page = max(1, $page - $range);
+$end_page = min($total_pages, $page + $range);
+
 $pagLink = "<nav><ul class='pagination'>";
-for ($i = 1; $i <= $total_pages; $i++) {
-    $pagLink .= "<li class='page-item'><a class='page-link' href='dashboard.php?page=$i";
+
+// Previous button
+if ($page > 1) {
+    $pagLink .= "<li class='page-item'><a class='page-link' href='dashboard.php?data=student&page=" . ($page - 1);
     if ($search_query !== '') {
         $pagLink .= "&search=$search_query";
     }
-    $pagLink .= "'>$i</a></li>";
+    $pagLink .= "'>&laquo;</a></li>";
 }
-echo $pagLink . "</ul></nav>";
+
+// First page
+if ($start_page > 1) {
+    $pagLink .= "<li class='page-item'><a class='page-link' href='dashboard.php?data=student&page=1";
+    if ($search_query !== '') {
+        $pagLink .= "&search=$search_query";
+    }
+    $pagLink .= "'>1</a></li>";
+    if ($start_page > 2) {
+        $pagLink .= "<li class='page-item disabled'><span class='page-link'>...</span></li>";
+    }
+}
+
+// Page links
+for ($i = $start_page; $i <= $end_page; $i++) {
+    if ($i == $page) {
+        $pagLink .= "<li class='page-item active'><span class='page-link'>$i</span></li>";
+    } else {
+        $pagLink .= "<li class='page-item'><a class='page-link' href='dashboard.php?data=student&page=$i";
+        if ($search_query !== '') {
+            $pagLink .= "&search=$search_query";
+        }
+        $pagLink .= "'>$i</a></li>";
+    }
+}
+
+// Last page
+if ($end_page < $total_pages) {
+    if ($end_page < $total_pages - 1) {
+        $pagLink .= "<li class='page-item disabled'><span class='page-link'>...</span></li>";
+    }
+    $pagLink .= "<li class='page-item'><a class='page-link' href='dashboard.php?data=student&page=$total_pages";
+    if ($search_query !== '') {
+        $pagLink .= "&search=$search_query";
+    }
+    $pagLink .= "'>$total_pages</a></li>";
+}
+
+// Next button
+if ($page < $total_pages) {
+    $pagLink .= "<li class='page-item'><a class='page-link' href='dashboard.php?data=student&page=" . ($page + 1);
+    if ($search_query !== '') {
+        $pagLink .= "&search=$search_query";
+    }
+    $pagLink .= "'>&raquo;</a></li>";
+}
+
+$pagLink .= "</ul></nav>";
+echo $pagLink;
 
 $conn->close();
+
+
 ?>
+</div>
