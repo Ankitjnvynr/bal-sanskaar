@@ -45,8 +45,9 @@ $total_pages = ceil($total_records / $records_per_page);
 ?>
 
 <div class="">
-    <h4 class="mb-4 teacher-l">Teachers List-(2300/4000)</h4>
-    <button class="filter-btn-rld">Filter Page </button>
+    <h5 class="mb-4 teacher-l">Teachers List-(2300/4000)</h5>
+    
+
 
     <!-- Search Form -->
     <form class="d-flex mb-4" method="GET" action="">
@@ -243,43 +244,29 @@ $total_pages = ceil($total_records / $records_per_page);
 
 </div>
 <script>
-    window.onload = function() {
-        console.log(
-            "wind"
-        )
-    // Get the current URL parameters
-    const urlParams = new URLSearchParams(window.location.search);
+  window.onload = function() {
+   
 
-    // Check if the URL parameters are missing and add them back if needed
-    const paramsToCheck = ['country', 'state', 'district', 'tehsil', 'name', 'phone', 'data'];
-    let needsUpdate = false;
+    // Check if the page was reloaded manually by the user
+    if (performance.navigation.type === performance.navigation.TYPE_RELOAD) {
+        // Get the current URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
 
-    paramsToCheck.forEach(param => {
-        if (!urlParams.has(param)) {
-            needsUpdate = true; // If a parameter is missing, mark the need for an update
-        }
-    });
+        // Keep only the 'data' and 'page' parameters, remove everything else
+        const allowedParams = ['data', 'page'];
+        const newParams = new URLSearchParams();
 
-    // If any parameter is missing, update the URL with the stored parameters
-    if (needsUpdate) {
-        const defaultParams = {
-            country: 'India',
-            state: 'State1',
-            district: 'District1',
-            tehsil: 'Tehsil1',
-            name: '',
-            phone: '',
-            data: ' Teacher',
-        };
-
-        paramsToCheck.forEach(param => {
-            if (!urlParams.has(param)) {
-                urlParams.set(param, defaultParams[param]); // Set the missing parameters
+        allowedParams.forEach(param => {
+            if (urlParams.has(param)) {
+                newParams.set(param, urlParams.get(param)); // Retain only 'data' and 'page' if they exist
             }
         });
 
-        // Redirect to the updated URL with all parameters
-        window.location.search = urlParams.toString();
+        // If the current URL has any other parameters, update the URL
+        if (urlParams.toString() !== newParams.toString()) {
+            // Redirect to the new URL with only 'data' and 'page'
+            window.location.search = newParams.toString();
+        }
     }
 };
 
