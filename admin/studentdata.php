@@ -21,12 +21,62 @@ if ($result->num_rows > 0) {
 }
 ?>
 
-<h4>Students Table</h4>
-<form class="d-flex mb-4" method="GET" action="dashboard.php">
+<h4>Students List-(2400/4000)</h4>
+<form class="d-flex mb-4" method="GET" action="">
+    <div class="form-container">
+        
+            <div class="form-group">
+                
+                <select id="country" name="country" >
+                    <option value="India">India</option>
+                    <option value="USA">USA</option>
+                    <option value="Canada">Canada</option>
+                </select>
+            </div>
+            <div class="form-group">
+                
+                <select id="state" name="state">
+                    <option value="State1">Haryana</option>
+                    <option value="State2">Chandigarh</option>
+                </select>
+            </div>
+            <div class="form-group">
+                
+                <select id="district" name="district">
+                    <option value="District1">Kurukshetra</option>
+                    <option value="District2">pehowa</option>
+                    <option value="District2">Karnal</option>
+                </select>
+            </div>
+            <div class="form-group">
+                
+                <select id="tehsil" name="tehsil">
+                    <option value="Tehsil1">Thanesar</option>
+                    <option value="Tehsil2">karnal</option>
+                </select>
+            </div>
+            <div class="form-group">
+                
+                <input type="text"  class="filter-input" id="name" name="name" placeholder=" Name">
+            </div>
+            <div class="form-group">
+                
+                <input type="tel"  class="filter-input" id="phone" name="phone" placeholder=" Phone Number">
+            </div>
+           
+    
+            <div class="form-group">
+            <input type="hidden" name="data" value="Student">
+        <!-- <input class="form-control me-2" type="search" name="search" placeholder="Search..." aria-label="Search" value="<?php echo htmlspecialchars($search_query); ?>"> -->
+        <button class="btn btn-outline-success p-0 px-1 flex-1 w-full  fltr-btn" type="submit" >Search</button>
+     
+        
+            </div>
+<!-- <form class="d-flex mb-4" method="GET" action="dashboard.php">
     <input type="hidden" name="data" value="student">
     <input class="form-control me-2" type="search" name="search" placeholder="Search"
         value="<?php echo htmlspecialchars($search_query); ?>" aria-label="Search">
-    <button class="btn btn-outline-success" type="submit">Search</button>
+    <button class="btn btn-outline-success" type="submit">Search</button> -->
 </form>
 <div class="table-responsive">
     <table class="table table-bordered fs-7">

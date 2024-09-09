@@ -45,13 +45,66 @@ $total_pages = ceil($total_records / $records_per_page);
 ?>
 
 <div class="">
-    <h4 class="mb-4">Teachers List</h4>
+    <h4 class="mb-4 teacher-l">Teachers List-(2300/4000)</h4>
+    <button class="filter-btn-rld">Filter Page </button>
 
     <!-- Search Form -->
     <form class="d-flex mb-4" method="GET" action="">
-        <input type="hidden" name="data" value="teacher">
-        <input class="form-control me-2" type="search" name="search" placeholder="Search..." aria-label="Search" value="<?php echo htmlspecialchars($search_query); ?>">
-        <button class="btn btn-outline-success" type="submit">Search</button>
+    <div class="form-container">
+        
+            <div class="form-group">
+                
+                <select id="country" name="country" >
+                    <option value="India">India</option>
+                    <option value="USA">USA</option>
+                    <option value="Canada">Canada</option>
+                </select>
+            </div>
+            <div class="form-group">
+                
+                <select id="state" name="state">
+                    <option value="State1">Haryana</option>
+                    <option value="State2">Chandigarh</option>
+                </select>
+            </div>
+            <div class="form-group">
+                
+                <select id="district" name="district">
+                    <option value="District1">Kurukshetra</option>
+                    <option value="District2">pehowa</option>
+                    <option value="District2">Karnal</option>
+                </select>
+            </div>
+            <div class="form-group">
+                
+                <select id="tehsil" name="tehsil">
+                    <option value="Tehsil1">Thanesar</option>
+                    <option value="Tehsil2">karnal</option>
+                </select>
+            </div>
+            <div class="form-group">
+                
+                <input type="text"  class="filter-input" id="name" name="name" placeholder=" Name">
+            </div>
+            <div class="form-group">
+                
+                <input type="tel"  class="filter-input" id="phone" name="phone" placeholder=" Phone Number">
+            </div>
+           
+    
+            <div class="form-group">
+            <input type="hidden" name="data" value="teacher">
+        <!-- <input class="form-control me-2" type="search" name="search" placeholder="Search..." aria-label="Search" value="<?php echo htmlspecialchars($search_query); ?>"> -->
+        <button class="btn btn-outline-success p-0 px-1 flex-1 w-full  fltr-btn" type="submit" >Search</button>
+     
+        
+            </div>
+      
+    
+    </div>
+    </div>
+      
+     
     </form>
 
     <!-- Data Table -->
@@ -189,3 +242,45 @@ $total_pages = ceil($total_records / $records_per_page);
 </nav>
 
 </div>
+<script>
+    window.onload = function() {
+        console.log(
+            "wind"
+        )
+    // Get the current URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+
+    // Check if the URL parameters are missing and add them back if needed
+    const paramsToCheck = ['country', 'state', 'district', 'tehsil', 'name', 'phone', 'data'];
+    let needsUpdate = false;
+
+    paramsToCheck.forEach(param => {
+        if (!urlParams.has(param)) {
+            needsUpdate = true; // If a parameter is missing, mark the need for an update
+        }
+    });
+
+    // If any parameter is missing, update the URL with the stored parameters
+    if (needsUpdate) {
+        const defaultParams = {
+            country: 'India',
+            state: 'State1',
+            district: 'District1',
+            tehsil: 'Tehsil1',
+            name: '',
+            phone: '',
+            data: ' Teacher',
+        };
+
+        paramsToCheck.forEach(param => {
+            if (!urlParams.has(param)) {
+                urlParams.set(param, defaultParams[param]); // Set the missing parameters
+            }
+        });
+
+        // Redirect to the updated URL with all parameters
+        window.location.search = urlParams.toString();
+    }
+};
+
+</script>

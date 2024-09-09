@@ -19,9 +19,8 @@ include '../config/_db.php';
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+<link rel="stylesheet" href="css/admin-filter-input.css">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-
 
 
     <style>
@@ -53,6 +52,58 @@ include '../config/_db.php';
             /* background-color: #741414; */
             transform: translatex(5px)
         }
+    </style>
+    <style>
+
+.form-container {
+    display:flex;
+    flex-wrap:wrap;
+    border-radius: 8px;
+    width: 100%;
+    gap:3px;
+}
+
+select, .filter-input {
+
+    width: 100%;
+    padding: 0 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+
+}
+ .form-group{
+    min-width:100px;
+    display:flex;
+    flex:1;
+ }
+.submit-btn {
+   width:100%;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 10px;
+    margin-left
+}
+    .submit-btn:hover {
+    background-color: #0056b3;
+} 
+.fltr-btn{
+    width:100%;
+    max-width:3000px;
+}
+/* filter-btn */
+.filter-btn-rld{
+border: 1px solid red;
+border-radius:5px;
+font-size:15px;
+font-weight:2px;
+color:red;
+margin-bottom:10px;
+
+}
+
     </style>
     <script>
         updating = false;
