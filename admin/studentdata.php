@@ -75,34 +75,25 @@ $total_pages = ceil($total_records / $limit);
 <h5>Students List - (Showing <?php echo $start_from + 1; ?>-<?php echo min($start_from + $limit, $total_records); ?> out of <?php echo $total_records; ?>)</h5>
 <form class="d-flex mb-4" method="GET" action="">
     <div class="form-container">
+    <input type="hidden" name="data" value="student">
         <div class="form-group">
-            <select id="country" name="country">
-                <option value="">All Countries</option>
-                <option value="India" <?php if ($country_filter == 'India') echo 'selected'; ?>>India</option>
-                <option value="USA" <?php if ($country_filter == 'USA') echo 'selected'; ?>>USA</option>
-                <option value="Canada" <?php if ($country_filter == 'Canada') echo 'selected'; ?>>Canada</option>
+            <select id="countrySelect" onchange="loadState(this)" name="country">
+                
             </select>
         </div>
         <div class="form-group">
-            <select id="state" name="state">
-                <option value="">All States</option>
-                <option value="Haryana" <?php if ($state_filter == 'Haryana') echo 'selected'; ?>>Haryana</option>
-                <option value="Chandigarh" <?php if ($state_filter == 'Chandigarh') echo 'selected'; ?>>Chandigarh</option>
+            <select id="stateSelect" onchange="loadDistrict(this)" name="state">
+                
             </select>
         </div>
         <div class="form-group">
-            <select id="district" name="district">
-                <option value="">All Districts</option>
-                <option value="Kurukshetra" <?php if ($district_filter == 'Kurukshetra') echo 'selected'; ?>>Kurukshetra</option>
-                <option value="Pehowa" <?php if ($district_filter == 'Pehowa') echo 'selected'; ?>>Pehowa</option>
-                <option value="Karnal" <?php if ($district_filter == 'Karnal') echo 'selected'; ?>>Karnal</option>
+            <select id="districtSelect" onchange="loadTehsil (this)" name="district">
+                
             </select>
         </div>
         <div class="form-group">
             <select id="tehsil" name="tehsil">
-                <option value="">All Tehsils</option>
-                <option value="Thanesar" <?php if ($tehsil_filter == 'Thanesar') echo 'selected'; ?>>Thanesar</option>
-                <option value="Karnal" <?php if ($tehsil_filter == 'Karnal') echo 'selected'; ?>>Karnal</option>
+               
             </select>
         </div>
         <div class="form-group">

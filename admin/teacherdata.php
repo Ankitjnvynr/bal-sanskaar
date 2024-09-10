@@ -187,7 +187,7 @@ $current_page_records = $result->num_rows;
             </div>
             <div class="form-group">
                 
-                <select  id="districtSelect" onchange="loadTehsil (this)" id="district" name="district">
+                <select  id="districtSelect" onchange="loadTehsil (this)"  name="district">
                     
                 </select>
             </div>
