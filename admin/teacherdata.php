@@ -1,5 +1,4 @@
 <?php
-
 // Set the number of records to display per page
 $records_per_page = 10;
 
@@ -9,44 +8,165 @@ $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
 // Calculate the offset for the SQL query
 $offset = ($page - 1) * $records_per_page;
 
-// Get the search query if any
-$search_query = isset($_GET['search']) ? $_GET['search'] : '';
+// Get filter values from the GET parameters
+$country = isset($_GET['country']) ? $_GET['country'] : '';
+$state = isset($_GET['state']) ? $_GET['state'] : '';
+$district = isset($_GET['district']) ? $_GET['district'] : '';
+$tehsil = isset($_GET['tehsil']) ? $_GET['tehsil'] : '';
+$name = isset($_GET['name']) ? $_GET['name'] : '';
+$phone = isset($_GET['phone']) ? $_GET['phone'] : '';
 
-// SQL query to fetch data with pagination and search
-$sql = "SELECT * FROM teachers 
-        WHERE name LIKE ? 
-        OR phone LIKE ? 
-        LIMIT ?, ?";
+// Start building the SQL query with a WHERE clause
+$sql = "SELECT * FROM teachers WHERE 1=1";
 
+// Array to hold the conditions and parameters
+$params = [];
+$types = ''; // Types for bind_param
+
+// Apply filters based on available GET parameters
+if (!empty($country)) {
+    $sql .= " AND country = ?";
+    $params[] = $country;
+    $types .= 's'; // string type
+}
+
+if (!empty($state)) {
+    $sql .= " AND state = ?";
+    $params[] = $state;
+    $types .= 's';
+}
+
+if (!empty($district)) {
+    $sql .= " AND district = ?";
+    $params[] = $district;
+    $types .= 's';
+}
+
+if (!empty($tehsil)) {
+    $sql .= " AND tehsil = ?";
+    $params[] = $tehsil;
+    $types .= 's';
+}
+
+if (!empty($name)) {
+    $sql .= " AND name LIKE ?";
+    $params[] = "%" . $name . "%";
+    $types .= 's';
+}
+
+if (!empty($phone)) {
+    $sql .= " AND phone LIKE ?";
+    $params[] = "%" . $phone . "%";
+    $types .= 's';
+}
+
+// Add the LIMIT for pagination
+$sql .= " LIMIT ?, ?";
+$params[] = $offset;
+$params[] = $records_per_page;
+$types .= 'ii'; // two integer types for offset and limit
+
+// Prepare the SQL statement
 $stmt = $conn->prepare($sql);
 if ($stmt === false) {
     die('Prepare failed: ' . htmlspecialchars($conn->error));
 }
 
-$search_term = "%" . $search_query . "%";
-$stmt->bind_param("ssii", $search_term, $search_term, $offset, $records_per_page);
+// Bind the parameters dynamically
+$stmt->bind_param($types, ...$params);
 $stmt->execute();
-$result = $stmt->get_result();
 
-// SQL query to get the total number of records for pagination
-$total_records_sql = "SELECT COUNT(*) AS total FROM teachers WHERE name LIKE ? OR phone LIKE ?";
+ $result = $stmt->get_result();
+
+
+
+
+?>
+ <?php
+// Create the base URL for pagination with filter values
+$base_url = "?data=teacher&country=" . urlencode($country) .
+    "&state=" . urlencode($state) .
+    "&district=" . urlencode($district) .
+    "&tehsil=" . urlencode($tehsil) .
+    "&name=" . urlencode($name) .
+    "&phone=" . urlencode($phone) . "&page=";
+?>
+<?php
+// SQL query to get the total number of records for pagination (without LIMIT)
+$total_records_sql = "SELECT COUNT(*) AS total FROM teachers WHERE 1=1";
+
+// Array to hold the conditions and parameters for the total count query
+$total_params = [];
+$total_types = ''; // Types for bind_param
+
+// Apply filters based on available GET parameters (same as main query)
+if (!empty($country)) {
+    $total_records_sql .= " AND country = ?";
+    $total_params[] = $country;
+    $total_types .= 's'; // string type
+}
+
+if (!empty($state)) {
+    $total_records_sql .= " AND state = ?";
+    $total_params[] = $state;
+    $total_types .= 's';
+}
+
+if (!empty($district)) {
+    $total_records_sql .= " AND district = ?";
+    $total_params[] = $district;
+    $total_types .= 's';
+}
+
+if (!empty($tehsil)) {
+    $total_records_sql .= " AND tehsil = ?";
+    $total_params[] = $tehsil;
+    $total_types .= 's';
+}
+
+if (!empty($name)) {
+    $total_records_sql .= " AND name LIKE ?";
+    $total_params[] = "%" . $name . "%";
+    $total_types .= 's';
+}
+
+if (!empty($phone)) {
+    $total_records_sql .= " AND phone LIKE ?";
+    $total_params[] = "%" . $phone . "%";
+    $total_types .= 's';
+}
+
+// Prepare the total records SQL statement
 $total_stmt = $conn->prepare($total_records_sql);
 if ($total_stmt === false) {
     die('Prepare failed: ' . htmlspecialchars($conn->error));
 }
 
-$total_stmt->bind_param("ss", $search_term, $search_term);
+// Dynamically bind the parameters
+if (!empty($total_types)) {
+    $total_stmt->bind_param($total_types, ...$total_params);
+}
+
+// Execute the total count query
 $total_stmt->execute();
 $total_result = $total_stmt->get_result();
 $total_records = $total_result->fetch_assoc()['total'];
 
 // Calculate total pages
 $total_pages = ceil($total_records / $records_per_page);
+
 ?>
 
+<?php
+// Count the number of records for the current page
+$current_page_records = $result->num_rows;
+?>
+
+
 <div class="">
-    <h5 class="mb-4 teacher-l">Teachers List-(2300/4000)</h5>
-    
+<h5 class="mb-4 teacher-l">
+        Teachers List - (<?php echo $current_page_records; ?>/<?php echo $total_records; ?>)
+    </h5>
 
 
     <!-- Search Form -->
@@ -55,32 +175,26 @@ $total_pages = ceil($total_records / $records_per_page);
         
             <div class="form-group">
                 
-                <select id="country" name="country" >
-                    <option value="India">India</option>
-                    <option value="USA">USA</option>
-                    <option value="Canada">Canada</option>
+                <select id="countrySelect" onchange="loadState(this)" name="country" >
+                    
                 </select>
             </div>
             <div class="form-group">
                 
-                <select id="state" name="state">
-                    <option value="State1">Haryana</option>
-                    <option value="State2">Chandigarh</option>
+                <select id="stateSelect" onchange="loadDistrict(this)"  name="state">
+                    
                 </select>
             </div>
             <div class="form-group">
                 
-                <select id="district" name="district">
-                    <option value="District1">Kurukshetra</option>
-                    <option value="District2">pehowa</option>
-                    <option value="District2">Karnal</option>
+                <select  id="districtSelect" onchange="loadTehsil (this)" id="district" name="district">
+                    
                 </select>
             </div>
             <div class="form-group">
                 
                 <select id="tehsil" name="tehsil">
-                    <option value="Tehsil1">Thanesar</option>
-                    <option value="Tehsil2">karnal</option>
+                  
                 </select>
             </div>
             <div class="form-group">
@@ -113,7 +227,7 @@ $total_pages = ceil($total_records / $records_per_page);
         <table class="table table-striped fs-7">
             <thead>
                 <tr>
-                    <th scope="col">ID</th>
+                    <th scope="col">Sr</th>
                     <th scope="col">Teacher Type</th>
                     <th scope="col">Name</th>
                     <th scope="col">DOB</th>
@@ -131,7 +245,11 @@ $total_pages = ceil($total_records / $records_per_page);
             <tbody>
                 <?php
                 if ($result->num_rows > 0) {
-                    $sr = 0;
+                    if(isset($_GET['page'])){
+                        $sr = 10*($_GET['page']-1);
+                    }else{
+                        $sr = 0;
+                    }
                     while ($row = $result->fetch_assoc()) :
                         $sr++; ?>
                         <tr>
@@ -173,13 +291,14 @@ $total_pages = ceil($total_records / $records_per_page);
         </table>
     </div>
 
+   
 <!-- Pagination -->
 <nav aria-label="Page navigation">
     <ul class="pagination justify-content-center">
         <!-- Previous Button -->
         <?php if ($page > 1) : ?>
             <li class="page-item">
-                <a class="page-link" href="?data=teacher&page=<?php echo $page - 1; ?>&search=<?php echo htmlspecialchars($search_query); ?>" aria-label="Previous">
+                <a class="page-link" href="<?php echo $base_url . ($page - 1); ?>" aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
@@ -187,11 +306,10 @@ $total_pages = ceil($total_records / $records_per_page);
 
         <!-- Page Number Buttons -->
         <?php
-        $visible_buttons = 5; // Number of buttons to display
+        $visible_buttons = 5; 
         $start_page = max(1, $page - floor($visible_buttons / 2));
         $end_page = min($total_pages, $page + floor($visible_buttons / 2));
 
-        // Adjust start and end page to ensure the buttons fit within the visible range
         if ($end_page - $start_page + 1 < $visible_buttons) {
             if ($start_page == 1) {
                 $end_page = min($total_pages, $start_page + $visible_buttons - 1);
@@ -200,10 +318,9 @@ $total_pages = ceil($total_records / $records_per_page);
             }
         }
 
-        // Display first page button and ellipsis if necessary
         if ($start_page > 1) : ?>
             <li class="page-item">
-                <a class="page-link" href="?data=teacher&page=1&search=<?php echo htmlspecialchars($search_query); ?>">1</a>
+                <a class="page-link" href="<?php echo $base_url . '1'; ?>">1</a>
             </li>
             <?php if ($start_page > 2) : ?>
                 <li class="page-item disabled">
@@ -215,11 +332,10 @@ $total_pages = ceil($total_records / $records_per_page);
         <!-- Display page number buttons -->
         <?php for ($i = $start_page; $i <= $end_page; $i++) : ?>
             <li class="page-item <?php if ($i == $page) echo 'active'; ?>">
-                <a class="page-link" href="?data=teacher&page=<?php echo $i; ?>&search=<?php echo htmlspecialchars($search_query); ?>"><?php echo $i; ?></a>
+                <a class="page-link" href="<?php echo $base_url . $i; ?>"><?php echo $i; ?></a>
             </li>
         <?php endfor; ?>
 
-        <!-- Display last page button and ellipsis if necessary -->
         <?php if ($end_page < $total_pages) : ?>
             <?php if ($end_page < $total_pages - 1) : ?>
                 <li class="page-item disabled">
@@ -227,14 +343,14 @@ $total_pages = ceil($total_records / $records_per_page);
                 </li>
             <?php endif; ?>
             <li class="page-item">
-                <a class="page-link" href="?data=teacher&page=<?php echo $total_pages; ?>&search=<?php echo htmlspecialchars($search_query); ?>"><?php echo $total_pages; ?></a>
+                <a class="page-link" href="<?php echo $base_url . $total_pages; ?>"><?php echo $total_pages; ?></a>
             </li>
         <?php endif; ?>
 
         <!-- Next Button -->
         <?php if ($page < $total_pages) : ?>
             <li class="page-item">
-                <a class="page-link" href="?data=teacher&page=<?php echo $page + 1; ?>&search=<?php echo htmlspecialchars($search_query); ?>" aria-label="Next">
+                <a class="page-link" href="<?php echo $base_url . ($page + 1); ?>" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>
@@ -242,32 +358,5 @@ $total_pages = ceil($total_records / $records_per_page);
     </ul>
 </nav>
 
+
 </div>
-<script>
-  window.onload = function() {
-   
-
-    // Check if the page was reloaded manually by the user
-    if (performance.navigation.type === performance.navigation.TYPE_RELOAD) {
-        // Get the current URL parameters
-        const urlParams = new URLSearchParams(window.location.search);
-
-        // Keep only the 'data' and 'page' parameters, remove everything else
-        const allowedParams = ['data', 'page'];
-        const newParams = new URLSearchParams();
-
-        allowedParams.forEach(param => {
-            if (urlParams.has(param)) {
-                newParams.set(param, urlParams.get(param)); // Retain only 'data' and 'page' if they exist
-            }
-        });
-
-        // If the current URL has any other parameters, update the URL
-        if (urlParams.toString() !== newParams.toString()) {
-            // Redirect to the new URL with only 'data' and 'page'
-            window.location.search = newParams.toString();
-        }
-    }
-};
-
-</script>
