@@ -119,10 +119,10 @@ $total_pages = ceil($total_records / $limit);
                 <th>DOB</th>
                 <th>Father's Name</th>
                 <th>Father's Phone</th>
-                <th>Father's DOB</th>
+                
                 <th>Mother's Name</th>
                 <th>Mother's Phone</th>
-                <th>Mother's DOB</th>
+              
                 <th>Country</th>
                 <th>State</th>
                 <th>District</th>
@@ -145,10 +145,10 @@ $total_pages = ceil($total_records / $limit);
                             <td>{$row['dob']}</td>
                             <td>{$row['father_name']}</td>
                             <td>{$row['father_phone']}</td>
-                            <td>{$row['father_dob']}</td>
+                      
                             <td>{$row['mother_name']}</td>
                             <td>{$row['mother_phone']}</td>
-                            <td>{$row['mother_dob']}</td>
+                       
                             <td>" . (isset($row['country']) ? $row['country'] : 'N/A') . "</td>
                             <td>" . (isset($row['state']) ? $row['state'] : 'N/A') . "</td>
                             <td>" . (isset($row['district']) ? $row['district'] : 'N/A') . "</td>

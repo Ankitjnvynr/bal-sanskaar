@@ -13,6 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $state = $_POST['state'];
     $district = $_POST['district'];
     $tehsil = $_POST['tehsil'];
+    $address = $_POST['address'];
     $center = $_POST['center'];
     $dt = $_POST['dt'];
 
@@ -33,10 +34,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Phone number has changed, update userpassword as well
         $hash_pass = password_hash($phone, PASSWORD_DEFAULT);
         $sql_update = "UPDATE teachers 
-                       SET teacher_type = ?, name = ?, dob = ?, phone = ?, qualification = ?, country = ?, state = ?, district = ?, tehsil = ?, center = ?, dt = ?, userpassword = ?
+                       SET teacher_type = ?, name = ?, dob = ?, phone = ?, qualification = ?, country = ?, state = ?, district = ?, tehsil = ?, center = ?, dt = ?, userpassword = ?,address=?
                        WHERE id = ?";
         $stmt_update = $conn->prepare($sql_update);
-        $stmt_update->bind_param("ssssssssssssi", $teacher_type, $name, $dob, $phone, $qualification, $country, $state, $district, $tehsil, $center, $dt, $hash_pass, $id);
+        $stmt_update->bind_param("sssssssssssssi", $teacher_type, $name, $dob, $phone, $qualification, $country, $state, $district, $tehsil, $center, $dt, $hash_pass,$address, $id);
     } else {
         // Phone number has not changed, do not update userpassword
         $sql_update = "UPDATE teachers 

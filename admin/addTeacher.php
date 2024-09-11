@@ -74,6 +74,10 @@
                     <option value="teh">teh</option>
                 </select>
             </div>
+            <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+                <label for="address" class="form-label">Address</label>
+                <textarea id="address" name="address" class="form-control form-control-sm" rows="2"></textarea>
+            </div>
             <!-- <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="center" class="form-label">Center</label>
                 <input type="text" id="center" name="center" class="form-control form-control-sm">

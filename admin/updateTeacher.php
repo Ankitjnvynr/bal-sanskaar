@@ -116,6 +116,10 @@ if ($user_id > 0) {
                 <label for="center" class="form-label">Join On</label>
                 <input type="date" id="dt" name="dt" class="form-control form-control-sm" value="<?php echo htmlspecialchars($dt); ?>">
             </div>
+            <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+                <label for="address" class="form-label">Address</label>
+                <textarea id="address" name="address" class="form-control form-control-sm" rows="2"><?php echo htmlspecialchars($teacher['address'] ?? '')   ?></textarea>
+            </div>
 
 
         </div>
