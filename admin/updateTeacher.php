@@ -35,7 +35,7 @@ if ($user_id > 0) {
         <div class="row d-flex gap-1 flex-wrap fs-7 px-2">
             <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="type" class="form-label">Teacher/City Head</label>
-                <select id="type" name="type" class="form-select" required>
+                <select id="type" name="type" class="form-select" onchange="changeTeacherType(<?php echo $user_id  ?>,this)" required>
                     <?php
                     $arr = ['City Head', 'Teacher'];
                     foreach ($arr as $value) {
@@ -132,3 +132,33 @@ if ($user_id > 0) {
 </script>
 
 <?php include '_footer.php'; ?>
+
+<script>
+    changeTeacherType = (id, e) => {
+console.log(e.value);
+
+
+$.ajax({
+    url: 'changeTeacherType.php',
+    type: 'POST',
+    data: {
+        id: id,
+        type: e.value
+    },
+    dataType: 'json', // Ensures the response is parsed as JSON
+    success: function (res) {
+
+        // Check if the response is a JavaScript object
+        console.log(res);
+        if (res.center == 0) res.center = '';
+
+        // Assuming the 10th child element is the one you want to update
+        // e.parentNode.parentNode.childNodes[21].innerHTML = res.center;
+        $('#center').val(res.center)
+    },
+    error: function (xhr, status, error) {
+        console.error('Error:', status, error);
+    }
+});
+}
+</script>

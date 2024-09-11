@@ -255,18 +255,7 @@ $current_page_records = $result->num_rows;
                         <tr>
                             <th scope="row"><?php echo $sr; ?></th>
                             <td>
-                                <select class="border" onchange="changeTeacherType(<?php echo $row['id']; ?>,this)">
-                                    <?php
-                                    $arr = ['Teacher', 'City Head', 'State Head'];
-                                    foreach ($arr as $value) {
-                                        if ($row['teacher_type'] == $value) {
-                                            echo '<option selected value="' . $value . '">' . $value . '</option>';
-                                        } else {
-                                            echo '<option value="' . $value . '">' . $value . '</option>';
-                                        }
-                                    }
-                                    ?>
-                                </select>
+                            <?php echo $row['teacher_type'] ?>
                             </td>
                             <td><?php echo $row['name']; ?></td>
                             <td><?php echo $row['dob']; ?></td>
@@ -306,7 +295,7 @@ $current_page_records = $result->num_rows;
 
         <!-- Page Number Buttons -->
         <?php
-        $visible_buttons = 5; 
+        $visible_buttons = 3; 
         $start_page = max(1, $page - floor($visible_buttons / 2));
         $end_page = min($total_pages, $page + floor($visible_buttons / 2));
 
