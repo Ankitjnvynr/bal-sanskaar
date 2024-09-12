@@ -15,6 +15,7 @@ $district = isset($_GET['district']) ? $_GET['district'] : '';
 $tehsil = isset($_GET['tehsil']) ? $_GET['tehsil'] : '';
 $name = isset($_GET['name']) ? $_GET['name'] : '';
 $phone = isset($_GET['phone']) ? $_GET['phone'] : '';
+$type = isset($_GET['type']) ? $_GET['type'] : '';
 
 // Start building the SQL query with a WHERE clause
 $sql = "SELECT * FROM teachers WHERE 1=1";
@@ -57,6 +58,11 @@ if (!empty($name)) {
 if (!empty($phone)) {
     $sql .= " AND phone LIKE ?";
     $params[] = "%" . $phone . "%";
+    $types .= 's';
+}
+if (!empty($type)) {
+    $sql .= " AND teacher_type LIKE ?";
+    $params[] = "%" . $type . "%";
     $types .= 's';
 }
 
@@ -135,6 +141,11 @@ if (!empty($phone)) {
     $total_params[] = "%" . $phone . "%";
     $total_types .= 's';
 }
+if (!empty($type)) {
+    $sql .= " AND teacher_type LIKE ?";
+    $params[] = "%" . $type . "%";
+    $types .= 's';
+}
 
 // Prepare the total records SQL statement
 $total_stmt = $conn->prepare($total_records_sql);
@@ -160,7 +171,22 @@ $total_pages = ceil($total_records / $records_per_page);
 <?php
 // Count the number of records for the current page
 $current_page_records = $result->num_rows;
+
+
 ?>
+
+<style>
+.nametd {
+    font-weight: 700;
+    cursor: pointer;
+
+}
+
+.nametd:hover {
+    text-decoration: underline;
+    /* color: red; */
+}
+</style>
 
 <!-- modal for the teacher profile -->
 <!-- Modal -->
@@ -177,7 +203,6 @@ $current_page_records = $result->num_rows;
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                
             </div>
         </div>
     </div>
@@ -190,59 +215,45 @@ $current_page_records = $result->num_rows;
     <h5 class="mb-4 teacher-l">
         Teachers List - (<?php echo $current_page_records; ?>/<?php echo $total_records; ?>)
     </h5>
-
-
     <!-- Search Form -->
     <form class="d-flex mb-4" method="GET" action="">
         <div class="form-container">
-
             <div class="form-group">
-
-                <select id="countrySelect" onchange="loadState(this)" name="country">
-
-                </select>
+                <select id="countrySelect" onchange="loadState(this)" name="country"></select>
             </div>
             <div class="form-group">
-
-                <select id="stateSelect" onchange="loadDistrict(this)" name="state">
-
-                </select>
+                <select id="stateSelect" onchange="loadDistrict(this)" name="state"></select>
             </div>
             <div class="form-group">
-
-                <select id="districtSelect" onchange="loadTehsil (this)" name="district">
-
-                </select>
+                <select id="districtSelect" onchange="loadTehsil (this)" name="district"></select>
             </div>
             <div class="form-group">
-
-                <select id="tehsil" name="tehsil">
-
-                </select>
+                <select id="tehsil" name="tehsil"></select>
             </div>
             <div class="form-group">
-
                 <input type="text" class="filter-input" id="name" name="name" placeholder=" Name">
             </div>
             <div class="form-group">
-
                 <input type="tel" class="filter-input" id="phone" name="phone" placeholder=" Phone Number">
             </div>
-
-
+            <div class="form-group">
+                <select name="type" id="type">
+                    <option value="">select type</option>
+                    <?php 
+                        $arr = ['City Head','State Head', 'Teacher','Teacher1'];
+                        foreach ($arr as $item) {
+                            echo '<option value="'.$item.'">'.$item.'</option>';
+                        }
+                    ?>
+                </select>
+            </div>
             <div class="form-group">
                 <input type="hidden" name="data" value="teacher">
                 <!-- <input class="form-control me-2" type="search" name="search" placeholder="Search..." aria-label="Search" value="<?php echo htmlspecialchars($search_query); ?>"> -->
                 <button class="btn btn-outline-success p-0 px-1 flex-1 w-full  fltr-btn" type="submit">Search</button>
-
-
             </div>
-
-
         </div>
 </div>
-
-
 </form>
 
 <!-- Data Table -->
@@ -281,7 +292,8 @@ $current_page_records = $result->num_rows;
                 <td>
                     <?php echo $row['teacher_type'] ?>
                 </td>
-                <td data-bs-toggle="modal" onclick="openTeacherProfileModal(this,<?php echo $row['id']; ?>)">
+                <td class="nametd" data-bs-toggle="modal"
+                    onclick="openTeacherProfileModal(this,<?php echo $row['id']; ?>)">
                     <?php echo $row['name']; ?></td>
                 <td><?php echo $row['dob']; ?></td>
                 <td><?php echo $row['phone']; ?></td>
@@ -311,6 +323,19 @@ $current_page_records = $result->num_rows;
 
 
 <!-- Pagination -->
+<?php
+// Create the base URL for pagination with filter values
+$base_url = "?data=teacher&country=" . urlencode($country) .
+    "&state=" . urlencode($state) .
+    "&district=" . urlencode($district) .
+    "&tehsil=" . urlencode($tehsil) .
+    "&name=" . urlencode($name) .
+    "&phone=" . urlencode($phone) .
+    "&type=" . urlencode($type) .  // Added type filter
+    "&page=";
+?>
+
+<?php if ($total_pages > 1): // Only show pagination if there's more than one page ?>
 <nav aria-label="Page navigation">
     <ul class="pagination justify-content-center">
         <!-- Previous Button -->
@@ -375,6 +400,8 @@ $current_page_records = $result->num_rows;
         <?php endif; ?>
     </ul>
 </nav>
+<?php endif; // End of pagination check ?>
+
 
 
 </div>
@@ -408,12 +435,10 @@ function openTeacherProfileModal(e, userId) {
         $("#teacher-list").removeAttr("hidden");
         $("#teacher-list").show(5);
         $("#student-list").hide(5);
-    } 
-    showStudentList=()=> {
+    }
+    showStudentList = () => {
         $("#teacher-list").hide(5);
         $("#student-list").show(5);
     }
 };
-
-
 </script>

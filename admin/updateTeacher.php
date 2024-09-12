@@ -37,7 +37,7 @@ if ($user_id > 0) {
                 <label for="type" class="form-label">Teacher/City Head</label>
                 <select id="type" name="type" class="form-select" onchange="changeTeacherType(<?php echo $user_id  ?>,this)" required>
                     <?php
-                    $arr = ['City Head', 'Teacher'];
+                    $arr = ['City Head', 'Teacher','State Head', 'Teacher1'];
                     foreach ($arr as $value) {
                         $selected = ($teacher && $teacher['teacher_type'] == $value) ? 'selected' : '';
                         echo '<option ' . $selected . ' value="' . $value . '">' . $value . '</option>';
