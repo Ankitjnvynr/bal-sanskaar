@@ -8,6 +8,11 @@ if (isset($_SESSION['phone'])) {
 <?php
 
 ?>
+<style>
+    .dropdown-item:hover{
+        background-color:#dc3545;
+    }
+</style>
 
 <ul class="nav flex-column">
     <div class="logo text-center shadow pt-2 rounded">
@@ -25,6 +30,13 @@ if (isset($_SESSION['phone'])) {
     </li>
     <li class="nav-item">
         <a class="nav-link " href="addTeacher.php">Add Teacher</a>
+    </li>
+    <li class="nav-item dropdown">
+        <a style="cursor:pointer;" data-bs-toggle="dropdown" class="nav-link  text-left ">Report</a>
+        <ul  class="dropdown-menu bg-danger">
+            <li><a class="dropdown-item" href="report.php">Teachers</a></li>
+            <li><a class="dropdown-item" href="reportstudent.php">Student</a></li>
+        </ul>
     </li>
 
 
