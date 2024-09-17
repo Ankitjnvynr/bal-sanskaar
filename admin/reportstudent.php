@@ -148,7 +148,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                    <!-- <option value="pdf">HTML (Simulated PDF)</option> -->
                </select>
            </div>
-            <div class="form-group">
+            <div class="form-group d-flex justify-content-center align-items-center">
                 <button class="btn btn-success p-0 px-1 flex-1 w-full " type="submit">Generate Report</button>
             </div>
         </div>
