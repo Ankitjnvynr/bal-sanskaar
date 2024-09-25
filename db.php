@@ -23,6 +23,13 @@ try {
     $add_address = "ALTER TABLE students ADD address TEXT AFTER tehsil,ADD rollno VARCHAR(100) AFTER id ";
 
     $add_address_teacher = "ALTER TABLE teachers ADD address TEXT AFTER tehsil";
+    $sql = "ALTER TABLE students ADD COLUMN register_option VARCHAR(255) DEFAULT NULL";
+
+if ($conn->query($sql) === TRUE) {
+    echo "Column 'register_option' added successfully.";
+} else {
+    echo "Error adding column: " . $conn->error;
+}
 
     // Execute the query
 
