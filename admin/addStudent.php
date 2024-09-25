@@ -35,10 +35,7 @@ $_SESSION['insertType'] = 'student';
                 <label for="father-phone" class="form-label">Father's Phone</label>
                 <input required type="text" class="form-control form-control-sm" id="father-phone" name="father-phone">
             </div>
-            <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
-                <label for="father-dob" class="form-label">Father's DOB</label>
-                <input required type="date" class="form-control form-control-sm" id="father-dob" name="father-dob">
-            </div>
+           
             <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="mother-name" class="form-label">Mother's Name</label>
                 <input required type="text" class="form-control form-control-sm" id="mother-name" name="mother-name">
@@ -47,10 +44,7 @@ $_SESSION['insertType'] = 'student';
                 <label for="mother-phone" class="form-label">Mother's Phone</label>
                 <input required type="text" class="form-control form-control-sm" id="mother-phone" name="mother-phone">
             </div>
-            <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
-                <label for="mother-dob" class="form-label">Mother's DOB</label>
-                <input required type="date" class="form-control form-control-sm" id="mother-dob" name="mother-dob">
-            </div>
+            
             <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="countrySelect" class="form-label">Country</label>
                 <select id="countrySelect" name="country" class="form-select " aria-label="Small select example"

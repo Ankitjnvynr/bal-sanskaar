@@ -32,7 +32,7 @@ if (isset($_SESSION['phone'])) {
         <a class="nav-link " href="addTeacher.php">Add Teacher</a>
     </li>
     <li class="nav-item dropdown">
-        <a style="cursor:pointer;" data-bs-toggle="dropdown" class="nav-link  text-left ">Report</a>
+        <a style="cursor:pointer;" data-bs-toggle="dropdown" class="nav-link dropdown-toggle  text-left ">Report</a>
         <ul  class="dropdown-menu bg-danger">
             <li><a class="dropdown-item" href="report.php">Teachers</a></li>
             <li><a class="dropdown-item" href="reportstudent.php">Student</a></li>

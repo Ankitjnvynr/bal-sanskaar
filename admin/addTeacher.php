@@ -13,8 +13,11 @@
         <div class="row d-flex gap-1 flex-wrap fs-7 px-2">
             <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="type" class="form-label">Teacher/City Head</label>
-                <select id="type" name="type" class="form-select" required>
+                <select id="type" name="type" class="form-select" onchange="maxCenter(this)" required>
+                    <option value="" selected>--type--</option>'
                     <?php
+                    $_GET['type'] =  isset($_GET['type']) ? $_GET['type'] : '';
+
                     $arr = ['City Head', 'Teacher', 'State Head', 'Teacher 1'];
                     foreach ($arr as $value) {
                         if ($value == $_GET['type']) {
@@ -45,8 +48,6 @@
                 <label for="name" class="form-label">Qualification</label>
                 <input type="text" class="form-control form-control-sm" id="qualification" name="qualification">
             </div>
-
-
             <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="countrySelect" class="form-label">Country</label>
                 <select id="countrySelect" name="country" class="form-select " aria-label="Small select example"
@@ -76,16 +77,44 @@
             </div>
             <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="address" class="form-label">Address</label>
-                <textarea id="address" name="address" class="form-control form-control-sm" rows="2"></textarea>
+                <textarea id="address" name="address" class="form-control form-control-sm" rows="1"></textarea>
             </div>
-            <!-- <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+            <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="center" class="form-label">Center</label>
-                <input type="text" id="center" name="center" class="form-control form-control-sm">
-            </div> -->
+                <div class="d-flex justify-content-center align-items-center gap-2">
+                    <span>BS</span>
+                    <input type="text" id="center" name="center" class="form-control form-control-sm">
+                </div>
+            </div>
+
 
         </div>
         <div class="text-center my-3"><button type="submit" class="btn btn-danger col-5">Submit</button></div>
     </form>
+
+    <script>
+    maxCenter = (e) => {
+        if (e.value == 'Teacher') {
+            console.log(e.value);
+            $.ajax({
+                type: "POST",
+                url: "getMaxCenter.php",
+                data: {
+                    'id': 1,
+                    'type': e.value
+                },
+                success: function(response) {
+
+                    var responseObject = JSON.parse(response); // Parse the response string to an object
+                    $('#center').val(responseObject.max_center +
+                        1
+                        ); // Fill the input with id 'center' with the max_center value from the response object
+                }
+            });
+        }
+    }
+    </script>
+
 
 </main>
 

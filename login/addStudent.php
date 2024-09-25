@@ -37,10 +37,7 @@ $_SESSION['insertType'] = 'student';
                     onkeypress="return onlyDigits(event)" size="10" minlength="10" maxlength="10" name="father-phone"
                     required>
             </div>
-            <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
-                <label for="father-dob" class="form-label">Father's DOB</label>
-                <input type="date" class="form-control form-control-sm" id="father-dob" name="father-dob">
-            </div>
+            
             <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="mother-name" class="form-label">Mother's Name</label>
                 <input type="text" class="form-control form-control-sm" id="mother-name" name="mother-name" required>
@@ -50,10 +47,7 @@ $_SESSION['insertType'] = 'student';
                 <input type="text" class="form-control form-control-sm" id="mother-phone"
                     onkeypress="return onlyDigits(event)" size="10" minlength="10" maxlength="10" name="mother-phone">
             </div>
-            <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
-                <label for="mother-dob" class="form-label">Mother's DOB</label>
-                <input type="date" class="form-control form-control-sm" id="mother-dob" name="mother-dob">
-            </div>
+           
 
             <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="countrySelect" class="form-label">Country</label>
