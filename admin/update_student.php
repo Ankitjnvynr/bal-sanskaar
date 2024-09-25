@@ -5,8 +5,7 @@ include '../config/_db.php'; // include the database connection
 ob_start(); // Start output buffering
 
 // Check if the form is submitted
-if ($_SERVER['REQUEST_METHOD'] === 'POST')
-{
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id = $_POST['id'];
     $name = $_POST['name'];
     $roll = $_POST['roll'];
@@ -23,33 +22,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     $tehsil = $_POST['tehsil'];
     $address = $_POST['address'];
     $center = isset($_POST['center']) ? $_POST['center'] : $_SESSION['userCenter'];
+    $register_option = $_POST['registerOption']; // Capture register option
     $page = isset($_GET['page']) ? $_GET['page'] : 1;
 
     // Update student data
     $sql = "UPDATE students SET 
                 rollno='$roll',
-                name = '$name', 
-                dob = '$dob', 
-                father_name = '$father_name', 
-                father_phone = '$father_phone', 
-                father_dob = '$father_dob', 
-                mother_name = '$mother_name', 
-                mother_phone = '$mother_phone', 
-                mother_dob = '$mother_dob', 
-                country = '$country', 
-                state = '$state', 
-                district = '$district', 
-                tehsil = '$tehsil', 
-                address = '$address', 
-                center = '$center' 
-            WHERE id = $id";
+                name='$name', 
+                dob='$dob', 
+                father_name='$father_name', 
+                father_phone='$father_phone', 
+                father_dob='$father_dob', 
+                mother_name='$mother_name', 
+                mother_phone='$mother_phone', 
+                mother_dob='$mother_dob', 
+                country='$country', 
+                state='$state', 
+                district='$district', 
+                tehsil='$tehsil', 
+                address='$address', 
+                center='$center',
+                register_option='$register_option'  -- Include register option here
+            WHERE id=$id";
 
-    if ($conn->query($sql) === TRUE)
-    {
+    if ($conn->query($sql) === TRUE) {
         echo "<script type='text/javascript'> window.location.href = 'dashboard.php?data=student&page={$page}';</script>";
         exit;
-    } else
-    {
+    } else {
         echo "Error updating record: " . $conn->error;
     }
 
@@ -60,21 +59,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
 ob_end_clean();
 
 // Fetch student data for editing
-if (isset($_GET['id']))
-{
+if (isset($_GET['id'])) {
     $id = $_GET['id'];
-    $sql = "SELECT * FROM students WHERE id = $id";
+    $sql = "SELECT * FROM students WHERE id=$id";
     $result = $conn->query($sql);
-    if ($result->num_rows > 0)
-    {
+    if ($result->num_rows > 0) {
         $student = $result->fetch_assoc();
-    } else
-    {
+    } else {
         echo "No record found";
         exit;
     }
-} else
-{
+} else {
     echo "Invalid request";
     exit;
 }
@@ -105,9 +100,8 @@ if (isset($_GET['id']))
 </style>
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 overflow-y-scroll">
-    <div
-        class="h4 text-center shadow-sm my-1 p-1 align-items-center rounded-2 text-danger d-flex justify-content-between">
-        <i data-bs-toggle="offcanvas" data-bs-target="#sidebarCanvas" class="fa-solid fa-bars d-md-none "></i>
+    <div class="h4 text-center shadow-sm my-1 p-1 align-items-center rounded-2 text-danger d-flex justify-content-between">
+        <i data-bs-toggle="offcanvas" data-bs-target="#sidebarCanvas" class="fa-solid fa-bars d-md-none"></i>
         Welcome: <?php echo mb_convert_case($_SESSION['username'], MB_CASE_TITLE) ?>
     </div>
 
@@ -116,8 +110,8 @@ if (isset($_GET['id']))
 
         <div class="text-center fw-bold my-2 text-danger fs-3">Edit Student Details</div>
         <div class="row d-flex gap-1 flex-wrap fs-7 px-2">
-            <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
-                <label for="name" class="form-label">Roll No</label>
+            <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+                <label for="roll" class="form-label">Roll No</label>
                 <input type="text" class="form-control form-control-sm" id="roll" name="roll"
                     value="<?php echo $student['rollno']; ?>" required>
             </div>
@@ -181,20 +175,31 @@ if (isset($_GET['id']))
                 <input class="form-control form-control-sm" type="text" id="tehsil" name="tehsil"
                     value="<?php echo $student['tehsil']; ?>" />
             </div>
-            <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
-                <label for="name" class="form-label">Address</label>
+            <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+                <label for="address" class="form-label">Address</label>
                 <input type="text" class="form-control form-control-sm" id="address" name="address"
                     value="<?php echo $student['address']; ?>" required>
             </div>
             <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="center" class="form-label">Center</label>
                 <input type="text" id="center" name="center" autocomplete="off" value="<?php echo $student['center']; ?>"
-                    class="form-control form-control-sm" >
+                    class="form-control form-control-sm">
                 <div id="centerSuggestions" class="suggestions"></div>
             </div>
-        </div>
-        <div class="text-center my-3">
-            <button type="submit" class="btn btn-danger col-5">Update</button>
+        
+            <div class="form-item bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+                <label for="registerSelect" class="form-label">Student Register</label>
+                <select id="registerSelect" name="registerOption" class="form-select" required>
+                    <option value="">---Select Register---</option>
+                    <option value="Yes" <?php echo ($student['register_option'] == 'Yes') ? 'selected' : ''; ?>>Yes</option>
+                    <option value="No" <?php echo ($student['register_option'] == 'No') ? 'selected' : ''; ?>>No</option>
+                    <option value="FOC" <?php echo ($student['register_option'] == 'FOC') ? 'selected' : ''; ?>>FOC (Free of Cost)</option>
+                </select>
+            </div>
+
+            <div class="text-center my-3">
+                <button type="submit" class="btn btn-danger col-5">Update</button>
+            </div>
         </div>
     </form>
 </main>
@@ -208,13 +213,11 @@ if (isset($_GET['id']))
         $centerTeh = $student['tehsil'];
         $centersql = "SELECT id, center FROM `centers` WHERE country = '$centerCountry' AND state = '$centerState' AND district = '$centerDist' AND tehsil = '$centerTeh' ORDER BY center ASC";
         $res = $conn->query($centersql);
-        while ($row = $res->fetch_assoc())
-        {
+        while ($row = $res->fetch_assoc()) {
             echo "'" . $row['center'] . "',";
         }
         ?>
     ];
-    // console.log(suggestions);
 </script>
 
 <?php include '_footer.php'; ?>

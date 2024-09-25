@@ -32,7 +32,13 @@ if ($conn->query($sql) === TRUE) {
 }
 
     // Execute the query
+    $sql_update = "UPDATE students SET register_option = 'default_value'"; // Set 'default_value' or any value you want
 
+    if ($conn->query($sql_update) === TRUE) {
+        echo "Column 'register_option' updated successfully.";
+    } else {
+        echo "Error updating column: " . $conn->error;
+    }
 
 
     // Use exec() because no results are returned
