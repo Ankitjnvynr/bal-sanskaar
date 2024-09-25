@@ -1,5 +1,45 @@
 <?php include '_header.php'; ?>
 
+<style>
+.checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    /* Add some space between checkboxes */
+}
+
+.form-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-check {
+    display: flex;
+    align-items: center;
+}
+
+.form-check-label {
+    margin-left: 10px;
+}
+/* Style the dropdown menu to match your form item */
+.dropdown-menu {
+    max-height: 200px; /* Limit height for scrolling */
+    overflow-y: auto;
+}
+
+.dropdown-toggle {
+    text-align: left; /* Align dropdown text to the left */
+}
+
+.form-check {
+    margin-bottom: 10px; /* Add space between checkboxes */
+}
+.dropdown{
+    width: 100%;
+}
+
+</style>
+
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 overflow-y-scroll">
     <div
         class="h4 text-center shadow-sm my-1 p-1 align-items-center  rounded-2 text-danger d-flex justify-content-between">
@@ -10,25 +50,35 @@
     <form action="../parts/teacher_form.php" method="post">
         <div class="text-center fw-bold my-2 text-danger fs-3">Teacher Details</div>
 
-        <div class="row d-flex gap-1 flex-wrap fs-7 px-2">
-            <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
-                <label for="type" class="form-label">Teacher/City Head</label>
-                <select id="type" name="type" class="form-select" onchange="maxCenter(this)" required>
-                    <option value="" selected>--type--</option>'
+        <div class="row d-flex gap-1 flex-wrap fs-7  ">
+            <div class="form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
+            <label class="form-label">Teacher/City Head</label>
+            <!-- Custom styled dropdown -->
+            <div class="dropdown ">
+                <button class="btn btn-light dropdown-toggle " type="button" id="dropdownMenuButton"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    Select Types
+                </button>
+                <ul class="dropdown-menu  p-3" aria-labelledby="dropdownMenuButton">
                     <?php
-                    $_GET['type'] =  isset($_GET['type']) ? $_GET['type'] : '';
+            $_GET['type'] = isset($_GET['type']) ? $_GET['type'] : [];
 
-                    $arr = ['City Head', 'Teacher', 'State Head', 'Teacher 1'];
-                    foreach ($arr as $value) {
-                        if ($value == $_GET['type']) {
-                            echo '<option selected value="' . $value . '">' . $value . '</option>';
-                        } else {
-                            echo '<option  value="' . $value . '">' . $value . '</option>';
-                        }
-                    }
-                    ?>
-                </select>
+            $arr = ['City Head', 'Teacher', 'State Head', 'Teacher 1'];
+            foreach ($arr as $value) {
+                $isChecked = in_array($value, $_GET['type']) ? 'checked' : '';
+                echo '
+                <li>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="type[]" value="' . htmlspecialchars($value, ENT_QUOTES, 'UTF-8') . '" ' . $isChecked . '>
+                        <label class="form-check-label">' . htmlspecialchars($value, ENT_QUOTES, 'UTF-8') . '</label>
+                    </div>
+                </li>';
+            }
+            ?>
+                </ul>
             </div>
+            </div>
+
             <div class=" form-item  bg-light shadow-sm rounded p-2 flex-grow-1 flex-shrink-0">
                 <label for="name" class="form-label">Name</label>
                 <input type="text" class="form-control form-control-sm" id="name" name="name">
@@ -108,7 +158,7 @@
                     var responseObject = JSON.parse(response); // Parse the response string to an object
                     $('#center').val(responseObject.max_center +
                         1
-                        ); // Fill the input with id 'center' with the max_center value from the response object
+                    ); // Fill the input with id 'center' with the max_center value from the response object
                 }
             });
         }
