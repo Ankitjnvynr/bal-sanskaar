@@ -28,25 +28,7 @@ if ($type === 'Teacher') {
     $center = 0; // Default center value for non-teachers, adjust if necessary
 }
 
-// Optional: If you still need to perform an update for other types
-$sql = "UPDATE `teachers` SET `teacher_type` = ?, `center` = ? WHERE `teachers`.`id` = ?";
-$stmt = $conn->prepare($sql);
-if ($stmt === false) {
-    $response['status'] = 'error';
-    $response['message'] = "Error preparing statement: " . $conn->error;
-    echo json_encode($response);
-    exit;
-}
-$stmt->bind_param('sii', $type, $center, $id);
-if ($stmt->execute()) {
-    $response['status'] = 'success';
-    $response['message'] = 'Update Success';
-    $response['center'] = $center; // Include the new center value if applicable
-} else {
-    $response['status'] = 'error';
-    $response['message'] = "Error: " . $stmt->error;
-}
-$stmt->close();
+// No update query needed
 
 echo json_encode($response); // Return response in JSON format
 

@@ -157,7 +157,7 @@ changeTeacherType = (id, e) => {
 
 
     $.ajax({
-        url: 'changeTeacherType.php',
+        url: 'getMaxCenter.php',
         type: 'POST',
         data: {
             id: id,
@@ -168,11 +168,11 @@ changeTeacherType = (id, e) => {
 
             // Check if the response is a JavaScript object
             console.log(res);
-            if (res.center == 0) res.center = '';
+            if (res.max_center == 0) res.max_center = '';
 
             // Assuming the 10th child element is the one you want to update
             // e.parentNode.parentNode.childNodes[21].innerHTML = res.center;
-            $('#center').val(res.center)
+            $('#center').val(res.max_center+1)
         },
         error: function(xhr, status, error) {
             console.error('Error:', status, error);
