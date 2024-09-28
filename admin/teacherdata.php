@@ -432,11 +432,13 @@ function openTeacherProfileModal(e, userId) {
 
     showTeacherList = () => {
         $("#teacher-list").removeAttr("hidden");
-        $("#teacher-list").show(5);
         $("#student-list").hide(5);
+        $("#associates-list").hide(5)
+        $("#teacher-list").show(5);
     }
     showStudentList = () => {
         $("#teacher-list").hide(5);
+        $("#associates-list").hide(5);
         $("#student-list").show(5);
     }
     showAssociatesList = () => {

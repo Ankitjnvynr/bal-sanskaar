@@ -174,8 +174,8 @@ maxCenter = (e) => {
                 'type': e.value
             },
             success: function(response) {
+                console.log(response);
                 var responseObject = JSON.parse(response);
-                console.log(responseObject);
                  // Parse the response string to an object
                 $('#center').val(responseObject.max_center + 1); // Set the center value
             }

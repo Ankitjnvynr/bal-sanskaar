@@ -60,7 +60,56 @@ if($row['teacher_type'] != 'Teacher' ){
                                 <p class="p-0 m-0"><strong>Address:</strong> ' . $row['address'] . ', ' . $row['tehsil'] . ', ' . $row['district'] . ', ' . $row['state'] . '.</p>
                                 <p class="p-0 m-0"><strong>Center Number:</strong> ' . $row['center'] . '</p>
                                 <p class="p-0 m-0"><strong>Center Start on:</strong> ' . $row['dt'] . '</p>
-                                <p class="p-0 m-0"><strong>Corporates:</strong> ' . $teacherList . '</p>
+                                
+                                <details>
+                                <summary ><span class="btn btn-success btn-sm">Add Corporates</span></summary>
+      <form class="mt-4">
+        <div class="row g-3">
+          <!-- Name -->
+          <div class="col-md-6">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="name" placeholder="Enter name">
+          </div>
+
+          <!-- DOB -->
+          <div class="col-md-6">
+            <label for="dob" class="form-label">DOB</label>
+            <input type="date" class="form-control" id="dob">
+          </div>
+
+          <!-- Phone -->
+          <div class="col-md-6">
+            <label for="phone" class="form-label">Phone</label>
+            <input type="tel" class="form-control" id="phone" placeholder="Enter phone number">
+          </div>
+
+          <!-- Qualification -->
+          <div class="col-md-6">
+            <label for="qualification" class="form-label">Qualification</label>
+            <input type="text" class="form-control" id="qualification" placeholder="Enter qualification">
+          </div>
+
+          <!-- Address -->
+          <div class="col-md-12">
+            <label for="address" class="form-label">Address</label>
+            <input type="text" class="form-control" id="address" placeholder="Enter address">
+          </div>
+
+          <!-- Hidden Fields -->
+          <input type="hidden" id="type" value="Teacher">
+          <input type="hidden" id="state" value="State">
+          <input type="hidden" id="district" value="District">
+          <input type="hidden" id="tehsil" value="'. $row['tehsil'] .'">
+          <input type="hidden" id="center" value="Center">
+
+          <!-- Submit Button -->
+          <div class="col-md-12">
+            <button type="submit" class="btn submit-btn">Submit</button>
+          </div>
+        </div>
+      </form>
+    </details>
+    
                             </div>
                         </div>
                     </div>
@@ -76,8 +125,8 @@ if($row['teacher_type'] != 'Teacher' ){
     <div class="card-header">
         <h5>Related
             <?php if($row['teacher_type']!='Teacher') echo '<span onclick="showTeacherList()" class="btn btn-warning btn-sm">Teachers</span> &';  ?>
-            <span onclick="showStudentList()" class="btn btn-success btn-sm">Students</span> & 
-            <span onclick="showAssociatesList()" class="btn btn-success btn-sm">Associates</span> </h5>
+            <span onclick="showStudentList()" class="btn btn-primary btn-sm">Students</span> & 
+            <span onclick="showAssociatesList()" class="btn btn-success btn-sm">Corporates</span> </h5>
     </div>
     <div class="card-body">
         <div style="height:30vh" class="row overflow-y-scroll">

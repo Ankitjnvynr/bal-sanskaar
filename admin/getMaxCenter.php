@@ -8,7 +8,7 @@ $response = array(); // Initialize response array
 $center = null;
 if ($type === 'Teacher') {
     // Fetch maximum center for teachers
-    $result = $conn->query("SELECT MAX(center) as max_center FROM teachers WHERE teacher_type='Teacher'");
+    $result = $conn->query("SELECT MAX(center) as max_center FROM teachers ");
     if ($result) {
         $row = $result->fetch_assoc();
         $max_center = isset($row['max_center']) ? (int)$row['max_center'] : 0; // Cast max_center to an integer
