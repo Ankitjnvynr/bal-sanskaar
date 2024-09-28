@@ -303,7 +303,7 @@ $current_page_records = $result->num_rows;
                 <td><?php echo $row['district']; ?></td>
                 <td><?php echo $row['tehsil']; ?></td>
                 <td><?php echo $row['address']; ?></td>
-                <td><?php echo $row['center']; ?></td>
+                <td><?php echo $row['center']?'BS-'.$row['center']:''; ?></td>
                 <td><?php echo substr($row['dt'], 0, 10); ?></td>
                 <td>
                     <a href="updateTeacher.php?user=<?php echo $row['id']; ?>" class="btn p-0 m-0 mx-1 fs-5"><i
@@ -431,7 +431,6 @@ function openTeacherProfileModal(e, userId) {
 
 
     showTeacherList = () => {
-
         $("#teacher-list").removeAttr("hidden");
         $("#teacher-list").show(5);
         $("#student-list").hide(5);
@@ -439,6 +438,13 @@ function openTeacherProfileModal(e, userId) {
     showStudentList = () => {
         $("#teacher-list").hide(5);
         $("#student-list").show(5);
+    }
+    showAssociatesList = () => {
+        $("#associates-list").removeAttr("hidden");
+        $("#teacher-list").hide(5);
+        $("#student-list").hide(5);
+        $("#associates-list").show(5);
+
     }
 };
 </script>

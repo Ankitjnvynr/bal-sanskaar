@@ -27,7 +27,7 @@ $teacherList = "";
 while ($c_row = $c_result->fetch_assoc()) {
     $teacherList .= $c_row['name'] . " (" . $c_row['phone'] . "), ";
 }
-
+$c_center = $row['center'];
 // Remove the trailing comma
 $teacherList = rtrim($teacherList, ", ");
 
@@ -76,13 +76,12 @@ if($row['teacher_type'] != 'Teacher' ){
     <div class="card-header">
         <h5>Related
             <?php if($row['teacher_type']!='Teacher') echo '<span onclick="showTeacherList()" class="btn btn-warning btn-sm">Teachers</span> &';  ?>
-            <span onclick="showStudentList()" class="btn btn-success btn-sm">Students</span> </h5>
+            <span onclick="showStudentList()" class="btn btn-success btn-sm">Students</span> & 
+            <span onclick="showAssociatesList()" class="btn btn-success btn-sm">Associates</span> </h5>
     </div>
     <div class="card-body">
         <div style="height:30vh" class="row overflow-y-scroll">
             <div id="teacher-list" hidden class="col-md-12 bg-warning-subtle">
-
-
                 <?php
                     // Retrieve filter values from POST request
                     $center = $row['center'];
@@ -106,19 +105,14 @@ if($row['teacher_type'] != 'Teacher' ){
                     if (!empty($district)) {
                         $whereClause .= " AND district = '$district'";
                     }
-
                     // Prepare and execute SQL query to fetch student data
                    $t_sql = "SELECT * FROM teachers WHERE " . $whereClause;
-                   
                     $t_result = $conn->query($t_sql);
-                
-
                     // Display student data in a table
                     echo '
                     <table  class="table bg-warning-subtle">
                         <thead>
                             <tr>
-                               
                                 <th>Teacher Type</th>
                                 <th>Name</th>
                                 <th>Phone</th>
@@ -130,7 +124,6 @@ if($row['teacher_type'] != 'Teacher' ){
                                 <th>Tehsil</th>
                                 <th>Address</th>
                                 <th>Center</th>
-                               
                             </tr>
                         </thead>
                         <tbody>';
@@ -164,9 +157,84 @@ if($row['teacher_type'] != 'Teacher' ){
                     ?>
 
             </div>
+            <div id="associates-list" hidden class="col-md-12 bg-warning-subtle">
+                <?php
+                    // Retrieve filter values from POST request
+                    $center = $row['center'];
+                    $country = $row['country'];
+                    $state = $row['state'];
+                    $tehsil = $row['tehsil'];
+                    $district = $row['district'];
+
+                    // Build WHERE clause based on filter values
+                    $whereClause = "";
+                    if (!empty($country)) {
+                        $whereClause .= "  country = '$country'";
+                    }
+                    
+                    if (!empty($state)) {
+                        $whereClause .= " AND state = '$state'";
+                    }
+                    if (!empty($tehsil)) {
+                        $whereClause .= " AND tehsil = '$tehsil'";
+                    }
+                    if (!empty($district)) {
+                        $whereClause .= " AND district = '$district'";
+                    }
+                    $whereClause .= " AND center = '$c_center'";
+                    // Prepare and execute SQL query to fetch student data
+                   $t_sql = "SELECT * FROM teachers WHERE " . $whereClause;
+                    $t_result = $conn->query($t_sql);
+                    // Display student data in a table
+                    echo '
+                    <table  class="table bg-warning-subtle">
+                        <thead>
+                            <tr>
+                                <th>Teacher Type</th>
+                                <th>Name</th>
+                                <th>Phone</th>
+                                <th>DOB</th>                                
+                                <th>Qualification</th>                                
+                                <th>Country</th>
+                                <th>State</th>
+                                <th>District</th>
+                                <th>Tehsil</th>
+                                <th>Address</th>
+                                <th>Center</th>
+                            </tr>
+                        </thead>
+                        <tbody>';
+
+                    if ($t_result->num_rows > 0) {
+                        echo "<h6>Total Associates: ".$t_result->num_rows."</h6><hr>"; 
+                        while ($t_row = $t_result->fetch_assoc()) {
+                            echo '
+                            <tr>
+                                <td>' . $t_row['teacher_type'] . '</td>
+                                <td>' . $t_row['name'] . '</td>
+                                <td>' . $t_row['phone'] . '</td>
+                                <td>' . $t_row['dob'] . '</td>
+                                <td>' . $t_row['qualification'] . '</td>                                
+                                <td>' . $t_row['country'] . '</td>
+                                <td>' . $t_row['state'] . '</td>
+                                <td>' . $t_row['district'] . '</td>
+                                <td>' . $t_row['tehsil'] . '</td>
+                                <td>' . $t_row['address'] . '</td>
+                                <td>' . $t_row['center'] . '</td>
+                               
+                            </tr>';
+                        }
+                    } else {
+                        echo '<tr><td colspan="16">No data found.</td></tr>';
+                    }
+
+                    echo '
+                        </tbody>
+                    </table>';
+                    ?>
+
+            </div>
             <div id="student-list" class="col-md-12">
-
-
                 <?php
                     // Retrieve filter values from POST request
                     $center = $row['center'];
@@ -229,22 +297,18 @@ if($row['teacher_type'] != 'Teacher' ){
                         while ($Student_row = $s_result->fetch_assoc()) {
                             echo '
                             <tr>
-                               
                                 <td>' . $Student_row['rollno'] . '</td>
                                 <td>' . $Student_row['name'] . '</td>
                                 <td>' . $Student_row['dob'] . '</td>
                                 <td>' . $Student_row['father_name'] . '</td>
                                 <td>' . $Student_row['father_phone'] . '</td>
-                                
                                 <td>' . $Student_row['mother_name'] . '</td>
                                 <td>' . $Student_row['mother_phone'] . '</td>
-                              
                                 <td>' . $Student_row['country'] . '</td>
                                 <td>' . $Student_row['state'] . '</td>
                                 <td>' . $Student_row['district'] . '</td>
                                 <td>' . $Student_row['tehsil'] . '</td>
                                 <td>' . $Student_row['address'] . '</td>
-                               
                             </tr>';
                         }
                     } else {

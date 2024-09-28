@@ -4,7 +4,12 @@ require_once '../config/_db.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id = $_POST['id'];
-    $teacher_type = $_POST['type'];
+
+    // Handle multiple roles
+    $teacher_types = isset($_POST['teacher_type']) ? $_POST['teacher_type'] : [];
+    // Convert to a comma-separated string and convert special characters to HTML entities
+    $teacher_type = htmlspecialchars(implode(',', $teacher_types), ENT_QUOTES, 'UTF-8');
+
     $name = $_POST['name'];
     $dob = $_POST['dob'];
     $phone = $_POST['phone'];
@@ -31,20 +36,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Prepare SQL update statement
     if ($update_password) {
-        // Phone number has changed, update userpassword as well
+        // Phone number has changed, update user password as well
         $hash_pass = password_hash($phone, PASSWORD_DEFAULT);
         $sql_update = "UPDATE teachers 
-                       SET teacher_type = ?, name = ?, dob = ?, phone = ?, qualification = ?, country = ?, state = ?, district = ?, tehsil = ?, center = ?, dt = ?, userpassword = ?,address=?
+                       SET teacher_type = ?, name = ?, dob = ?, phone = ?, qualification = ?, country = ?, state = ?, district = ?, tehsil = ?, center = ?, dt = ?, userpassword = ?, address = ?
                        WHERE id = ?";
         $stmt_update = $conn->prepare($sql_update);
-        $stmt_update->bind_param("sssssssssssssi", $teacher_type, $name, $dob, $phone, $qualification, $country, $state, $district, $tehsil, $center, $dt, $hash_pass,$address, $id);
+        $stmt_update->bind_param("sssssssssssssi", $teacher_type, $name, $dob, $phone, $qualification, $country, $state, $district, $tehsil, $center, $dt, $hash_pass, $address, $id);
     } else {
-        // Phone number has not changed, do not update userpassword
+        // Phone number has not changed, do not update user password
         $sql_update = "UPDATE teachers 
-                       SET teacher_type = ?, name = ?, dob = ?, phone = ?, qualification = ?, country = ?, state = ?, district = ?, tehsil = ?, center = ?, dt = ?
+                       SET teacher_type = ?, name = ?, dob = ?, phone = ?, qualification = ?, country = ?, state = ?, district = ?, tehsil = ?, center = ?, dt = ?, address = ?
                        WHERE id = ?";
         $stmt_update = $conn->prepare($sql_update);
-        $stmt_update->bind_param("sssssssssssi", $teacher_type, $name, $dob, $phone, $qualification, $country, $state, $district, $tehsil, $center, $dt, $id);
+        $stmt_update->bind_param("ssssssssssssi", $teacher_type, $name, $dob, $phone, $qualification, $country, $state, $district, $tehsil, $center, $dt, $address, $id);
     }
 
     // Execute the update statement
