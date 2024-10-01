@@ -37,344 +37,118 @@ if($row['teacher_type'] != 'Teacher' ){
 
 // Now, $teacherList contains the comma-separated list of teacher names and phone numbers
 
+// Display teacher profile details
+?>
+<div class="container mt-4">
+    <div class="row">
+        <div class="col">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h4><?php echo $row['name']; ?> (<?php echo $row['teacher_type']; ?>)</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-4">
+                            <img src="../imgs/Logo.png" alt="Teacher Image"
+                                class="card-img-top rounded-circle img-fluid"
+                                style="width: 150px; height: 150px; margin: auto;">
+                        </div>
+                        <div class="col-8">
+                            <p class="p-0 m-0"><strong>DOB:</strong> <?php echo $row['dob']; ?></p>
+                            <p class="p-0 m-0"><strong>Phone:</strong> <?php echo $row['phone']; ?></p>
+                            <p class="p-0 m-0"><strong>Qualification:</strong> <?php echo $row['qualification']; ?>.</p>
+                            <p class="p-0 m-0"><strong>Address:</strong> <?php echo $row['address']; ?>,
+                                <?php echo $row['tehsil']; ?>, <?php echo $row['district']; ?>,
+                                <?php echo $row['state']; ?>.</p>
+                            <p class="p-0 m-0"><strong>Center Number:</strong> <?php echo $row['center']; ?></p>
+                            <p class="p-0 m-0"><strong>Center Start on:</strong> <?php echo $row['dt']; ?></p>
+                            <details>
+                                <summary><span class="btn btn-success btn-sm">Add Corporates</span></summary>
 
-    // Display teacher profile details
-    echo '
-    <div class="container mt-4">
-        <div class="row">
-            <div class="col">
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <h4>' . $row['name'] . ' (' . $row['teacher_type'] . ')</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-4">
-                                <img src="../imgs/Logo.png" alt="Teacher Image" class="card-img-top rounded-circle img-fluid"
-                                    style="width: 150px; height: 150px; margin: auto;">
-                            </div>
-                            <div class="col-8">
-                                <p class="p-0 m-0"><strong>DOB:</strong> ' . $row['dob'] . '</p>
-                                <p class="p-0 m-0"><strong>Phone:</strong> ' . $row['phone'] . '</p>
-                                <p class="p-0 m-0"><strong>Qualification:</strong> ' . $row['qualification'] . '.</p>
-                                <p class="p-0 m-0"><strong>Address:</strong> ' . $row['address'] . ', ' . $row['tehsil'] . ', ' . $row['district'] . ', ' . $row['state'] . '.</p>
-                                <p class="p-0 m-0"><strong>Center Number:</strong> ' . $row['center'] . '</p>
-                                <p class="p-0 m-0"><strong>Center Start on:</strong> ' . $row['dt'] . '</p>
-                                
-                                <details>
-                                <summary ><span class="btn btn-success btn-sm">Add Corporates</span></summary>
-      <form class="mt-4">
-        <div class="row g-3">
-          <!-- Name -->
-          <div class="col-md-6">
-            <label for="name" class="form-label">Name</label>
-            <input type="text" class="form-control" id="name" placeholder="Enter name">
-          </div>
+                                <form class="mt-4" id="subteacherForm">
+                                    <div class="row g-3">
+                                        <!-- Name -->
+                                        <div class="col-md-6">
+                                            <label for="subteacher_name" class="form-label">Name</label>
+                                            <input type="text" class="form-control" id="subteacher_name"
+                                                placeholder="Enter name" required>
+                                        </div>
 
-          <!-- DOB -->
-          <div class="col-md-6">
-            <label for="dob" class="form-label">DOB</label>
-            <input type="date" class="form-control" id="dob">
-          </div>
+                                        <!-- DOB -->
+                                        <div class="col-md-6">
+                                            <label for="subteacher_dob" class="form-label">DOB</label>
+                                            <input type="date" class="form-control" id="subteacher_dob" required>
+                                        </div>
 
-          <!-- Phone -->
-          <div class="col-md-6">
-            <label for="phone" class="form-label">Phone</label>
-            <input type="tel" class="form-control" id="phone" placeholder="Enter phone number">
-          </div>
+                                        <!-- Phone -->
+                                        <div class="col-md-6">
+                                            <label for="subteacher_phone" class="form-label">Phone</label>
+                                            <input type="tel" class="form-control" id="subteacher_phone"
+                                                placeholder="Enter phone number" required>
+                                        </div>
 
-          <!-- Qualification -->
-          <div class="col-md-6">
-            <label for="qualification" class="form-label">Qualification</label>
-            <input type="text" class="form-control" id="qualification" placeholder="Enter qualification">
-          </div>
+                                        <!-- Qualification -->
+                                        <div class="col-md-6">
+                                            <label for="subteacher_qualification"
+                                                class="form-label">Qualification</label>
+                                            <input type="text" class="form-control" id="subteacher_qualification"
+                                                placeholder="Enter qualification" required>
+                                        </div>
 
-          <!-- Address -->
-          <div class="col-md-12">
-            <label for="address" class="form-label">Address</label>
-            <input type="text" class="form-control" id="address" placeholder="Enter address">
-          </div>
+                                        <!-- Address -->
+                                        <div class="col-md-12">
+                                            <label for="subteacher_address" class="form-label">Address</label>
+                                            <input type="text" class="form-control" id="subteacher_address"
+                                                placeholder="Enter address" required>
+                                        </div>
 
-          <!-- Hidden Fields -->
-          <input type="hidden" id="type" value="Teacher">
-          <input type="hidden" id="state" value="State">
-          <input type="hidden" id="district" value="District">
-          <input type="hidden" id="tehsil" value="'. $row['tehsil'] .'">
-          <input type="hidden" id="center" value="Center">
+                                        <!-- Hidden Fields -->
+                                        <input type="hidden" id="subteacher_type" value="Teacher">
+                                        <input type="hidden" id="subteacher_state" value="State">
+                                        <input type="hidden" id="subteacher_district" value="District">
+                                        <input type="hidden" id="subteacher_tehsil"
+                                            value="<?php echo $row['tehsil']; ?>">
+                                        <input type="hidden" id="subteacher_center" value="Center">
 
-          <!-- Submit Button -->
-          <div class="col-md-12">
-            <button type="submit" class="btn submit-btn">Submit</button>
-          </div>
-        </div>
-      </form>
-    </details>
-    
-                            </div>
+                                        <!-- Submit Button -->
+                                        <div class="col-md-12">
+                                            <button type="button" onclick="submitSubteacher(
+                                            '<?php echo addslashes($row['country']); ?>', 
+                                            '<?php echo addslashes($row['state']); ?>', 
+                                            '<?php echo addslashes($row['district']); ?>', 
+                                            '<?php echo addslashes($row['tehsil']); ?>', 
+                                            '<?php echo addslashes($row['center']); ?>'
+                                        )" class="btn submit-btn">Submit</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </details>
+
+
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    ';
+</div>
+<?php
+?>
 
-    ?>
-
+// related teachers and students and corporates
 <div class="card">
-    <div class="card-header">
-        <h5>Related
-            <?php if($row['teacher_type']!='Teacher') echo '<span onclick="showTeacherList()" class="btn btn-warning btn-sm">Teachers</span> &';  ?>
-            <span onclick="showStudentList()" class="btn btn-primary btn-sm">Students</span> & 
-            <span onclick="showAssociatesList()" class="btn btn-success btn-sm">Corporates</span> </h5>
-    </div>
+
     <div class="card-body">
-        <div style="height:30vh" class="row overflow-y-scroll">
-            <div id="teacher-list" hidden class="col-md-12 bg-warning-subtle">
-                <?php
-                    // Retrieve filter values from POST request
-                    $center = $row['center'];
-                    $country = $row['country'];
-                    $state = $row['state'];
-                    $tehsil = $row['tehsil'];
-                    $district = $row['district'];
-
-                    // Build WHERE clause based on filter values
-                    $whereClause = "";
-                    if (!empty($country)) {
-                        $whereClause .= "  country = '$country'";
-                    }
-                    
-                    if (!empty($state)) {
-                        $whereClause .= " AND state = '$state'";
-                    }
-                    if (!empty($tehsil)) {
-                        $whereClause .= " AND tehsil = '$tehsil'";
-                    }
-                    if (!empty($district)) {
-                        $whereClause .= " AND district = '$district'";
-                    }
-                    // Prepare and execute SQL query to fetch student data
-                   $t_sql = "SELECT * FROM teachers WHERE " . $whereClause;
-                    $t_result = $conn->query($t_sql);
-                    // Display student data in a table
-                    echo '
-                    <table  class="table bg-warning-subtle">
-                        <thead>
-                            <tr>
-                                <th>Teacher Type</th>
-                                <th>Name</th>
-                                <th>Phone</th>
-                                <th>DOB</th>                                
-                                <th>Qualification</th>                                
-                                <th>Country</th>
-                                <th>State</th>
-                                <th>District</th>
-                                <th>Tehsil</th>
-                                <th>Address</th>
-                                <th>Center</th>
-                            </tr>
-                        </thead>
-                        <tbody>';
-
-                    if ($t_result->num_rows > 0) {
-                        echo "<h6>Total Teachers: ".$t_result->num_rows."</h6><hr>"; 
-                        while ($t_row = $t_result->fetch_assoc()) {
-                            echo '
-                            <tr>
-                                <td>' . $t_row['teacher_type'] . '</td>
-                                <td>' . $t_row['name'] . '</td>
-                                <td>' . $t_row['phone'] . '</td>
-                                <td>' . $t_row['dob'] . '</td>
-                                <td>' . $t_row['qualification'] . '</td>                                
-                                <td>' . $t_row['country'] . '</td>
-                                <td>' . $t_row['state'] . '</td>
-                                <td>' . $t_row['district'] . '</td>
-                                <td>' . $t_row['tehsil'] . '</td>
-                                <td>' . $t_row['address'] . '</td>
-                                <td>' . $t_row['center'] . '</td>
-                               
-                            </tr>';
-                        }
-                    } else {
-                        echo '<tr><td colspan="16">No data found.</td></tr>';
-                    }
-
-                    echo '
-                        </tbody>
-                    </table>';
-                    ?>
-
-            </div>
-            <div id="associates-list" hidden class="col-md-12 bg-warning-subtle">
-                <?php
-                    // Retrieve filter values from POST request
-                    $center = $row['center'];
-                    $country = $row['country'];
-                    $state = $row['state'];
-                    $tehsil = $row['tehsil'];
-                    $district = $row['district'];
-
-                    // Build WHERE clause based on filter values
-                    $whereClause = "";
-                    if (!empty($country)) {
-                        $whereClause .= "  country = '$country'";
-                    }
-                    
-                    if (!empty($state)) {
-                        $whereClause .= " AND state = '$state'";
-                    }
-                    if (!empty($tehsil)) {
-                        $whereClause .= " AND tehsil = '$tehsil'";
-                    }
-                    if (!empty($district)) {
-                        $whereClause .= " AND district = '$district'";
-                    }
-                    $whereClause .= " AND center = '$c_center'";
-                    // Prepare and execute SQL query to fetch student data
-                   $t_sql = "SELECT * FROM teachers WHERE " . $whereClause;
-                    $t_result = $conn->query($t_sql);
-                    // Display student data in a table
-                    echo '
-                    <table  class="table bg-warning-subtle">
-                        <thead>
-                            <tr>
-                                <th>Teacher Type</th>
-                                <th>Name</th>
-                                <th>Phone</th>
-                                <th>DOB</th>                                
-                                <th>Qualification</th>                                
-                                <th>Country</th>
-                                <th>State</th>
-                                <th>District</th>
-                                <th>Tehsil</th>
-                                <th>Address</th>
-                                <th>Center</th>
-                            </tr>
-                        </thead>
-                        <tbody>';
-
-                    if ($t_result->num_rows > 0) {
-                        echo "<h6>Total Associates: ".$t_result->num_rows."</h6><hr>"; 
-                        while ($t_row = $t_result->fetch_assoc()) {
-                            echo '
-                            <tr>
-                                <td>' . $t_row['teacher_type'] . '</td>
-                                <td>' . $t_row['name'] . '</td>
-                                <td>' . $t_row['phone'] . '</td>
-                                <td>' . $t_row['dob'] . '</td>
-                                <td>' . $t_row['qualification'] . '</td>                                
-                                <td>' . $t_row['country'] . '</td>
-                                <td>' . $t_row['state'] . '</td>
-                                <td>' . $t_row['district'] . '</td>
-                                <td>' . $t_row['tehsil'] . '</td>
-                                <td>' . $t_row['address'] . '</td>
-                                <td>' . $t_row['center'] . '</td>
-                               
-                            </tr>';
-                        }
-                    } else {
-                        echo '<tr><td colspan="16">No data found.</td></tr>';
-                    }
-
-                    echo '
-                        </tbody>
-                    </table>';
-                    ?>
-
-            </div>
-            <div id="student-list" class="col-md-12">
-                <?php
-                    // Retrieve filter values from POST request
-                    $center = $row['center'];
-                    $country = $row['country'];
-                    $state = $row['state'];
-                    $tehsil = $row['tehsil'];
-                    $district = $row['district'];
-
-                    // Build WHERE clause based on filter values
-                    $whereClause = "";
-                    if (!empty($country)) {
-                        $whereClause .= "  country = '$country'";
-                    }
-                    if (!empty($center)) {
-                        $whereClause .= " AND center = '$center'";
-                    }
-                    if (!empty($state)) {
-                        $whereClause .= " AND state = '$state'";
-                    }
-                    if (!empty($tehsil)) {
-                        $whereClause .= " AND tehsil = '$tehsil'";
-                    }
-                    if (!empty($district)) {
-                        $whereClause .= " AND district = '$district'";
-                    }
-
-                    // Prepare and execute SQL query to fetch student data
-                   $s_sql = "SELECT * FROM students WHERE " . $whereClause;
-                   
-                    $s_result = $conn->query($s_sql);
-                
-
-                    // Display student data in a table
-                    echo '
-                    <table class="table">
-                        <thead>
-                            <tr>
-                               
-                                <th>Roll No</th>
-                                <th>Name</th>
-                                <th>DOB</th>
-                                <th>Father Name</th>
-                                <th>Father Phone</th>
-                                
-                                <th>Mother Name</th>
-                                <th>Mother Phone</th>
-                               
-                                <th>Country</th>
-                                <th>State</th>
-                                <th>District</th>
-                                <th>Tehsil</th>
-                                <th>Address</th>
-                               
-                            </tr>
-                        </thead>
-                        <tbody>';
-
-                    if ($s_result->num_rows > 0) {
-                        echo "<h6>Total Students: ".$s_result->num_rows."</h6><hr>"; 
-                        while ($Student_row = $s_result->fetch_assoc()) {
-                            echo '
-                            <tr>
-                                <td>' . $Student_row['rollno'] . '</td>
-                                <td>' . $Student_row['name'] . '</td>
-                                <td>' . $Student_row['dob'] . '</td>
-                                <td>' . $Student_row['father_name'] . '</td>
-                                <td>' . $Student_row['father_phone'] . '</td>
-                                <td>' . $Student_row['mother_name'] . '</td>
-                                <td>' . $Student_row['mother_phone'] . '</td>
-                                <td>' . $Student_row['country'] . '</td>
-                                <td>' . $Student_row['state'] . '</td>
-                                <td>' . $Student_row['district'] . '</td>
-                                <td>' . $Student_row['tehsil'] . '</td>
-                                <td>' . $Student_row['address'] . '</td>
-                            </tr>';
-                        }
-                    } else {
-                        echo '<tr><td colspan="16">No data found.</td></tr>';
-                    }
-
-                    echo '
-                        </tbody>
-                    </table>';
-                    ?>
-
-
-
-
-            </div>
-        </div>
+        <h5>Related
+            <span onclick="fetchTeachers()" class="btn btn-warning btn-sm">Teachers</span> &
+            <span onclick="fetchStudents()" class="btn btn-primary btn-sm">Students</span> &
+            <span onclick="fetchCorporates()" class="btn btn-success btn-sm">Corporates</span>
+        </h5>
+        <div id="related-data" style="height:30vh; overflow-y: scroll;"></div>
     </div>
+
+
 </div>
 
 
@@ -394,3 +168,115 @@ if($row['teacher_type'] != 'Teacher' ){
 $stmt->close();
 $conn->close();
 ?>
+
+
+
+
+
+
+<script>
+function fetchTeachers() {
+    $.ajax({
+        url: 'fetch_teachers.php',
+        type: 'POST',
+        data: {
+            country: '<?php echo $row['country']; ?>',
+            state: '<?php echo $row['state']; ?>',
+            tehsil: '<?php echo $row['tehsil']; ?>',
+            district: '<?php echo $row['district']; ?>'
+        },
+        success: function(response) {
+            $('#related-data').html(response);
+        },
+        error: function(xhr, status, error) {
+            alert("An error occurred: " + error);
+        }
+    });
+}
+
+function fetchStudents() {
+    $.ajax({
+        url: 'fetch_students.php',
+        type: 'POST',
+        data: {
+            country: '<?php echo $row['country']; ?>',
+            state: '<?php echo $row['state']; ?>',
+            tehsil: '<?php echo $row['tehsil']; ?>',
+            district: '<?php echo $row['district']; ?>',
+            center: '<?php echo $row['center']; ?>'
+        },
+        success: function(response) {
+            $('#related-data').html(response);
+        },
+        error: function(xhr, status, error) {
+            alert("An error occurred: " + error);
+        }
+    });
+}
+
+function fetchCorporates() {
+    $.ajax({
+        url: 'fetch_corporates.php',
+        type: 'POST',
+        data: {
+            country: '<?php echo $row['country']; ?>',
+            state: '<?php echo $row['state']; ?>',
+            tehsil: '<?php echo $row['tehsil']; ?>',
+            district: '<?php echo $row['district']; ?>',
+            center: '<?php echo $row['center']; ?>'
+        },
+        success: function(response) {
+            $('#related-data').html(response);
+        },
+        error: function(xhr, status, error) {
+            alert("An error occurred: " + error);
+        }
+    });
+}
+</script>
+<script>
+function submitSubteacher(country, state, district, tehsil, center) {
+    // Collecting form data from visible fields
+    const name = $('#subteacher_name').val();
+    const dob = $('#subteacher_dob').val();
+    const phone = $('#subteacher_phone').val();
+    const qualification = $('#subteacher_qualification').val();
+    const address = $('#subteacher_address').val();
+
+    // Creating an object to hold the data
+    const data = {
+        name: name,
+        dob: dob,
+        phone: phone,
+        qualification: qualification,
+        address: address,
+        type: 'Teacher1', // Adjust if necessary
+        country: country,
+        state: state,
+        district: district,
+        tehsil: tehsil,
+        center: center
+    };
+
+    // Sending the AJAX request with jQuery
+    $.ajax({
+        url: '../parts/teacher_form.php',
+        type: 'POST',
+        data: data, // Sending data as plain object
+        success: function(response) {
+            console.log(response);
+
+            $('#subteacher_name').val('');
+            $('#subteacher_dob').val('');
+            $('#subteacher_phone').val('');
+            $('#subteacher_qualification').val('');
+            $('#subteacher_address').val('');
+            fetchCorporates()
+            
+        },
+        error: function(xhr, status, error) {
+            alert("An error occurred: " + error);
+        }
+    });
+}
+</script>

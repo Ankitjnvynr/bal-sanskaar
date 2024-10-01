@@ -36,23 +36,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $district = isset($_POST['district']) ? $_POST['district'] : $_SESSION['district'];
     $tehsil = isset($_POST['tehsil']) ? $_POST['tehsil'] : $_SESSION['tehsil'];
     $address = $_POST['address'];
-    $center = null;
+    $center = isset($_POST['center']) ? $_POST['center'] : $_SESSION['center'];
     $hash_pass = password_hash($phone, PASSWORD_DEFAULT);
 
     // If teacher type is 'Teacher', assign a center number
-    if ($teacher_type === 'Teacher') {
-        $result = $conn->query("SELECT MAX(center) as max_center FROM teachers WHERE teacher_type='Teacher'");
-        if ($result) {
-            $row = $result->fetch_assoc();
-            $max_center = $row['max_center'];
-
-            // Ensure $max_center is an integer or default to 0 if NULL
-            $center = ($max_center !== NULL ? (int)$max_center : 0) + 1;
-        } else {
-            echo "Error fetching center number: " . $conn->error;
-            exit;
-        }
-    }
+   
 
     // Use prepared statement to insert data
     $stmt = $conn->prepare("INSERT INTO teachers (teacher_type, name, dob, phone, qualification, country, state, district, tehsil, address, center, userpassword) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
