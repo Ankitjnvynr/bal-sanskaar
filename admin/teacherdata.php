@@ -17,8 +17,8 @@ $name = isset($_GET['name']) ? $_GET['name'] : '';
 $phone = isset($_GET['phone']) ? $_GET['phone'] : '';
 $type = isset($_GET['type']) ? $_GET['type'] : '';
 
-// Start building the SQL query with a WHERE clause
-$sql = "SELECT * FROM teachers WHERE 1=1";
+// Start building the SQL query with a WHERE clause, excluding Teacher1
+$sql = "SELECT * FROM teachers WHERE teacher_type != 'Teacher1'";  // Exclude Teacher1
 
 // Array to hold the conditions and parameters
 $params = [];
@@ -82,24 +82,12 @@ if ($stmt === false) {
 $stmt->bind_param($types, ...$params);
 $stmt->execute();
 
- $result = $stmt->get_result();
-
-
-
+$result = $stmt->get_result();
 
 ?>
 <?php
-// Create the base URL for pagination with filter values
-$base_url = "?data=teacher&country=" . urlencode($country) .
-    "&state=" . urlencode($state) .
-    "&district=" . urlencode($district) .
-    "&tehsil=" . urlencode($tehsil) .
-    "&name=" . urlencode($name) .
-    "&phone=" . urlencode($phone) . "&page=";
-?>
-<?php
-// SQL query to get the total number of records for pagination (without LIMIT)
-$total_records_sql = "SELECT COUNT(*) AS total FROM teachers WHERE 1=1";
+// SQL query to get the total number of records for pagination (without LIMIT), excluding Teacher1
+$total_records_sql = "SELECT COUNT(*) AS total FROM teachers WHERE teacher_type != 'Teacher1'"; // Exclude Teacher1
 
 // Array to hold the conditions and parameters for the total count query
 $total_params = [];
@@ -142,9 +130,9 @@ if (!empty($phone)) {
     $total_types .= 's';
 }
 if (!empty($type)) {
-    $sql .= " AND teacher_type LIKE ?";
-    $params[] = "%" . $type . "%";
-    $types .= 's';
+    $total_records_sql .= " AND teacher_type LIKE ?";
+    $total_params[] = "%" . $type . "%";
+    $total_types .= 's';
 }
 
 // Prepare the total records SQL statement
@@ -172,14 +160,12 @@ $total_pages = ceil($total_records / $records_per_page);
 // Count the number of records for the current page
 $current_page_records = $result->num_rows;
 
-
 ?>
 
 <style>
 .nametd {
     font-weight: 700;
     cursor: pointer;
-
 }
 
 .nametd:hover {
@@ -199,7 +185,6 @@ $current_page_records = $result->num_rows;
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div id="modalBody" class="modal-body">
-
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -208,8 +193,6 @@ $current_page_records = $result->num_rows;
     </div>
 </div>
 <!-- end  modal for the teacher profile -->
-
-
 
 <div class="">
     <h5 class="mb-4 teacher-l">
@@ -225,16 +208,16 @@ $current_page_records = $result->num_rows;
                 <select id="stateSelect" onchange="loadDistrict(this)" name="state"></select>
             </div>
             <div class="form-group">
-                <select id="districtSelect" onchange="loadTehsil (this)" name="district"></select>
+                <select id="districtSelect" onchange="loadTehsil(this)" name="district"></select>
             </div>
             <div class="form-group">
                 <select id="tehsil" name="tehsil"></select>
             </div>
             <div class="form-group">
-                <input type="text" class="filter-input" id="name" name="name" placeholder=" Name">
+                <input type="text" class="filter-input" id="name" name="name" placeholder="Name">
             </div>
             <div class="form-group">
-                <input type="tel" class="filter-input" id="phone" name="phone" placeholder=" Phone Number">
+                <input type="tel" class="filter-input" id="phone" name="phone" placeholder="Phone Number">
             </div>
             <div class="form-group">
                 <select name="type" id="type">
@@ -249,161 +232,155 @@ $current_page_records = $result->num_rows;
             </div>
             <div class="form-group">
                 <input type="hidden" name="data" value="teacher">
-                <!-- <input class="form-control me-2" type="search" name="search" placeholder="Search..." aria-label="Search" value="<?php echo htmlspecialchars($search_query); ?>"> -->
                 <button class="btn btn-outline-success p-0 px-1 flex-1 w-full  fltr-btn" type="submit">Search</button>
             </div>
         </div>
-</div>
-</form>
+    </form>
 
-<!-- Data Table -->
-<div class="table-responsive">
-    <table class="table table-striped fs-7">
-        <thead>
-            <tr>
-                <th scope="col">Sr</th>
-                <th scope="col">Teacher Type</th>
-                <th scope="col">Name</th>
-                <th scope="col">DOB</th>
-                <th scope="col">Phone</th>
-                <th scope="col">Qualification</th>
-                <th scope="col">Country</th>
-                <th scope="col">State</th>
-                <th scope="col">District</th>
-                <th scope="col">Tehsil</th>
-                <th scope="col">Address</th>
-                <th scope="col">Center</th>
-                <th scope="col">Start On</th>
-                <th scope="col">Action</th>
-            </tr>
-        </thead>
-        <tbody>
+    <!-- Data Table -->
+    <div class="table-responsive">
+        <table class="table table-striped fs-7">
+            <thead>
+                <tr>
+                    <th scope="col">Sr</th>
+                    <th scope="col">Teacher Type</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">DOB</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">Qualification</th>
+                    <th scope="col">Country</th>
+                    <th scope="col">State</th>
+                    <th scope="col">District</th>
+                    <th scope="col">Tehsil</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Center</th>
+                    <th scope="col">Start On</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                    if ($result->num_rows > 0) {
+                        if(isset($_GET['page'])){
+                            $sr = 10*($_GET['page']-1);
+                        }else{
+                            $sr = 0;
+                        }
+                        while ($row = $result->fetch_assoc()) :
+                            $sr++; ?>
+                <tr>
+                    <th scope="row"><?php echo $sr; ?></th>
+                    <td>
+                        <?php echo $row['teacher_type'] ?>
+                    </td>
+                    <td class="nametd" data-bs-toggle="modal"
+                        onclick="openTeacherProfileModal(this,<?php echo $row['id']; ?>)">
+                        <?php echo $row['name']; ?></td>
+                    <td><?php echo $row['dob']; ?></td>
+                    <td><?php echo $row['phone']; ?></td>
+                    <td><?php echo $row['qualification']; ?></td>
+                    <td><?php echo $row['country']; ?></td>
+                    <td><?php echo $row['state']; ?></td>
+                    <td><?php echo $row['district']; ?></td>
+                    <td><?php echo $row['tehsil']; ?></td>
+                    <td><?php echo $row['address']; ?></td>
+                    <td><?php echo $row['center'] ? 'BS-' . $row['center'] : ''; ?></td>
+                    <td><?php echo substr($row['dt'], 0, 10); ?></td>
+                    <td>
+                        <a href="updateTeacher.php?user=<?php echo $row['id']; ?>" class="btn p-0 m-0 mx-1 fs-5"><i
+                                class="fa-regular fa-pen-to-square text-success"></i></a>
+                        <a href="delete_teacher.php?id=<?php echo $row['id'] . '&page=' . $page; ?>"
+                            onclick='return confirm("Are you sure you want to delete this record?")'
+                            class="btn p-0 m-0 mx-1 fs-5"><i class="fa-regular fa-trash-can text-danger"></i></a>
+                    </td>
+                </tr>
+                <?php endwhile;
+                    } else {
+                        echo "<tr><td colspan='12'>No records found</td></tr>";
+                    } ?>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination -->
+    <?php
+    // Create the base URL for pagination with filter values
+    $base_url = "?data=teacher&country=" . urlencode($country) .
+        "&state=" . urlencode($state) .
+        "&district=" . urlencode($district) .
+        "&tehsil=" . urlencode($tehsil) .
+        "&name=" . urlencode($name) .
+        "&phone=" . urlencode($phone) .
+        "&type=" . urlencode($type) .  // Added type filter
+        "&page=";
+    ?>
+
+    <?php if ($total_pages > 1): // Only show pagination if there's more than one page ?>
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+            <!-- Previous Button -->
+            <?php if ($page > 1) : ?>
+            <li class="page-item">
+                <a class="page-link" href="<?php echo $base_url . ($page - 1); ?>" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <?php endif; ?>
+
+            <!-- Page Number Buttons -->
             <?php
-                if ($result->num_rows > 0) {
-                    if(isset($_GET['page'])){
-                        $sr = 10*($_GET['page']-1);
-                    }else{
-                        $sr = 0;
-                    }
-                    while ($row = $result->fetch_assoc()) :
-                        $sr++; ?>
-            <tr>
-                <th scope="row"><?php echo $sr; ?></th>
-                <td>
-                    <?php echo $row['teacher_type'] ?>
-                </td>
-                <td class="nametd" data-bs-toggle="modal"
-                    onclick="openTeacherProfileModal(this,<?php echo $row['id']; ?>)">
-                    <?php echo $row['name']; ?></td>
-                <td><?php echo $row['dob']; ?></td>
-                <td><?php echo $row['phone']; ?></td>
-                <td><?php echo $row['qualification']; ?></td>
-                <td><?php echo $row['country']; ?></td>
-                <td><?php echo $row['state']; ?></td>
-                <td><?php echo $row['district']; ?></td>
-                <td><?php echo $row['tehsil']; ?></td>
-                <td><?php echo $row['address']; ?></td>
-                <td><?php echo $row['center']?'BS-'.$row['center']:''; ?></td>
-                <td><?php echo substr($row['dt'], 0, 10); ?></td>
-                <td>
-                    <a href="updateTeacher.php?user=<?php echo $row['id']; ?>" class="btn p-0 m-0 mx-1 fs-5"><i
-                            class="fa-regular fa-pen-to-square text-success"></i></a>
-                    <a href="delete_teacher.php?id=<?php echo $row['id'] . '&page=' . $page; ?>"
-                        onclick='return confirm("Are you sure you want to delete this record?")'
-                        class="btn p-0 m-0 mx-1 fs-5"><i class="fa-regular fa-trash-can text-danger"></i></a>
-                </td>
-            </tr>
-            <?php endwhile;
+            $visible_buttons = 3;
+            $start_page = max(1, $page - floor($visible_buttons / 2));
+            $end_page = min($total_pages, $page + floor($visible_buttons / 2));
+
+            if ($end_page - $start_page + 1 < $visible_buttons) {
+                if ($start_page == 1) {
+                    $end_page = min($total_pages, $start_page + $visible_buttons - 1);
                 } else {
-                    echo "<tr><td colspan='12'>No records found</td></tr>";
-                } ?>
-        </tbody>
-    </table>
-</div>
-
-
-<!-- Pagination -->
-<?php
-// Create the base URL for pagination with filter values
-$base_url = "?data=teacher&country=" . urlencode($country) .
-    "&state=" . urlencode($state) .
-    "&district=" . urlencode($district) .
-    "&tehsil=" . urlencode($tehsil) .
-    "&name=" . urlencode($name) .
-    "&phone=" . urlencode($phone) .
-    "&type=" . urlencode($type) .  // Added type filter
-    "&page=";
-?>
-
-<?php if ($total_pages > 1): // Only show pagination if there's more than one page ?>
-<nav aria-label="Page navigation">
-    <ul class="pagination justify-content-center">
-        <!-- Previous Button -->
-        <?php if ($page > 1) : ?>
-        <li class="page-item">
-            <a class="page-link" href="<?php echo $base_url . ($page - 1); ?>" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-            </a>
-        </li>
-        <?php endif; ?>
-
-        <!-- Page Number Buttons -->
-        <?php
-        $visible_buttons = 3; 
-        $start_page = max(1, $page - floor($visible_buttons / 2));
-        $end_page = min($total_pages, $page + floor($visible_buttons / 2));
-
-        if ($end_page - $start_page + 1 < $visible_buttons) {
-            if ($start_page == 1) {
-                $end_page = min($total_pages, $start_page + $visible_buttons - 1);
-            } else {
-                $start_page = max(1, $end_page - $visible_buttons + 1);
+                    $start_page = max(1, $end_page - $visible_buttons + 1);
+                }
             }
-        }
 
-        if ($start_page > 1) : ?>
-        <li class="page-item">
-            <a class="page-link" href="<?php echo $base_url . '1'; ?>">1</a>
-        </li>
-        <?php if ($start_page > 2) : ?>
-        <li class="page-item disabled">
-            <span class="page-link">...</span>
-        </li>
-        <?php endif; ?>
-        <?php endif; ?>
+            if ($start_page > 1) : ?>
+            <li class="page-item">
+                <a class="page-link" href="<?php echo $base_url . '1'; ?>">1</a>
+            </li>
+            <?php if ($start_page > 2) : ?>
+            <li class="page-item disabled">
+                <span class="page-link">...</span>
+            </li>
+            <?php endif; ?>
+            <?php endif; ?>
 
-        <!-- Display page number buttons -->
-        <?php for ($i = $start_page; $i <= $end_page; $i++) : ?>
-        <li class="page-item <?php if ($i == $page) echo 'active'; ?>">
-            <a class="page-link" href="<?php echo $base_url . $i; ?>"><?php echo $i; ?></a>
-        </li>
-        <?php endfor; ?>
+            <!-- Display page number buttons -->
+            <?php for ($i = $start_page; $i <= $end_page; $i++) : ?>
+            <li class="page-item <?php if ($i == $page) echo 'active'; ?>">
+                <a class="page-link" href="<?php echo $base_url . $i; ?>"><?php echo $i; ?></a>
+            </li>
+            <?php endfor; ?>
 
-        <?php if ($end_page < $total_pages) : ?>
-        <?php if ($end_page < $total_pages - 1) : ?>
-        <li class="page-item disabled">
-            <span class="page-link">...</span>
-        </li>
-        <?php endif; ?>
-        <li class="page-item">
-            <a class="page-link" href="<?php echo $base_url . $total_pages; ?>"><?php echo $total_pages; ?></a>
-        </li>
-        <?php endif; ?>
+            <?php if ($end_page < $total_pages) : ?>
+            <?php if ($end_page < $total_pages - 1) : ?>
+            <li class="page-item disabled">
+                <span class="page-link">...</span>
+            </li>
+            <?php endif; ?>
+            <li class="page-item">
+                <a class="page-link" href="<?php echo $base_url . $total_pages; ?>"><?php echo $total_pages; ?></a>
+            </li>
+            <?php endif; ?>
 
-        <!-- Next Button -->
-        <?php if ($page < $total_pages) : ?>
-        <li class="page-item">
-            <a class="page-link" href="<?php echo $base_url . ($page + 1); ?>" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-            </a>
-        </li>
-        <?php endif; ?>
-    </ul>
-</nav>
-<?php endif; // End of pagination check ?>
-
-
-
+            <!-- Next Button -->
+            <?php if ($page < $total_pages) : ?>
+            <li class="page-item">
+                <a class="page-link" href="<?php echo $base_url . ($page + 1); ?>" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+            <?php endif; ?>
+        </ul>
+    </nav>
+    <?php endif; // End of pagination check ?>
 </div>
 
 <script>
@@ -417,36 +394,11 @@ function openTeacherProfileModal(e, userId) {
         data: {
             teacher_id: userId
         },
-
         success: function(response) {
             $('#modalBody').html(response)
         }
     });
 
-
-
     $('#teacherProfileModal').modal('show');
-
-
-
-
-    showTeacherList = () => {
-        $("#teacher-list").removeAttr("hidden");
-        $("#student-list").hide(5);
-        $("#associates-list").hide(5)
-        $("#teacher-list").show(5);
-    }
-    showStudentList = () => {
-        $("#teacher-list").hide(5);
-        $("#associates-list").hide(5);
-        $("#student-list").show(5);
-    }
-    showAssociatesList = () => {
-        $("#associates-list").removeAttr("hidden");
-        $("#teacher-list").hide(5);
-        $("#student-list").hide(5);
-        $("#associates-list").show(5);
-
-    }
-};
+}
 </script>
