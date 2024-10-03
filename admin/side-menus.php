@@ -38,6 +38,9 @@ if (isset($_SESSION['phone'])) {
             <li><a class="dropdown-item" href="reportstudent.php">Student</a></li>
         </ul>
     </li>
+    <li class="nav-item">
+        <a class="nav-link " href="syllabus.php">Syllabus</a>
+    </li>
 
 
 
