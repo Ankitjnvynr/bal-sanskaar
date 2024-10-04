@@ -139,26 +139,11 @@ $result = $conn->query($sql);
             <?php
             if ($_SESSION['userType'] == 'State Head' || $_SESSION['userType'] == 'City Head') {
             ?>
-              <td>
-                <select class="border" onchange="changeTeacherType(<?php echo $row['id']; ?>,this)">
-                  <?php
-                  $arr = ['Teacher', 'Teacher1'];
-                  if ($_SESSION['userType'] == 'State Head') {
-                    array_push($arr,  'City Head');
-                  }
-                  foreach ($arr as $value) {
-                    if ($row['teacher_type'] == $value) {
-                      echo '<option selected value="' . $value . '">' . $value . '</option>';
-                    } else {
-                      echo '<option value="' . $value . '">' . $value . '</option>';
-                    }
-                  }
-                  ?>
-                </select>
-              </td>
+             
         <?php
             }
             echo "
+                    <td class='lh-1 text-nowrap' >{$row['teacher_type']}</td>
                     <td class='lh-1 text-nowrap' >{$row['name']}</td>
                     <td class='lh-1 text-nowrap' >{$row['dob']}</td>
                     <td class='lh-1 text-nowrap' >{$row['phone']}</td>
