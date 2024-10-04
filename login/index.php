@@ -38,8 +38,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $_SESSION['state'] = $row['state'];
                     $_SESSION['district'] = $row['district'];
                     $_SESSION['tehsil'] = $row['tehsil'];
-                    $_SESSION['userType'] = $row['teacher_type'];
                     $_SESSION['userCenter'] = $row['center'];
+
+                    $typearr = explode(",", $row['teacher_type']);
+
+                    if (in_array('State Head', $typearr)) {
+                        $_SESSION['userType'] = 'State Head';
+                    }elseif(in_array('City Head', $typearr)){
+                        $_SESSION['userType'] = 'City Head';
+                    }elseif(in_array('Teacher', $typearr)){
+                        $_SESSION['userType'] = 'Teacher';
+                    }else{
+                        $_SESSION['userType'] = 'Teacher1';
+                    }
 
                     $msg = "Teacher exists!";
                     header('Location: dashboard.php?data=student');

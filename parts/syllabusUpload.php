@@ -16,7 +16,7 @@ function insertIntoDatabase($title, $subtitle, $fileName)
 
     try {
         // Insert the data directly into the query
-        $query = "INSERT INTO pdf_uploads (title, subtitle, file_name, dt) VALUES ('$title', '$subtitle', '$fileName', NOW())";
+        $query = "INSERT INTO syllabus (title, subtitle, file_name, dt) VALUES ('$title', '$subtitle', '$fileName', NOW())";
 
         // Execute the query and check if it's successful
         if ($conn->query($query)) {
