@@ -19,6 +19,8 @@ $userType = $_SESSION['userType'];
         <img width="50px" class='shadow rounded rounded-pill' src="../imgs/logo.png" alt="">
         <p class="text-light mt-2 fw-bolder rounded">GIEO Gita-Bal Sanskaar</p>
     </div>
+    
+
     <li class="nav-item mt-3">
         <a class="nav-link" href="dashboard.php?data=student">All Student</a>
     </li>
@@ -67,6 +69,9 @@ $userType = $_SESSION['userType'];
     ?>
     <li class="nav-item border-top">
         <a class="nav-link" href="profile.php">Profile</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link " href="syllabus.php">Syllabus</a>
     </li>
     <li class="nav-item border-top">
         <a class="nav-link" href="logout.php">Logout</a>
