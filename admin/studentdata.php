@@ -166,7 +166,7 @@ $total_pages = ceil($total_records / $limit);
                             <td>" . (isset($row['district']) ? htmlspecialchars($row['district']) : 'N/A') . "</td>
                             <td>" . (isset($row['tehsil']) ? htmlspecialchars($row['tehsil']) : 'N/A') . "</td>
                             <td>{$row['address']}</td>
-                            <td>{$row['center']}</td>
+                            <td>" . $row['center'] ? 'BS-' . $row['center'] : '' . "</td>
                             <td>" . (isset($row['register_option']) ? htmlspecialchars($row['register_option']) : 'N/A') . "</td>
                             <td class=''>
                                 <div class='d-flex'>
